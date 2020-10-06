@@ -1,0 +1,12 @@
+.side-body {
+    background: rgb(238, 238, 238);
+    bottom: 0px;
+    display: block;
+    font-size: 13px;
+    height: 100vh;
+    left: 0px;
+    overflow: auto;
+    position: fixed;
+    top: 0px;
+    width: 250px;
+}

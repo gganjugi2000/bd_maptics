@@ -1,5 +1,14 @@
-.App {
-  text-align: center;
+.root {
+  flex-grow: 1;
+  display: "flex";
+  min-height: "100vh";
+  flex-direction: "column";
+}
+
+.main {
+  position: relative;
+  left: 250px;
+  padding: 10px 0 0 10px;
 }
 
 .App-logo {
