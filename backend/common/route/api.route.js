@@ -1,22 +1,23 @@
 const asyncHandler = require('express-async-handler');
 const express = require('express');
 const router = express.Router();
+const logger = require('../logger/winston');
 
 // asyncHandler test
 router.get('/test', asyncHandler((req, res) => {
-   console.log('test ok!!');
+   logger.info('asyncHandler test ok!!');
    res.send();
 }));
 
 // get test
 router.get('/test1', (req, res) => {
-   console.log('get test1 ok!!');
+   logger.info('get test1 ok!!');
    res.send();
 });
 
 // post test
 router.post('/test2', (req, res) => {
-   console.log('post test2 ok!!');
+   logger.info('post test2 ok!!');
    res.send();
 });
 
