@@ -2,9 +2,10 @@ let winston = require('winston');
 let winstonDaily = require('winston-daily-rotate-file');
 const { combine, timestamp, printf } = winston.format;
 const fs = require('fs');
+const path = require('path')
 
 // 로그 디렉토리 체크
-const logDir = require('os').homedir() + "/maptics_log";
+const logDir = require('os').homedir() + path.sep + "maptics_log";
 console.log('### logDir ### '+logDir);
 // custom log format 정의
 const logFormat = printf(info => {
