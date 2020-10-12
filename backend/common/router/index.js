@@ -1,6 +1,6 @@
 const express = require('express');
-const cmmRouter = require('./common');
-const fileUpRouter = require('./file');
+const cmmRouter = require('./api/common');
+const fileUpRouter = require('./api/file');
 const router = express.Router();
 
 router.use("/cmm", cmmRouter);

@@ -10,12 +10,12 @@ app.use(express.urlencoded({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-const cmmRoutes = require('./common/router/api');
-const apiRoutes = require('./router/api');
+const cmmRoutes = require('./common/router');
+const apiRoutes = require('./app/router');
 const login = require('./common/router/api/auth');
 
 app.use('/common', cmmRoutes);
-app.use("/api", apiRoutes);
+app.use('/api', apiRoutes);
 app.use('/login', login);
 
 const port = normalizePort(process.env.PORT || '4000');
