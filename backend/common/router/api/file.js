@@ -2,7 +2,7 @@ const asyncHandler = require('express-async-handler');
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
-const logger = require('../logger/winston');
+const logger = require('../../logger/winston');
 const formidable = require('formidable');
 const path = require('path');
 
@@ -39,6 +39,7 @@ router.post('/upload', asyncHandler(async (req, res) => {
                     'code' : 999,
                     'msg' : err.message
                 }
+                res.status(200).send(data);
             }
             fs.stat(newPath, function (err, stats) {
                 if(err) {
@@ -46,6 +47,7 @@ router.post('/upload', asyncHandler(async (req, res) => {
                         'code' : 999,
                         'msg' : err.message
                     }
+                    res.status(200).send(data);
                 }
             });
         });
@@ -57,22 +59,21 @@ router.post('/upload', asyncHandler(async (req, res) => {
         console.log("============ progress ==================="); 
         console.log("bytesReceiveed ==> ", bytesReceived, " ; bytesExpected ==> ", bytesExpected); 
         console.log(percent_complete.toFixed(2), "% uploaded...");
+
     }).on('end', function() {
-        // data = {
-        //     'code' : 200,
-        //     'msg' : 'success'
-        // }
         fields = [];
         files = [];
         fields_array = [];
         files_array = [];
-        res.send(data);
+        res.status(200).send(data);
+
     }).on('error', function(error) {
         data = {
             'code' : 999,
             'msg' : error.message
         }
-        res.send(data);
+        res.status(200).send(data);
+        
     });
 
      // end 이벤트 까지 전송된 후 최종 호출

@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { verifyToken } = require('../service/authService'); // 미들웨어 임포트
+const { verifyToken } = require('../../service/authService'); // 미들웨어 임포트
 const jwt = require('jsonwebtoken') // 모듈 임포트
 
 const router = express.Router();

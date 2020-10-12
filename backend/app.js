@@ -2,9 +2,6 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const common = require('./common/rest/common');
-const file = require('./common/rest/file');
-const login = require('./common/rest/auth');
 
 app.use(cookieParser())
 app.use(express.json());
@@ -13,10 +10,13 @@ app.use(express.urlencoded({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/common', common);
-app.use('/file', file);
-app.use('/login', login);
+const cmmRoutes = require('./common/router/api');
+const apiRoutes = require('./router/api');
+const login = require('./common/router/api/auth');
 
+app.use('/common', cmmRoutes);
+app.use("/api", apiRoutes);
+app.use('/login', login);
 
 const port = normalizePort(process.env.PORT || '4000');
 if (process.env.NODE_ENV === "production") {

@@ -1,7 +1,8 @@
 const asyncHandler = require('express-async-handler');
 const express = require('express');
 const router = express.Router();
-const logger = require('../logger/winston');
+const logger = require('../../logger/winston');
+const commonService = require('../../service/commonService');
 
 // asyncHandler test
 router.get('/test', asyncHandler((req, res) => {
@@ -20,5 +21,11 @@ router.post('/test2', (req, res) => {
    logger.info('post test2 ok!!');
    res.send('postOK');
 });
+
+router.get('/users', asyncHandler(async (req, res) => {
+   logger.info('get users called');
+   let data = await commonService.getUserList();
+   res.status(200).send(data);
+}));
 
 module.exports = router; 
