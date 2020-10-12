@@ -21,17 +21,19 @@ import UserList from './domain/User/UserList';
 // stats menu
 
 
+import AxiosTest from './domain/AxiosTest'
+
 
 const cx = classNames.bind(styles);
 
 function App() {
   let sideMenu = null;
-  sideMenu = <SideMenu />
+  sideMenu = <SideMenu />;
   
 
   return (
     <Router>
-      <React.Fragment>
+      <>
       <div className={cx("root")}>
         {sideMenu}
         <div className={cx("main")}>
@@ -39,10 +41,11 @@ function App() {
             <Route exact path="/users"  children={<UserList />} />
             <Route exact path="/products" children={<h3>Produ</h3>} />
             <Route exact path="/stats" children={<h3>Two</h3>} />
+            <Route exact path="/axios_test"  component={AxiosTest} />
           </Switch>
         </div>
       </div>
-      </React.Fragment>
+      </>
     </Router>
     
   );

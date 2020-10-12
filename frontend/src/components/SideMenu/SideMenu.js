@@ -8,7 +8,8 @@ const cx = classNames.bind(styles);
 const dummyMenu = [
     {name: "Users", id: "0", url: "/users"},
     {name: "Products", id: "1", url: "/products"},
-    {name: "Stats", id: "2", url: "/stats"}
+    {name: "Stats", id: "2", url: "/stats"},
+    {name: "Test_axios", id: "3", url: "/axios_test"}
 ];
 
 

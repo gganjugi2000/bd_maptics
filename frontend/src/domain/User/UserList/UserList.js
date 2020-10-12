@@ -17,9 +17,9 @@ const UserList = () => {
 
     // render
     return (
-        <div styles={{magin: 200}}>
+        <div styles={{margin: 200}}>
             {dummyUserList && dummyUserList.map((userItem, i) => {
-                console.log(userItem)
+                console.log(userItem);
                 return (
                     <div key={i}>
                         {userItem.name}
