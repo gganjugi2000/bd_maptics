@@ -1,10 +1,7 @@
-const mysql = require('../db/mysql');
+const db_mysql = require('../db/common');
 
-exports.getUserList = () => {
-    const sql = `select * from users`;
-    return new Promise(resolve => {
-        mysql.get_data('user_info', sql, (result) => {
-            resolve(result);
-        });
-    });
+
+exports.getUserList = async () => {
+    const data = await db_mysql.getUserList();
+    return data
 }

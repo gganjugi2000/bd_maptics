@@ -17,6 +17,7 @@ exports.get_data = (func, query, callback) => {
             }
             connection.release();
             const end_time = new Date();
+            console.log(func, query, results, start_time, end_time);
             // write_log(func, query, results, start_time, end_time);
             callback(results);
         });    
