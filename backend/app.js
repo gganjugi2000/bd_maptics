@@ -2,8 +2,8 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const apiRest = require('./common/rest/api');
-const fileRest = require('./common/rest/file');
+const common = require('./common/rest/common');
+const file = require('./common/rest/file');
 
 app.use(cookieParser())
 app.use(express.json());
@@ -12,8 +12,8 @@ app.use(express.urlencoded({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api', apiRest);
-app.use('/file', fileRest);
+app.use('/common', common);
+app.use('/file', file);
 
 
 const port = normalizePort(process.env.PORT || '4000');

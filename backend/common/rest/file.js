@@ -17,60 +17,71 @@ router.post('/upload', asyncHandler(async (req, res) => {
     // 업로드 정보
     form.encoding = 'utf-8';        // 인코딩
     form.uploadDir = require('os').homedir() + path.sep + 'upload';
-    // console.log('### uploadDir ### '+form.uploadDir);
     form.multiples = true;          // 여러 파일
     form.keepExtensions = true;     // 확장자 표시
 
     // form타입 필드(text 타입)
     form.on('field', function(field, value) {
-    fields.push([field, value]);
-    fields_array.push(value);
+        fields.push([field, value]);
+        fields_array.push(value);
 
     // form타입 필드(file 타입)
     }).on('file', function(field, file) {
-
-    console.log('### file.name >>>', file.name);
-    let oldPath = file.path;
-    let newPath = form.uploadDir + path.sep + file.name;
-
-    fs.rename(oldPath, newPath, function(err) {
-        if(err) {
-            res.status(200).send({'code':'999','msg':err.message});
+        let oldPath = file.path;
+        let newPath = form.uploadDir + path.sep + file.name;
+        data = {
+            'code' : 200,
+            'msg' : 'success'
         }
-        fs.stat(newPath, function (err, stats) {
+        fs.rename(oldPath, newPath, function(err) {
             if(err) {
-                res.status(200).send({'code':'999','msg':err.message});
+                data = {
+                    'code' : 999,
+                    'msg' : err.message
+                }
             }
+            fs.stat(newPath, function (err, stats) {
+                if(err) {
+                    data = {
+                        'code' : 999,
+                        'msg' : err.message
+                    }
+                }
+            });
         });
-    });
-    files.push([field, file.name]);
-    files_array.push(file.name);
+        files.push([field, file.name]);
+        files_array.push(file.name);
         
+    }).on('progress', function(bytesReceived, bytesExpected) {
+        let percent_complete = (bytesReceived / bytesExpected) * 100; 
+        console.log("============ progress ==================="); 
+        console.log("bytesReceiveed ==> ", bytesReceived, " ; bytesExpected ==> ", bytesExpected); 
+        console.log(percent_complete.toFixed(2), "% uploaded...");
     }).on('end', function() {
-    data = {
-        'field' : fields_array,
-        'file' : files_array
-    }
-    res.status(200).send({'code':'200','msg':'success'});
-    fields = [];
-    files = [];
-    fields_array = [];
-    files_array = [];
+        // data = {
+        //     'code' : 200,
+        //     'msg' : 'success'
+        // }
+        fields = [];
+        files = [];
+        fields_array = [];
+        files_array = [];
+        res.send(data);
     }).on('error', function(error) {
-        console.log('error :'+error);
-        res.status(200).send({'code':'999','msg':error.message});
+        data = {
+            'code' : 999,
+            'msg' : error.message
+        }
+        res.send(data);
     });
 
-    // end 이벤트 까지 전송된 후 최종 호출
+     // end 이벤트 까지 전송된 후 최종 호출
     form.parse(req, (err, field, file) => {
-        // console.log('upload success!!');
-        // res.writeHead(200, { 'content-type': 'application/json' });
         if(!err) {
             console.log('upload success!!');
         } else {
             console.log('upload fail!!');
         }
-        res.end(JSON.stringify({ field, file }, null, 2));
     });
 }));
 
