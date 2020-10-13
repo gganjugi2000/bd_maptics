@@ -29,25 +29,26 @@ router.post('/upload', asyncHandler(async (req, res) => {
     }).on('file', function(field, file) {
         let oldPath = file.path;
         let newPath = form.uploadDir + path.sep + file.name;
-        data = {
-            'code' : 200,
-            'msg' : 'success'
-        }
+ 
         fs.rename(oldPath, newPath, function(err) {
             if(err) {
-                data = {
-                    'code' : 999,
-                    'msg' : err.message
-                }
-                res.status(200).send(data);
+                res.status(200).send({
+                    result: {
+                      code: 999,
+                      message: "error",
+                      data : err.message
+                    }
+                });
             }
             fs.stat(newPath, function (err, stats) {
                 if(err) {
-                    data = {
-                        'code' : 999,
-                        'msg' : err.message
-                    }
-                    res.status(200).send(data);
+                    res.status(200).send({
+                        result: {
+                          code: 999,
+                          message: "error",
+                          data : err.message
+                        }
+                    });
                 }
             });
         });
@@ -65,14 +66,22 @@ router.post('/upload', asyncHandler(async (req, res) => {
         files = [];
         fields_array = [];
         files_array = [];
-        res.status(200).send(data);
 
+        res.status(200).send({
+            result: {
+              code: 200,
+              message: "success",
+              data : data
+            }
+        });
     }).on('error', function(error) {
-        data = {
-            'code' : 999,
-            'msg' : error.message
-        }
-        res.status(200).send(data);
+        res.status(200).send({
+            result: {
+              code: 999,
+              message: "error",
+              data : err.message
+            }
+        });
         
     });
 
