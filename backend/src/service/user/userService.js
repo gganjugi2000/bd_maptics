@@ -1,5 +1,4 @@
-const db_mysql = require('../db/common');
-
+const db_mysql = require('./userDao');
 
 exports.getUserList = async () => {
     const data = await db_mysql.getUserList();

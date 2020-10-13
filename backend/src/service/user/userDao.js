@@ -1,4 +1,4 @@
-const mysql = require('./mysql');
+const mysql = require('../../db/mysql');
 
 exports.getUserList = async () => {
     const sql = `select * from users`;

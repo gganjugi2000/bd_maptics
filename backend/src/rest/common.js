@@ -1,7 +1,7 @@
 const asyncHandler = require('express-async-handler');
 const express = require('express');
 const router = express.Router();
-const logger = require('../../logger/winston');
+const logger = require('../utils/logger/winston');
 
 // asyncHandler test
 router.get('/test', asyncHandler((req, res) => {

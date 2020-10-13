@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
-const jwt_secret = require('../../config/config').getConfig().jwt_secret;
-const utils = require('../util/utils');
+const jwt_secret = require('../config/config').getConfig().jwt_secret;
+const utils = require('../utils/jwt/utils');
 
 exports.verifyToken = (req, res, next) => {
 	console.log('jwt middleware');

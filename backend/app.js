@@ -18,20 +18,14 @@ const corsOptions = {
 app.use(cors(corsOptions)); // config 추가
 
 // middleware
-const { verifyToken } = require("./common/middleware/jwtMiddleware");
+const { verifyToken } = require("./src/middleware/jwtMiddleware");
 app.use(verifyToken);
 
 // router
-const cmmRoutes = require('./common/router');
-const fileUpRouter = require('./common/router/api/file');
-const apiRoutes = require('./app/router');
-const login = require('./common/router/api/auth');
-const user = require('./router/users');
+const fileUpRouter = require('./src/rest/file');
+const user = require('./src/rest/users');
 
-app.use('/common', cmmRoutes);
 app.use("/file", fileUpRouter);
-app.use('/api', apiRoutes);
-app.use('/login', login);
 app.use('/user', user);
 
 const port = normalizePort(process.env.PORT || '4000');

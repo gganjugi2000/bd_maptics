@@ -2,7 +2,7 @@ const asyncHandler = require('express-async-handler');
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
-const logger = require('../../logger/winston');
+const logger = require('../utils/logger/winston');
 const formidable = require('formidable');
 const path = require('path');
 
@@ -79,7 +79,7 @@ router.post('/upload', asyncHandler(async (req, res) => {
             result: {
               code: 999,
               message: "error",
-              data : err.message
+              data : error
             }
         });
         
@@ -90,6 +90,7 @@ router.post('/upload', asyncHandler(async (req, res) => {
         if(!err) {
             console.log('upload success!!');
         } else {
+            console.log('### req >>>'+String(req)+'### err >>>'+err);
             console.log('upload fail!!');
         }
     });
