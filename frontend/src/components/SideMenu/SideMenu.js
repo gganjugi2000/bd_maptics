@@ -6,10 +6,11 @@ import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 
 const dummyMenu = [
-    {name: "Users", id: "0", url: "/users"},
-    {name: "Products", id: "1", url: "/products"},
-    {name: "Stats", id: "2", url: "/stats"},
-    {name: "Test_axios", id: "3", url: "/axios_test"}
+    {name: "Home", id: "0", url: "/"},
+    {name: "Users", id: "1", url: "/users"},
+    {name: "Products", id: "2", url: "/products"},
+    {name: "Stats", id: "3", url: "/stats"},
+    {name: "Test_axios", id: "4", url: "/axios_test"}
 ];
 
 

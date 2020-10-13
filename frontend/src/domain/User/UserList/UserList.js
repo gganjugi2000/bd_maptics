@@ -5,27 +5,30 @@ import classNames from 'classnames/bind';
 
 const cx = classNames.bind(styles);
 
-const dummyUserList = [
-    {name: "one", id: "0"},
-    {name: "two", id: "1"},
-    {name: "three", id: "2"}
-];
-
 
 // 컴포넌트 정의
-const UserList = () => {
+const UserList = ({ userList }) => {
+    console.log("UserList ===============================");
+    console.log(userList);
+    console.log("UserList end ===========================");
 
     // render
     return (
         <div styles={{margin: 200}}>
-            {dummyUserList && dummyUserList.map((userItem, i) => {
+            {userList ? userList.map((userItem, i) => {
                 console.log(userItem);
                 return (
                     <div key={i}>
-                        {userItem.name}
+                        <div>
+                            {userItem.user_id}
+                        </div>
+                        <div>
+                            {userItem.user_name}
+                        </div>
                     </div>
+                    
                 );
-            })}
+            }) : "List Empty" }
         </div>
     )
 }

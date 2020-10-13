@@ -14,7 +14,8 @@ import classNames from 'classnames/bind';
 import SideMenu from './components/SideMenu';
 
 // users menu
-import UserList from './domain/User/UserList';
+import UserListContainer from './domain/User/UserListContainer';
+import UserFormContainer from './domain/User/UserFormContainer';
 
 // products menu
 
@@ -30,7 +31,6 @@ function App() {
   let sideMenu = null;
   sideMenu = <SideMenu />;
   
-
   return (
     <Router>
       <>
@@ -38,7 +38,8 @@ function App() {
         {sideMenu}
         <div className={cx("main")}>
           <Switch>
-            <Route exact path="/users"  children={<UserList />} />
+          <Route exact path="/users"  children={<UserListContainer />} />
+            <Route exact path="/users/create"  children={<UserFormContainer />} />
             <Route exact path="/products" children={<h3>Produ</h3>} />
             <Route exact path="/stats" children={<h3>Two</h3>} />
             <Route exact path="/axios_test"  component={AxiosTest} />
