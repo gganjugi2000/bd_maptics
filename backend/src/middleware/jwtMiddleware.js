@@ -8,13 +8,15 @@ exports.verifyToken = (req, res, next) => {
 		//토큰 정상 처리 부분 - secret 키 처리 필요
 		if (req.headers.authorization) {
 			console.log('check token');
-			const decoded = jwt.verify(req.headers.authorization, jwt_secret);
+			const token = req.headers.authorization.split('Bearer ')[1];
+			const decoded = jwt.verify(token, jwt_secret);
 
 			// 유효시간 검증 및 재발급
 			const now = Math.floor(Date.now() / 1000);
-			if (decoded.exp - now < 60 * 60 * 5) {
-				token = utils.generateToken('temp@email.com');
-				req.decode =  token;
+			if (decoded.exp - now < 60 * 5) {
+				const reToken = utils.generateToken('temp@email.com');
+				req.decode =  reToken;
+				res.set('authorization', 'Bearer ' + reToken);
 			}
 		}
 		return next();
