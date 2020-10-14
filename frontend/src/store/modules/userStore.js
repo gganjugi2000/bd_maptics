@@ -29,11 +29,22 @@ const createCompanyUserAPI = (user) => {
     console.log(user)
     console.log("----------------------------------")
     // 'content-type': 'multipart/form-data',
-    return axios.post(`/file/upload`,{user}, {
+    const formData = new FormData();
+
+    formData.append("user_id", user.user_id)
+    formData.append("user_email", user.user_email)
+    formData.append("file", user.user_file);
+    console.log("formData ----------------------------------")
+    console.log(formData)
+    console.log("----------------------------------")
+    console.log(user.user_id)
+    console.log(user.user_email)
+    console.log(user.user_file)
+    console.log("----------------------------------")
+    return axios.post('/file/upload',formData, {
         headers: { 
-            'x-apikey': 'API_KEY',
-            'Access-Control-Allow-Origin': '*',
-        },
+            'Content-Type': 'multipart/form-data'
+        }
     });
 };
 
