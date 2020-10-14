@@ -101,7 +101,7 @@ const UserForm = ({onSubmit, onCancel, setUserForm}) => {
         //     // const parserName = input.dataset.parse;
         //   }
 
-        let user = {"user_id": userId, "user_email": userEmail, "file": imgUrl};
+        let user = {"user_id": userId, "user_email": userEmail, "user_file": userFile};
         // data.set('user_id', userId);
         // data.set('user_email', userEmail);
         // data.set('user_file', imgUrl);
@@ -115,9 +115,7 @@ const UserForm = ({onSubmit, onCancel, setUserForm}) => {
     // render
     return (
         <form
-            onSubmit={e => {
-                handleSubmit(e);
-            }}
+            onSubmit= {(e) => handleSubmit(e)}
         >
             <p>
                 <label id="helpMsg">{helpMsg}</label>
@@ -158,7 +156,7 @@ const UserForm = ({onSubmit, onCancel, setUserForm}) => {
                 <img src={imgUrl} alt="img test" width="100" height="50" style={imgUrl !== "" ?  {display: 'inline-block'} : {display: 'none'}}/>
             </p>
             <p>
-                <button>저장</button>
+                <button type="submit">저장</button>
                 <button onClick={(e) => {
                     onCancel();
                 }}>취소</button>
