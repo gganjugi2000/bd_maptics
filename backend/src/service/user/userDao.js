@@ -9,6 +9,15 @@ exports.getUserList = () => {
     });
 }
 
+exports.getUserInfoDetail = (id) => {
+    const sql = `select * from users WHERE id = ${id}`;
+    return new Promise(resolve => {
+        mysql.get_data('get_user_detail', sql, (result) => {
+            resolve(result);
+        });
+    });
+}
+
 exports.addUserInfo = (user_id, user_name) => {
     const sql = `
         INSERT INTO users (USER_ID, USER_NAME)

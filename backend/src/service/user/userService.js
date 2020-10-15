@@ -5,6 +5,11 @@ exports.getUserList = async () => {
     return data
 }
 
+exports.getUserInfoDetail = async (id) => {
+    const data = await db_mysql.getUserInfoDetail(id);
+    return data
+}
+
 exports.addUserInfo = async (user_id, user_name) => {
     const data = await db_mysql.addUserInfo(user_id, user_name);
     return data;
