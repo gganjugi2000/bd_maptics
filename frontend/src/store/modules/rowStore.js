@@ -62,6 +62,8 @@ const [
 ] = createRequestActionTypes('user/CREATE_COMPANY_USER');
 
 const CHANGE_LIMIT = 'list/CHANGE_LIMIT';
+const CHANGE_NOW_SECTOR = 'list/CHANGE_NOW_SECTOR';
+const CHANGE_NOW_PAGE = 'list/CHANGE_PAGE_NOW';
 
 // action create
 export const listCompanyUser = createAction(LIST_COMPANY_USER); 
@@ -70,6 +72,8 @@ export const listCompanyUser = createAction(LIST_COMPANY_USER);
 const listCompanyUserSaga = createRequestSaga(LIST_COMPANY_USER, listCompanyUserAPI);
 
 export const changeLimit = createAction(CHANGE_LIMIT, limit => limit);
+export const changeNowSector = createAction(CHANGE_NOW_SECTOR, nowSector => nowSector);
+export const changeNowPage = createAction(CHANGE_NOW_PAGE, nowPage => nowPage);
 export const createCompanyUser = createAction(CREATE_COMPANY_USER);
 const createCompanyUserSaga = createRequestSaga(CREATE_COMPANY_USER, createCompanyUserAPI);
 
@@ -95,6 +99,14 @@ const rowData = handleActions(
         [CHANGE_LIMIT]: (state, { payload: limit }) => ({
             ...state,
             limit: limit
+        }),
+        [CHANGE_NOW_SECTOR]: (state, { payload: nowSector }) => ({
+            ...state,
+            nowSector: nowSector
+        }),
+        [CHANGE_NOW_PAGE]: (state, { payload: nowPage }) => ({
+            ...state,
+            nowPage: nowPage
         }),
     },
     initState
