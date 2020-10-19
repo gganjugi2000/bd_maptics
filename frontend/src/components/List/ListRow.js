@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef }  from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeLimit } from 'store/modules/rowStore';
+import { changeLimit, changeNowPage } from 'store/modules/rowStore';
 import { Link, withRouter } from "react-router-dom";
 import styles from './ListRow.module.css';
 import classNames from 'classnames/bind';
@@ -12,16 +12,18 @@ const cx = classNames.bind(styles);
 const ListRow = ({rowData}) => {
 
     const dispatch = useDispatch();
-    const { limit, rowList} = useSelector((state) => state.rowStore);
+    const { limit, nowSector, nowPage, rowList} = useSelector((state) => state.rowStore);
+
+    let pageRowLength = 0
     if(rowData) {
         //dispatch(changeRowList(rowData))
     }
     const handleChangeMode = useCallback(
         e => {
             const limit = e.target.value
-            console.log(limit)
+            pageRowLength = 0
             dispatch(changeLimit(limit))
-        }, [dispatch, limit]
+        }, [dispatch, limit, nowSector, nowPage]
     )
     // render
     return (
@@ -51,15 +53,18 @@ const ListRow = ({rowData}) => {
                 </thead>
                 <tbody>
                 {rowData && rowData.map((item, i) => {
-                    if(limit && limit >= i){
-                        return (
-                            <tr key={i}>
-                                <td>{i}</td>
-                                <td><Link to={item.url+i}>{item.name + i}</Link></td>
-                                <td>{item.date}</td>
-                                <td>{item.author}</td>
-                            </tr>
-                        );
+                    if(limit * (nowPage-1) <= i) {
+                        if (limit > pageRowLength) {
+                            pageRowLength++
+                            return (
+                                <tr key={i}>
+                                    <td>{i}</td>
+                                    <td><Link to={item.url + i}>{item.name + i}</Link></td>
+                                    <td>{item.date}</td>
+                                    <td>{item.author}</td>
+                                </tr>
+                            );
+                        }
                     }
                 })}
                 </tbody>
