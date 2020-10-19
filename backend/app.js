@@ -22,11 +22,11 @@ const { verifyToken } = require("./src/middleware/jwtMiddleware");
 app.use(verifyToken);
 
 // router
-const fileUpRouter = require('./src/rest/file');
 const user = require('./src/rest/users');
+const sample = require('./src/rest/sample');
 
-app.use("/file", fileUpRouter);
 app.use('/user', user);
+app.use('/sample', sample);
 
 const port = normalizePort(process.env.PORT || '4000');
 if (process.env.NODE_ENV === "production") {
