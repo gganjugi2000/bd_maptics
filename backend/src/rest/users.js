@@ -15,16 +15,25 @@ router.get('/', function(req, res) {
 });
 
 // 로그인 처리
-router.post('/login', function(req, res) {
+router.post('/login', async (req, res) => {
     let {email, password} = req.body;
+    let data = null;
     // 유저로그인 작업
+    data = await userService.getUserInfoFind(email, password);
 
-    //임시 - token 발급
-    const token = utils.generateToken(email);
+    if (typeof data[0] !== 'undefined' && data[0] !== null) {
+        //임시 - token 발급
+        const token = utils.generateToken(data[0].email_addr);
 
-    return res.status(200).set('authorization', 'Bearer ' + token).json({
-      success: true
-    });
+        return res.status(200).set('authorization', 'Bearer ' + token).json({
+            success: true
+        });
+    } else {
+        return res.status(200).json({
+            success: false
+        });
+    }
+
 });
 
 // 사용자 정보 조회

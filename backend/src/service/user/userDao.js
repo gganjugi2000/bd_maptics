@@ -110,3 +110,17 @@ exports.modifyUserInfo = (user_seq, user_id, password, comp_nm, comp_no, phone_n
         });
     });
 }
+
+exports.getUserInfoFind = (user_id, password) => {
+    const sql = ` 
+        select 
+            user_id
+            , email_addr
+        from user_info WHERE use_yn = 'Y' and user_id = '${user_id}' and password = '${password}' limit 1
+     `;
+    return new Promise(resolve => {
+        mysql.get_data('get_info_find', sql, (result) => {
+            resolve(result);
+        });
+    });
+}
