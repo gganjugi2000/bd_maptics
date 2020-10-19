@@ -14,9 +14,11 @@ exports.verifyToken = (req, res, next) => {
 			// 유효시간 검증 및 재발급
 			const now = Math.floor(Date.now() / 1000);
 			if (decoded.exp - now < 60 * 5) {
-				const reToken = utils.generateToken('temp@email.com');
+				const reToken = utils.generateToken(decoded.email);
 				req.decode =  reToken;
 				res.set('authorization', 'Bearer ' + reToken);
+			} else {
+				res.set('authorization', 'Bearer ' + req.headers.authorization);
 			}
 		}
 		return next();

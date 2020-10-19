@@ -7,8 +7,7 @@ exports.generateToken = (email) =>{
 		if (email) {
 			token = jwt.sign({
 				// 가져온 유저정보 셋팅 부분
-				user_id: 'bdbd',
-				email: 'bdbd@bluedigm.com'
+				email: email
 			}, jwt_secret, {
 				expiresIn: '15m', // 유효기간 15분 => 15분 이후 토큰이 재발급 됨
 			});

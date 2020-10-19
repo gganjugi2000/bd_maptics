@@ -28,3 +28,8 @@ exports.modifyUserInfo = async (user_seq, user_id, password, comp_nm, comp_no, p
     if(user_seq)
         await db_mysql.modifyUserInfo(user_seq, user_id, password, comp_nm, comp_no, phone_no, addr, email_addr, comp_img, mobphone_no, descp, use_yn);
 }
+
+exports.getUserInfoFind = async (user_id, password) => {
+    const data = await db_mysql.getUserInfoFind(user_id, password);
+    return data
+}
