@@ -13,7 +13,8 @@ const dummyMenu = [
     {name: "Products", id: "2", url: "/products"},
     {name: "Stats", id: "3", url: "/stats"},
     {name: "Test_axios", id: "4", url: "/axios_test"},
-	{name: "List", id: "3", url: "/List"}
+    {name: "List", id: "3", url: "/List"},
+    {name: "Sample", id: "90", url: "/Sample"}
 ];
 
 
@@ -27,12 +28,6 @@ const SideMenu = () => {
             {dummyMenu && dummyMenu.map((menuItem, i) => {
                 console.log(menuItem)
                 return (
-                    // <li key={i} 
-                    //     onClick={() => {
-                    //         toLink(menuItem.url);
-                    //     }}
-                    // >
-                    //     {menuItem.name}
                     <li key={i}>
                         <Link to={menuItem.url}>{menuItem.name}</Link>
                     </li>
