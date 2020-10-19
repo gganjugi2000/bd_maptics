@@ -156,7 +156,7 @@ const forwardLocation = '/users';
 function* sampleGoToUsersSaga() {
     console.log("goToUsersSaga =========================== ")
     const history = yield getContext('history');
-    console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+    console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@1")
     console.log(history)
     console.log("-----------------------------------------------")
     history.push('/users');
