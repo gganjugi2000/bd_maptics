@@ -33,6 +33,7 @@ app.use('/sample', sample);
 app.use((err, req, res, next) => {
     console.error('### err >>>', err);
     logger.error('### err >>>', err);
+    console.log('test');
     res.status(err.status || 500).send({result: {code: err.status || 500, message: err.message, data : ""}});
 });
 
