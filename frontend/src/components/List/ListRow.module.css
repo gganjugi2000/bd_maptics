@@ -1,0 +1,5 @@
+.listRow {box-sizing: border-box; width:100%;}
+.listAmount {padding:10px 0; float:right}
+.listRow table {width:100%}
+.listRow table th {background: #ddd; padding:10px;}
+.listRow table td {border-bottom: 1px solid #ddd; padding:10px 10px;}

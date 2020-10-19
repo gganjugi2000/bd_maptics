@@ -1,0 +1,3 @@
+.listSearch {}
+.listSearch li{float:left; padding:10px;}
+.listSearch:after {content:''; display:block; clear:both;}

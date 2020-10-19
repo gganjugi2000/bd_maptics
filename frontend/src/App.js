@@ -17,6 +17,8 @@ import UserInfoContainer from './domain/User/UserInfoContainer';
 
 import AxiosTest from './domain/AxiosTest'
 
+import List from './domain/List';
+
 const cx = classNames.bind(styles);
 
 function App({ history, context }) {
@@ -39,6 +41,7 @@ function App({ history, context }) {
               <Route exact path="/products" children={<h3>Produ</h3>} />
               <Route exact path="/stats" children={<h3>Two</h3>} />
               <Route exact path="/axios_test"  component={AxiosTest} />
+			  <Route exact path="/list"  children={<List />} />
             </Switch>
           </div>
         </div>

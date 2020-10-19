@@ -12,7 +12,8 @@ const dummyMenu = [
     {name: "Users", id: "1", url: "/users"},
     {name: "Products", id: "2", url: "/products"},
     {name: "Stats", id: "3", url: "/stats"},
-    {name: "Test_axios", id: "4", url: "/axios_test"}
+    {name: "Test_axios", id: "4", url: "/axios_test"},
+	{name: "List", id: "3", url: "/List"}
 ];
 
 
