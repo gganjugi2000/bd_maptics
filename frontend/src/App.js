@@ -10,6 +10,11 @@ import classNames from 'classnames/bind';
 // left menu
 import SideMenu from './components/SideMenu';
 
+// sample menu
+import SampleUserListContainer from './domain/Sample/UserListContainer';
+import SampleUserFormContainer from './domain/Sample/UserFormContainer';
+import SampleUserInfoContainer from './domain/Sample/UserInfoContainer';
+
 // users menu
 import UserListContainer from './domain/User/UserListContainer';
 import UserFormContainer from './domain/User/UserFormContainer';
@@ -41,7 +46,14 @@ function App({ history, context }) {
               <Route exact path="/products" children={<h3>Produ</h3>} />
               <Route exact path="/stats" children={<h3>Two</h3>} />
               <Route exact path="/axios_test"  component={AxiosTest} />
-			  <Route exact path="/list"  children={<List />} />
+			        <Route exact path="/list"  children={<List />} />
+              <Route exact path="/sample"  component={UserListContainer} />
+
+              {/* Sample ===========================================================*/}
+              <Route exact path="/sample"  component={SampleUserListContainer} />
+              <Route exact path="/sample/create"  component={SampleUserFormContainer} />
+              <Route exact path="/sample/:id" component={SampleUserInfoContainer} />
+              {/* Sample end ===========================================================*/}
             </Switch>
           </div>
         </div>
