@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 import styles from './UserList.module.css';
 import classNames from 'classnames/bind';
 
@@ -8,10 +8,6 @@ const cx = classNames.bind(styles);
 
 // 컴포넌트 정의
 const UserList = ({ userList }) => {
-    console.log("UserList ===============================");
-    console.log(userList);
-    console.log("UserList end ===========================");
-
     // render
     return (
         <div styles={{margin: 200}}>
@@ -20,7 +16,9 @@ const UserList = ({ userList }) => {
                 return (
                     <div key={i}>
                         <div>
+                            <Link to={`/users/${userItem.id}`}>
                             {userItem.user_id}
+                            </Link>
                         </div>
                         <div>
                             {userItem.user_name}

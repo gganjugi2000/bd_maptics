@@ -38,11 +38,17 @@ const UserForm = ({onSubmit, onCancel, setUserForm}) => {
         setUserId(value);
     }
 
-    const setUserEmailValue = (e, value) => {
-        console.log("setUserEmailValue ====== ")
-        console.log(e)
-        console.log("---------------------------------------")
+    const setUserNameValue = (e, value) => {
+        if(isEmpty(value)){
+            alert("Empty");
+            return;
+        }
 
+        setHelpMsg("");
+        setUserName(value);
+    }
+
+    const setUserEmailValue = (e, value) => {
         if(!validUserEmail(value)){
             // alert("validation test false \n email pattern check");
             setHelpMsg("validation test false \n email pattern check");
@@ -54,10 +60,6 @@ const UserForm = ({onSubmit, onCancel, setUserForm}) => {
     }
 
     const setUserFileValue = (e) => {
-        console.log("setUserFileValue ====== ")
-        console.log(e)
-        console.log(e.target.files[0])
-        console.log("---------------------------------------")
         if(isEmpty(e))
             return;
         
@@ -66,7 +68,6 @@ const UserForm = ({onSubmit, onCancel, setUserForm}) => {
             setImgUrl(e.target.result);
         }
         reader.readAsDataURL(e.target.files[0]);
-    
 
         setHelpMsg("");
         setUserFile(e.target.files[0]);
@@ -87,28 +88,14 @@ const UserForm = ({onSubmit, onCancel, setUserForm}) => {
             return;
         }
 
-        // const form = e.target;
-        // const data = new FormData(form);
-        // console.log("userForm data ======")
-        // console.log(data)
+        let user = {"user_id": userId, "user_name": userName, "user_email": userEmail, "user_file": userFile};
+        const formData = new FormData();
+        formData.append("user_id", userId);
+        formData.append("user_name", userName);
+        formData.append("user_email", userEmail);
+        // formData.append("file", userFile);
 
-        // for (let name of data.keys()) {
-        //     console.log("userForm keys name ======")
-        //     console.log(name)
-        //     const input = form.elements[name];
-        //     console.log(input)
-        //     console.log("---------------------")
-        //     // const parserName = input.dataset.parse;
-        //   }
-
-        let user = {"user_id": userId, "user_email": userEmail, "user_file": userFile};
-        // data.set('user_id', userId);
-        // data.set('user_email', userEmail);
-        // data.set('user_file', imgUrl);
-        console.log("handleSubmit ==========================");
-        console.log(user)
-        // console.log(data)
-        console.log("---------------------------------------")
+        // onSubmit(e, formData);
         onSubmit(e, user);
     };
 
@@ -125,8 +112,20 @@ const UserForm = ({onSubmit, onCancel, setUserForm}) => {
                     id="userId"
                     size="50"
                     placeholder="User ID"
+                    value={userId || ""}
                     onChange={(e) => {
                         setUserIdValue(e, e.target.value);
+                    }}
+                />
+            </p>
+            <p>
+                <input
+                    id="userName"
+                    size="50"
+                    placeholder="User Name"
+                    value={userName || ""}
+                    onChange={(e) => {
+                        setUserNameValue(e, e.target.value);
                     }}
                 />
             </p>
@@ -136,6 +135,7 @@ const UserForm = ({onSubmit, onCancel, setUserForm}) => {
                     type="email"
                     size="50"
                     placeholder="Email"
+                    value={userEmail || ""}
                     onChange={(e) => {
                         setUserEmailValue(e, e.target.value);
                     }}

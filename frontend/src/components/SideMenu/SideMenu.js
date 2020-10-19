@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link, withRouter } from "react-router-dom";
+
 import styles from './SideMenu.module.css';
 import classNames from 'classnames/bind';
+
 
 const cx = classNames.bind(styles);
 
@@ -24,8 +26,14 @@ const SideMenu = () => {
             {dummyMenu && dummyMenu.map((menuItem, i) => {
                 console.log(menuItem)
                 return (
+                    // <li key={i} 
+                    //     onClick={() => {
+                    //         toLink(menuItem.url);
+                    //     }}
+                    // >
+                    //     {menuItem.name}
                     <li key={i}>
-                    <Link to={menuItem.url}>{menuItem.name}</Link>
+                        <Link to={menuItem.url}>{menuItem.name}</Link>
                     </li>
                 );
             })}

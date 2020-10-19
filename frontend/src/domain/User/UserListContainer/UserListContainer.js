@@ -9,28 +9,19 @@ import UserList from '../UserList'
 const UserListContainer = () => {
     const dispatch = useDispatch()
     const history = useHistory();
+    const userList = useSelector((state) => state.userStore.userList);
+    console.log("UserListContainer")
     // state 정의
     // const [userList, setUserList] = useState([]);
 
     // life cycle
     useEffect(() => {
         // 데이터 불러오기
-        let userListAction = dispatch(listCompanyUser());
-        console.log("UserListContainer userListAction ===============================");
-        console.log(userListAction);
-        // setUserList(data);
-        console.log("UserListContainer userListAction end ===========================");
-    }, [dispatch]) // page loading 
-    const userList = useSelector((state) => state.userStore.userList);
-    const stateCheck = useSelector(state => state);
-    console.log("useSelector call ---");
-    console.log(userList)
-    console.log("stateCheck -------------------")
-    console.log(stateCheck)
-    console.log("-------------------")
-
+        dispatch(listCompanyUser());
+    }, []) // page loading 
+    
     const handleUserCreate = (e) => {
-        console.log("------------------------------------");
+        // this.props.history.push("/users/create");
         history.push({
             pathname:  "/users/create"
         });
@@ -39,7 +30,7 @@ const UserListContainer = () => {
     // render
     return (
         <>
-        <button 
+            <button 
                 onClick={e => { 
                     handleUserCreate(e); 
                 }} 

@@ -16,7 +16,7 @@ function createWithAuth(url, options) {
 		// get Authorization info
 		const auth = localStorage.getItem('Auth');
 		if(auth)
-			config.headers.Authorization = localStorage.getItem('Auth');
+			config.headers.Authorization = "Bearer " + localStorage.getItem('Auth');
 
 		return config;
 	}, error => {

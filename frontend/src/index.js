@@ -1,17 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+import { Provider, ReactReduxContext } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
-import configure, { runSaga } from './store/configure';
+import configure, { runSaga, history } from './store/configure';
+
 import App from './App';
 import './index.css';
 
-export const store = configure();
+export const store = configure(history);
+
 runSaga();
+// sagaMiddleware.run(rootSaga);
 ReactDOM.render(
-  <Provider store={store}>
+  <Provider store={store} context={ReactReduxContext}>
     <React.StrictMode>
-      <App />
+      
+        <App history={history} context={ReactReduxContext}/>
+      
     </React.StrictMode>
   </Provider>
   , document.getElementById('root')

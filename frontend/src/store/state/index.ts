@@ -1,4 +1,4 @@
-////////// auth State //////////
+///////// auth State //////////
 ////////////////////////////
 export type AuthState = {
     code: string,
@@ -19,10 +19,10 @@ export const initAuthState = {
 ////////// user State //////////
 ////////////////////////////
 export type UserState = {
-    code: string,
-    error: string,
-    msg: string,
-    userList: any[],   
+    userList: any[],
+    userInfo: {},
+    forwardLocation: "/",
+    status: string,
 }
 
 export const initUserState = {
@@ -30,4 +30,5 @@ export const initUserState = {
     error: null,
     msg: null,
     userList: [],
+    status: "",
 }

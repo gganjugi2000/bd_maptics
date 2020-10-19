@@ -13,7 +13,6 @@ const UserLayout = () => {
 
     const handleUserCreate = (e) => {
         const history = useHistory();
-        console.log("------------------------------------");
         e.target.reset();
         history.push({
             pathname:  "/"

@@ -18,28 +18,26 @@ const UserFormContainer = () => {
     }, []) // page loading 
 
     const setUserFormValue = (user) => {
-        console.log("setUserFormValue ========================= ")
-        console.log(user);
-        console.log("------------------------------")
         setUserForm(user);
     }
 
     const onCancel = () => {
         // state clear
+        // this.props.history.push("/users");
         history.push({
             pathname:  "/users"
         });
     }
 
     const onSubmit = (e, user) => {
-        console.log("onSubmit ========================= ")
-        console.log(user);
-        console.log("------------------------------")
         e.preventDefault();
-        dispatch(createCompanyUser(user));
-        history.push({
-            pathname:  "/users"
-        });
+        let createAction = dispatch(createCompanyUser(user));
+        console.log("createAction = " + createAction);
+        console.log(createAction)
+        // this.props.history.push("/users");
+        // history.push({
+        //     pathname:  "/users"
+        // });
     }
 
     // render
