@@ -24,9 +24,17 @@ app.use(verifyToken);
 // router
 const user = require('./src/rest/users');
 const sample = require('./src/rest/sample');
+const logger = require('./src/utils/logger/winston');
 
 app.use('/user', user);
 app.use('/sample', sample);
+
+// 공통 Exception에 대한 응답 처리
+app.use((err, req, res, next) => {
+    console.error('### err >>>', err);
+    logger.error('### err >>>', err);
+    res.status(err.status || 500).send({result: {code: err.status || 500, message: err.message, data : ""}});
+});
 
 const port = normalizePort(process.env.PORT || '4000');
 if (process.env.NODE_ENV === "production") {
