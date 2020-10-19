@@ -21,6 +21,7 @@ router.post('/login', function(req, res) {
 
     //임시 - token 발급
     const token = utils.generateToken(email);
+    console.log(token);
 
     return res.status(200).set('authorization', 'Bearer ' + token).json({
       success: true
