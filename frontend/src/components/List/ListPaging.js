@@ -21,14 +21,14 @@ const ListPaging = ({rowData}) => {
             if (type == 'first') {
                 dispatch(changeNowSector(1))
             } else if (type == 'last') {
-
+                dispatch(changeNowSector(Math.ceil(rowData.length/(limit*10))))
             } else if (type == 'prev') {
                 if(nowSector > 1) {
                     pageLength = 0
                     dispatch(changeNowSector(nowSector - 1))
                 }
             } else if (type == 'next') {
-                if(nowSector*limit*10 < rowData.length) {
+                if(nowSector < Math.ceil(rowData.length/(limit*10))) {
                     pageLength = 0
                     dispatch(changeNowSector(nowSector + 1))
                 }
@@ -48,9 +48,10 @@ const ListPaging = ({rowData}) => {
                 <li className={cx("first")} onClick={()=> handleMove('first')}>&lt;&lt;</li>
                 <li className={cx("prev")} onClick={()=> handleMove('prev')}>&lt;</li>
                     {rowData && rowData.map((menuItem, i) => {
-                        if( i % limit == 0 && i > (nowSector-1)*10) {
+                        if( i % limit == 0 && i >= (nowSector-1)*10) {
                             pages = (nowSector-1) * 10 + pageLength + 1
-                            if(pageLength < 10) {
+                            let maxPage = Math.ceil((rowData.length - limit*(nowSector-1)*10)/limit)
+                            if(pageLength < maxPage && pageLength < 10) {
                                 pageLength++
                                 return (
                                     <li key={pages} onClick={handleMovePage} data-page={pages}>{pages}</li>

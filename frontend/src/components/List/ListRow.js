@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef }  from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeLimit, changeNowPage } from 'store/modules/rowStore';
+import { changeLimit, changeNowSector, changeNowPage } from 'store/modules/rowStore';
 import { Link, withRouter } from "react-router-dom";
 import styles from './ListRow.module.css';
 import classNames from 'classnames/bind';
@@ -22,6 +22,8 @@ const ListRow = ({rowData}) => {
         e => {
             const limit = e.target.value
             pageRowLength = 0
+            dispatch(changeNowSector(1))
+            dispatch(changeNowPage(1))
             dispatch(changeLimit(limit))
         }, [dispatch, limit, nowSector, nowPage]
     )
@@ -57,7 +59,7 @@ const ListRow = ({rowData}) => {
                         if (limit > pageRowLength) {
                             pageRowLength++
                             return (
-                                <tr key={i}>
+                                <tr key={i} data-sector={nowSector}>
                                     <td>{i}</td>
                                     <td><Link to={item.url + i}>{item.name + i}</Link></td>
                                     <td>{item.date}</td>
