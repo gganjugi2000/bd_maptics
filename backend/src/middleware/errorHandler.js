@@ -19,3 +19,12 @@ exports.errors = (err, res) => {
     // else 
     //     res.send( error.name + ' -> ' + error.message );
 };
+
+const asyncUtil = fn =>
+function asyncUtilWrap(...args) {
+  const fnReturn = fn(...args);
+  const next = args[args.length-1];
+  return Promise.resolve(fnReturn).catch(next);
+}
+
+module.exports = asyncUtil;

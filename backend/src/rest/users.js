@@ -29,7 +29,7 @@ router.post('/login', function(req, res) {
 });
 
 // 사용자 정보 조회
-router.get("/getInfoList/:cur/:page_size", asyncHandler(async (req, res) => {
+router.get("/getInfoList/:cur/:page_size", asyncHandler(async (req, res, next) => {
     let start_offset = 0;                   // limit 변수
     let totalPageCount = 0;                 // 전체 게시물의 숫자
     // let page_list_size = 0;              // 페이지의 갯수 : 1 ~ n개 페이지
@@ -70,7 +70,16 @@ router.get("/getInfoList/:cur/:page_size", asyncHandler(async (req, res) => {
 }));
 
 // 사용자 상세 조회
-router.post('/getInfoDetail', asyncHandler(async (req, res) => {
+// router.post('/getInfoDetail', asyncUtil(asyncHandler(async (req, res) => {
+router.post('/getInfoDetail', asyncHandler(async (req, res, next) => {
+    // const error = new Error('catch me!')
+    // const next = sinon.spy();
+    // const foo = asyncUtil(async (req, res, next) => {
+    //   throw error
+    // })
+    
+    throw new Error('throw new exception');
+
     const { user_seq } = req.body;
     let data = null;
     if(user_seq) {
@@ -80,7 +89,7 @@ router.post('/getInfoDetail', asyncHandler(async (req, res) => {
 }));
 
 // 사용자 정보 입력
-router.post('/addInfo', asyncHandler(async (req, res) => {
+router.post('/addInfo', asyncHandler(async (req, res, next) => {
     const form = new formidable.IncomingForm(); // 헤더를 만듬
     form.encoding = 'utf-8';          // 인코딩
     form.uploadDir = require('os').homedir() + path.sep + 'upload';
@@ -118,7 +127,7 @@ router.post('/addInfo', asyncHandler(async (req, res) => {
 }));
 
 // 사용자 정보 삭제
-router.post('/removeInfo', asyncHandler(async (req, res) => {
+router.post('/removeInfo', asyncHandler(async (req, res, next) => {
     const { user_seq } = req.body;
     if(user_seq) {
         await userService.removeUserInfo(user_seq);
@@ -131,7 +140,7 @@ router.post('/removeInfo', asyncHandler(async (req, res) => {
 }));
 
 // 사용자 정보 수정
-router.post('/modifyInfo', asyncHandler(async (req, res) => {
+router.post('/modifyInfo', asyncHandler(async (req, res, next) => {
     const form = new formidable.IncomingForm(); // 헤더를 만듬
     form.encoding = 'utf-8';        // 인코딩
     form.uploadDir = require('os').homedir() + path.sep + 'upload';
