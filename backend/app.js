@@ -32,8 +32,7 @@ app.use('/sample', sample);
 // 공통 Exception에 대한 응답 처리
 app.use((err, req, res, next) => {
     console.error('### err >>>', err);
-    logger.error('### err >>>', err);
-    console.log('test');
+    logger.error(err);
     res.status(err.status || 500).send({result: {code: err.status || 500, message: err.message, data : ""}});
 });
 

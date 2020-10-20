@@ -70,7 +70,6 @@ router.get("/getInfoList/:cur/:page_size", asyncHandler(async (req, res, next) =
 }));
 
 // 사용자 상세 조회
-// router.post('/getInfoDetail', asyncUtil(asyncHandler(async (req, res) => {
 router.post('/getInfoDetail', asyncHandler(async (req, res, next) => {
     // const error = new Error('catch me!')
     // const next = sinon.spy();
@@ -78,8 +77,8 @@ router.post('/getInfoDetail', asyncHandler(async (req, res, next) => {
     //   throw error
     // })
     
-    throw new Error('throw new exception');
-
+    // throw new Error('throw new exception');
+    
     const { user_seq } = req.body;
     let data = null;
     if(user_seq) {
