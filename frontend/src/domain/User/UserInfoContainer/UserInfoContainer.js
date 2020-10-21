@@ -18,6 +18,8 @@ const UserInfoContainer = ({match}) => {
 
     // life cycle
     useEffect(() => {
+        console.log("UserInfo")
+        console.log(match)
         let id = match.params.id;
         dispatch(getCompanyUser(match.params.id));
 
