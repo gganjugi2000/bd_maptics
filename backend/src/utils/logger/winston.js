@@ -9,8 +9,6 @@ const logDir = require('os').homedir() + path.sep + "maptics_log";
 // console.log('### logDir ### '+logDir);
 // custom log format 정의
 const logFormat = printf(info => {
-  console.log('########### info instanceof Error >>>>>>>>>', info instanceof Error);
-
   if (info instanceof Error) {
       info.message = `${info.message} - ${info.stack}`;
   }

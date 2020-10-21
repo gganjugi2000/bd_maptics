@@ -1,5 +1,5 @@
 // 에러 처리용 핸들러
-exports.errors = (err, res) => {
+const customErrHandler =  function(req, res) {
     if (process.env.NODE_ENV !== "production") console.log(err);
     res.status(500).send({
         meta: {
@@ -20,11 +20,4 @@ exports.errors = (err, res) => {
     //     res.send( error.name + ' -> ' + error.message );
 };
 
-const asyncUtil = fn =>
-function asyncUtilWrap(...args) {
-  const fnReturn = fn(...args);
-  const next = args[args.length-1];
-  return Promise.resolve(fnReturn).catch(next);
-}
-
-module.exports = asyncUtil;
+module.exports = customErrHandler;
