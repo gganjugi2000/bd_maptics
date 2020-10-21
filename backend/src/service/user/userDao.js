@@ -12,7 +12,8 @@ exports.getUserTotalCnt = () => {
 exports.getUserList = (start_offset, page_size) => {
     const sql = ` 
                 select
-                    user_id
+                    user_seq
+                    , user_id
                     , password
                     , comp_nm
                     , comp_no

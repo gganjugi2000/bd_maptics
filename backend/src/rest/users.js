@@ -73,14 +73,14 @@ router.get("/getInfoList/:cur/:page_size", asyncHandler(async (req, res, next) =
 router.post('/getInfoDetail', asyncHandler(async (req, res, next) => {
     let data = null;
     const { user_seq } = req.body;
-    try {
+    // try {
         if(user_seq) {
             data = await userService.getUserInfoDetail(user_seq);
         }
         res.status(200).send({result: {code: 200, message: "success", data : data}});
-    } catch (err) {
-        res.status(500).send({result: {code: 500, message: err.message, data : data}});
-    }
+    // } catch (err) {
+    //     res.status(500).send({result: {code: 500, message: err.message, data : data}});
+    // }
 }));
 
 // 사용자 정보 입력
