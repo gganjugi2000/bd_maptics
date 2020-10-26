@@ -3,6 +3,9 @@ const app = express();
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const logger = require('./src/utils/logger/winston');
+require('express-async-errors');
+const customErrHandler = require('./src/middleware/errorHandler');
 
 app.use(cookieParser())
 app.use(express.json());
@@ -22,12 +25,32 @@ const { verifyToken } = require("./src/middleware/jwtMiddleware");
 app.use(verifyToken);
 
 // router
-const fileUpRouter = require('./src/rest/file');
 const user = require('./src/rest/users');
+const sample = require('./src/rest/sample');
+const health = require('./src/rest/health');
 
-app.use("/file", fileUpRouter);
 app.use('/user', user);
+app.use('/sample', sample);
+app.use('/health', health);
 
+// Custom Error Handling
+app.use(customErrHandler);
+
+// Express Error Handling
+app.use((err, req, res, next) => {
+    logger.error(err);
+    res.status(err.status || 500).send({result: {code: err.status || 500, message: err.message, data : ""}});
+});
+
+// process
+//   .on('unhandledRejection', (reason, p) => {
+//     console.error(reason, 'Unhandled Rejection at Promise', p);
+//   })
+//   .on('uncaughtException', err => {
+//     console.error(err, 'Uncaught Exception thrown');
+//     process.exit(1);
+//   });
+  
 const port = normalizePort(process.env.PORT || '4000');
 if (process.env.NODE_ENV === "production") {
     console.log('production');

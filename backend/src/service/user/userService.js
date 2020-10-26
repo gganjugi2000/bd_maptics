@@ -1,26 +1,30 @@
 const db_mysql = require('./userDao');
 
-exports.getUserList = async () => {
-    const data = await db_mysql.getUserList();
+exports.getUserTotalCnt = async () => {
+    const data = await db_mysql.getUserTotalCnt();
     return data
 }
 
-exports.getUserInfoDetail = async (id) => {
-    const data = await db_mysql.getUserInfoDetail(id);
+exports.getUserList = async (start_offset, page_size) => {
+    const data = await db_mysql.getUserList(start_offset, page_size);
     return data
 }
 
-exports.addUserInfo = async (user_id, user_name) => {
-    const data = await db_mysql.addUserInfo(user_id, user_name);
-    return data;
+exports.getUserInfoDetail = async (user_seq) => {
+    const data = await db_mysql.getUserInfoDetail(user_seq);
+    return data
 }
 
-exports.removeUserInfo = async (id) => {
-    if(id)
-        await db_mysql.removeUserInfo(id);
+exports.addUserInfo = async (user_id, password, comp_nm, comp_no, phone_no, addr, email_addr, comp_img, mobphone_no, descp, use_yn) => {
+    await db_mysql.addUserInfo(user_id, password, comp_nm, comp_no, phone_no, addr, email_addr, comp_img, mobphone_no, descp, use_yn);
 }
 
-exports.modifyUserInfo = async (id, user_name) => {
-    if(id)
-        await db_mysql.modifyUserInfo(id, user_name);
+exports.removeUserInfo = async (user_seq) => {
+    if(user_seq)
+        await db_mysql.removeUserInfo(user_seq);
+}
+
+exports.modifyUserInfo = async (user_seq, user_id, password, comp_nm, comp_no, phone_no, addr, email_addr, comp_img, mobphone_no, descp, use_yn) => {
+    if(user_seq)
+        await db_mysql.modifyUserInfo(user_seq, user_id, password, comp_nm, comp_no, phone_no, addr, email_addr, comp_img, mobphone_no, descp, use_yn);
 }

@@ -33,6 +33,18 @@ export const sampleInitUserState = {
     status: "",
 }
 
+////////// session State //////////
+////////////////////////////
+export type SessionState = {
+    isAuth: boolean,
+    token: string,
+}
+
+export const initSessionState = {
+    isAuth: false,
+    token: null,
+}
+
 ////////// user State //////////
 ////////////////////////////
 export type UserState = {
@@ -40,6 +52,7 @@ export type UserState = {
     userInfo: {},
     forwardLocation: "/",
     status: string,
+    totalCount: number
 }
 
 export const initUserState = {
@@ -48,6 +61,7 @@ export const initUserState = {
     msg: null,
     userList: [],
     status: "",
+    totalCount: 0
 }
 
 export type ListState = {

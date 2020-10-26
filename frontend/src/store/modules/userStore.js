@@ -1,5 +1,9 @@
 import { createAction, handleActions } from 'redux-actions';
-import axios from 'axios';
+// import axios from 'axios';
+import {
+    // baseAxios,
+    authAxios
+} from '../lib/createAxiosInstance';
 import { takeLatest, takeEvery, getContext } from 'redux-saga/effects';
 import createRequestOfficeSaga, {
     createRequestOfficeActionTypes,
@@ -10,39 +14,30 @@ import { initUserState } from '../state';
 // import history from '../../history';
 
 
-// 목록 : /sample/getInfoList
-// 입력 : /sample/addInfo
-// 삭제 : /sample/removeInfo
-// 수정 : /sample/updateInfo
-// 상세 : /sample/getInfoDetail
+// 목록 : /user/getInfoList
+// 입력 : /user/addInfo
+// 삭제 : /user/removeInfo
+// 수정 : /user/updateInfo
+// 상세 : /user/getInfoDetail
 
 
-const listCompanyUserAPI = () => axios.get(`/sample/getInfoList`, {
-    headers: { 
-        'x-apikey': 'API_KEY',
-        'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json'
-    },
-});
+const listCompanyUserAPI = (user) => {
+    return (
+        authAxios.get(
+            `/user/getInfoList/${user.cur}/${user.page_size}`, user)
+    );
+};
 const createCompanyUserAPI = (user) => {
-    return axios.post('/sample/addInfo',user, {
-        headers: { 
-            'x-apikey': 'API_KEY',
-            'Access-Control-Allow-Origin': '*',
-            'Content-Type': 'application/json'
-        },
-    });
+    return (
+        authAxios.post('/user/addInfo',user)
+    );
 };
 const getCompanyUserAPI = (userId) => {
-    return axios.post('/sample/getInfoDetail',{id: userId}, {
-        headers: { 
-            'x-apikey': 'API_KEY',
-            'Access-Control-Allow-Origin': '*',
-            'Content-Type': 'application/json'
-        },
-    });
+    return (
+        authAxios.post('/user/getInfoDetail',{user_seq: userId})
+    );
 };
-// const getCompanyUserAPI = (userId) => axios.get(`/sample/getInfoDetail/${userId}`, {
+// const getCompanyUserAPI = (userId) => axios.get(`/user/getInfoDetail/${userId}`, {
 //     headers: { 
 //         'x-apikey': 'API_KEY',
 //         'Access-Control-Allow-Origin': '*',
@@ -50,7 +45,7 @@ const getCompanyUserAPI = (userId) => {
 //     },
 // });
 const updateCompanyUserAPI = (user) => {
-    return axios.post(`/sample/modifyInfo`, user, {
+    return authAxios.post(`/user/modifyInfo`, user, {
         headers: { 
             'x-apikey': 'API_KEY',
             'Access-Control-Allow-Origin': '*',
@@ -59,7 +54,7 @@ const updateCompanyUserAPI = (user) => {
     });
 };
 // const updateCompanyUserAPI = (user) => {
-//     return axios.put(`/sample/modifyInfo`, user, {
+//     return axios.put(`/user/modifyInfo`, user, {
 //         headers: { 
 //             'x-apikey': 'API_KEY',
 //             'Access-Control-Allow-Origin': '*',
@@ -68,7 +63,7 @@ const updateCompanyUserAPI = (user) => {
 //     });
 // };
 const deleteCompanyUserAPI = (userId) => {
-    return axios.post('/sample/removeInfo',{id: userId}, {
+    return authAxios.post('/user/removeInfo',{user_seq: userId}, {
         headers: { 
             'x-apikey': 'API_KEY',
             'Access-Control-Allow-Origin': '*',
@@ -76,7 +71,7 @@ const deleteCompanyUserAPI = (userId) => {
         },
     });
 };
-// const deleteCompanyUserAPI = (userId) => axios.delete(`/sample/removeInfo/${userId}`, {
+// const deleteCompanyUserAPI = (userId) => authAxios.delete(`/user/removeInfo/${userId}`, {
 //     headers: { 
 //         'x-apikey': 'API_KEY',
 //         'Access-Control-Allow-Origin': '*',
@@ -91,7 +86,7 @@ const createFileCompanyUserAPI = (user) => {
     // formData.append("user_id", user.user_id)
     // formData.append("user_email", user.user_email)
     // formData.append("file", user.user_file);
-    return axios.post('/file/upload',user, {
+    return authAxios.post('/file/upload',user, {
         headers: { 
             'Content-Type': 'multipart/form-data'
         }
@@ -103,7 +98,7 @@ const createFileCompanyUserAPI = (user) => {
 //     formData.append("user_id", user.user_id)
 //     formData.append("user_email", user.user_email)
 //     formData.append("file", user.user_file);
-//     return axios.post('/file/upload',formData, {
+//     return authAxios.post('/file/upload',formData, {
 //         headers: { 
 //             'Content-Type': 'multipart/form-data'
 //         }
@@ -157,6 +152,7 @@ function* goToUsersSaga() {
     console.log("goToUsersSaga =========================== ")
     const history = yield getContext('history');
     console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+    console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
     console.log(history)
     console.log("-----------------------------------------------")
     history.push('/users');
@@ -198,6 +194,7 @@ const userStore = handleActions(
         [LIST_COMPANY_USER_SUCCESS]: (state, { payload: data }) => ({
             ...state,
             userList: data.result.data,
+            totalCount: data.result.totalCount,
             // userInfo: {}
         }),
         [CREATE_COMPANY_USER_SUCCESS]: (state, { payload: data }) => ({
