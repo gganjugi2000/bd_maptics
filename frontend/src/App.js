@@ -14,6 +14,7 @@ import SideMenu from './components/SideMenu';
 import SampleUserListContainer from './domain/Sample/UserListContainer';
 import SampleUserFormContainer from './domain/Sample/UserFormContainer';
 import SampleUserInfoContainer from './domain/Sample/UserInfoContainer';
+import Main from './domain/Main';
 
 // users menu
 import UserListContainer from './domain/User/UserListContainer';
@@ -38,6 +39,7 @@ function App({ history, context }) {
         <div className={cx("root")}>
           {sideMenu}
           <div className={cx("main")}>
+            <Main />
             <Switch>
               <Route exact path="/users"  component={UserListContainer} />
               <Route exact path="/users/create"  component={UserFormContainer} />

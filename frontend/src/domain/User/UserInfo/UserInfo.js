@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './UserInfo.module.css';
 import classNames from 'classnames/bind';
-import InputDatePicker from '../../../components/InputDatePickerComponent/InputDatePicker';
 
 import {
     isEmpty
@@ -179,7 +178,6 @@ const UserInfo = ({userInfo, onSubmit, onCancel, onDelete}) => {
                         }}
                     />
                 </p>
-                    <InputDatePicker />
                 <p>
                     <img src={imgUrl} alt="img test" width="100" height="50" style={imgUrl !== "" ?  {display: 'inline-block'} : {display: 'none'}}/>
                 </p>

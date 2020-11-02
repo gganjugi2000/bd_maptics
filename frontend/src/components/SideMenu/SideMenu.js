@@ -3,6 +3,9 @@ import { Link, withRouter } from "react-router-dom";
 
 import styles from './SideMenu.module.css';
 import classNames from 'classnames/bind';
+import imageLogo from '../../images/ats_sambol.png';
+import btnLogout from '../../images/btn_logout.png';
+import manPic from '../../images/man_photo.png';
 
 
 const cx = classNames.bind(styles);
@@ -23,17 +26,43 @@ const SideMenu = () => {
 
     // render
     return (
-        <div className={cx("side-body")}>
-            <ul>
-            {dummyMenu && dummyMenu.map((menuItem, i) => {
-                console.log(menuItem)
-                return (
-                    <li key={i}>
-                        <Link to={menuItem.url}>{menuItem.name}</Link>
-                    </li>
-                );
-            })}
-            </ul>
+        <div>
+            <div className={cx("lnbarea", "cbp-spmenu-open")}>
+                <div className={cx("logo")}>
+                    <Link to={"main.html"}><img src={imageLogo} alt="ATS2.0 Admin Sambol" /> Maptics Admin</Link>
+                </div>
+                <div className={cx("myInFo")}>
+                    <img src={manPic} alt="성별:남자 로그인 후 이미지" />
+                        <div className={cx("profile")}>
+                            <ul>
+                                <li className={cx("logouT")}><img src={btnLogout} alt="log out" /></li>
+                                <li className={cx("mt10")}><span>Maptics Master 님</span></li>
+                                <li><span className={cx("term")}>전략 사업팀</span></li>
+                            </ul>
+                        </div>
+                        <div className={cx("lnbm", "mt30")}>
+                            <ul>
+                                <li className={cx("mb20")}><a href="" className={cx("current")}>캠페인 관리</a></li>
+                                <p className={cx("mb20")}>- 캠페인 관리</p>
+                                <p className={cx("mb20")}>- 예약 관리</p>
+                                <p>- 히스토리</p>
+                            </ul>
+                        </div>
+                </div>
+            </div>
+
+            {/*<div className={cx("side-body")}>
+                <ul>
+                {dummyMenu && dummyMenu.map((menuItem, i) => {
+                    console.log(menuItem)
+                    return (
+                        <li key={i}>
+                            <Link to={menuItem.url}>{menuItem.name}</Link>
+                        </li>
+                    );
+                })}
+                </ul>
+            </div>*/}
         </div>
     )
 }

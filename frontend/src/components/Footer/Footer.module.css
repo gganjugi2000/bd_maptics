@@ -1,0 +1,7 @@
+/* Footer */
+.footerWrap{display:block; width:100%; height:60px;border-top:1px solid #ccc;clear: both;}
+.footerWrap .copy{display:block;font-size:12px;}
+.footerWrap .logo {float:left; display:inline-block; line-height:60px; padding-left:40px; color:#777;}
+.footerWrap .footer {float:right; display:inline-block; text-align:right; color:#999; line-height:60px;padding-right:40px;}
+.cbp-spmenu-open {left: 0;}
+.cbp-spmenu-push-toright {margin-left: 260px;}

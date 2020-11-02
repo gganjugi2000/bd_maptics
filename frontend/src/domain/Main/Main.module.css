@@ -1,0 +1,12 @@
+/* ats common box */
+.ats_com_box {display:block; width: 100%;overflow: hidden;}
+
+.ats_com_box >.comm_box {width:20%;display:inline-block;float: left;}
+.ats_com_box >.comr_box {width:54%;display:inline-block;float:right;border-left: 1px solid #e1e1e1;padding-left: 2%;}
+.ats_com_box >.comall_box {width:100%;display:inline-block;float:left;}
+.ats_com_box .user_boxtop{border: 1px solid #e0e0e0;height: 60px;line-height: 60px;border-top-left-radius:5px;border-top-right-radius:5px;border-bottom-left-radius: 0;border-bottom-right-radius: 0;}
+.ats_com_box .boxcontents{font-size:14px;height:470px;font-weight:700;color:#555555;border: 1px solid #e0e0e0;border-top:0;background:#ffffff;padding:10px;overflow-y: scroll;border-top-left-radius:0;border-top-right-radius:0;border-bottom-left-radius:5px;border-bottom-right-radius:5px;scrollbar-width:5px;}
+.ats_com_box .boxcontents::-webkit-scrollbar{width: 5px;}
+.ats_com_box .boxcontents::-webkit-scrollbar-thumb {background-color: #bbbbbb;border-radius: 10px;}
+.ats_com_box .boxcontents::-webkit-scrollbar-track {background-color: #e0e0e0;border-radius: 10px;}
+.ats_com_box input[type="text"]{font-size:14px;font-weight:bold;height:32px;color:#555151;padding:0 0 0 10px;background-color:transparent;border:none;}
