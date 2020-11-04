@@ -22,12 +22,12 @@ const dummyMenu = [
 
 
 // 컴포넌트 정의
-const SideMenu = () => {
+const SideMenu = ({leftSize}) => {
 
     // render
     return (
         <div>
-            <div className={cx("lnbarea", "cbp-spmenu-open")}>
+            <div className={cx("lnbarea")} style={{'left': leftSize === 260 ? '0' : '-260px'}}>
                 <div className={cx("logo")}>
                     <Link to={"main.html"}><img src={imageLogo} alt="ATS2.0 Admin Sambol" /> Maptics Admin</Link>
                 </div>

@@ -8,11 +8,6 @@ const cx = classNames.bind(styles);
 // 컴포넌트 정의
 const SearchName = ({rowData}) => {
 
-    const handleSlidemenu = useCallback(
-        (e) => {
-
-        }, []
-    )
     // render
     return (
         <div className={cx(rowData.type === 'normal' ? "comr_box": "coml_box")}>
@@ -37,7 +32,7 @@ const SearchName = ({rowData}) => {
                                 <tbody>
                                     {rowData.list && rowData.list.map((item, i) => {
                                         return(
-                                            <tr>
+                                            <tr key={i}>
                                                 <td className={ i%2 == 0 ? cx(rowData.type === 'normal' ? "grey" : "green") : ""}>
                                                     {rowData.type === 'normal' ? <span className={cx("txt")}>{item.name}</span> :
                                                         <label className={cx("check")}>

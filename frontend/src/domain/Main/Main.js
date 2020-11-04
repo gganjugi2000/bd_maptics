@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useCallback} from "react";
 import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './Main.module.css';
@@ -12,7 +12,7 @@ const cx = classNames.bind(styles);
 
 
 // 컴포넌트 정의
-const List = () => {
+const List = ({setLeftSize, leftSize}) => {
 	const dispatch = useDispatch()
 	// state 정의
 
@@ -115,9 +115,9 @@ const List = () => {
 	};
 	// render
 	return (
-		<div className={cx("container", "cbp-spmenu-push-toright")}>
+		<div className={cx("container")} style={{'marginLeft': leftSize === 260 ? '0' : '-260px'}}>
 			<div className={cx("contents")}>
-				<Header />
+				<Header setLeftSize={setLeftSize} />
 				<div className={cx("ats_com_box", "mt30")}>
 					<SearchName rowData={rowCompany} />
 					<SearchName rowData={rowGroup} />

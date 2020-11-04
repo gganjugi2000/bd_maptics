@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Route, Switch } from 'react-router' // react-router v4/v5
 import { ConnectedRouter } from 'connected-react-router';
 
@@ -9,6 +9,7 @@ import classNames from 'classnames/bind';
 
 // left menu
 import SideMenu from './components/SideMenu';
+
 
 // sample menu
 import SampleUserListContainer from './domain/Sample/UserListContainer';
@@ -29,17 +30,24 @@ const cx = classNames.bind(styles);
 
 function App({ history, context }) {
   let sideMenu = null;
-  sideMenu = <SideMenu />;
   // let sideMenu = null;
-  // sideMenu = <SideMenu history={history} />;
+  const [leftSize, setLeftSize] = useState(260)
+  const showHideLeft = () => {
+    if(leftSize === 0){
+      setLeftSize(260)
+    }
+    else {
+      setLeftSize(0)
+    }
+  }
     // <Router>
   return (
     <ConnectedRouter history={history} context={context}>
       <>
         <div className={cx("root")}>
-          {sideMenu}
+          <SideMenu setLeftSize={showHideLeft} leftSize={leftSize} />
           <div className={cx("main")}>
-            <Main />
+            <Main setLeftSize={showHideLeft} leftSize={leftSize} />
             <Switch>
               <Route exact path="/users"  component={UserListContainer} />
               <Route exact path="/users/create"  component={UserFormContainer} />
