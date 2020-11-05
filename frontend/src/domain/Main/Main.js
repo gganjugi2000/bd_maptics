@@ -115,9 +115,9 @@ const List = ({setLeftSize, leftSize}) => {
 	};
 	// render
 	return (
-		<div className={cx("container")} style={{'marginLeft': leftSize === 260 ? '0' : '-260px'}}>
+		<div className={cx("container")} style={{'transform': `translate3d(${leftSize === 260 ? '0' : '-260px'}, 0, 0)`, width : `calc(100% - ${leftSize}px)`}}>
 			<div className={cx("contents")}>
-				<Header setLeftSize={setLeftSize} />
+				<Header setLeftSize={setLeftSize} leftSize={leftSize} />
 				<div className={cx("ats_com_box", "mt30")}>
 					<SearchName rowData={rowCompany} />
 					<SearchName rowData={rowGroup} />

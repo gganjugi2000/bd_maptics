@@ -1,4 +1,4 @@
-.lnbarea{position:absolute;left:0px;top:0;float:left;width:260px;height:100%;background:#363333;}
+.lnbarea{position:absolute;left:0px;top:0;float:left;width:260px;height:100%;background:#363333; transition: transform .3s}
 .lnbarea .logo{display:inline-block;width:260px;height:90px;line-height:90px;text-align:center;color:#FFFFFF;margin: 0 auto;font-size: 22px;letter-spacing: -1px;font-weight: bold;}
 .lnbarea .logo a{color: #FFFFFF;}
 .lnbarea .myInFo{position:relative;text-align: center;}

@@ -1,6 +1,9 @@
 /* category 상단영역 */
 .catetop{position:relative;height:240px;padding:0;clear: both;display: block;}
-.catetop h2{font-size:22px;color:#2b2929;font-weight: bold;padding-top: 5px;display: inline-block;}
+.catetop h2{position:relative; font-size:22px;color:#2b2929;font-weight: bold;padding-top: 5px;display: inline-block; background:#fff;}
+.catetop h2 div {position:absolute; top:40px; left:0; background:#fff; border:2px solid #ccc; width:200px;}
+.catetop h2 div ul {display:inline-block; height:100%; width:100%; padding:15px;}
+.catetop h2 div li{font-size:14px; padding:5px;}
 .catetop h3{font-size:16px;line-height:22px;color:#aaa5a5;padding-top: 5px;display: inline-block;margin-left: 20px;}
 .catetop h3 a{color:#aaa5a5;}
 .catetop h3 a:hover{color:#2b2929;}

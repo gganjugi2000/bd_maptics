@@ -27,7 +27,7 @@ const SideMenu = ({leftSize}) => {
     // render
     return (
         <div>
-            <div className={cx("lnbarea")} style={{'left': leftSize === 260 ? '0' : '-260px'}}>
+            <div className={cx("lnbarea")} style={{'transform': `translate3d(${leftSize === 260 ? '0' : '-260px'}, 0, 0)`}}>
                 <div className={cx("logo")}>
                     <Link to={"main.html"}><img src={imageLogo} alt="ATS2.0 Admin Sambol" /> Maptics Admin</Link>
                 </div>

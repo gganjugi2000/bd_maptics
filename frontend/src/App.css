@@ -110,12 +110,6 @@ strong{font-weight:800;}
   flex-direction: "column";
 }
 
-.main {
-  position: relative;
-  left: 250px;
-  padding: 10px 0 0 10px;
-  width: calc(100% - 250px);
-}
 
 .App-logo {
   height: 40vmin;
