@@ -1,3 +1,4 @@
+/* before start */
 .listRow {box-sizing: border-box; width:100%;}
 .listRow table {width:100%}
 .listRow table th {background: #ddd; padding:10px;}
@@ -5,3 +6,25 @@
 .listPaging {margin-top:20px; width:100%; text-align:center;}
 .listPaging li{display:inline-block; padding:5px; border:1px solid #eee; margin:5px; width:15px; text-align:center; cursor:pointer;}
 .listPaging:after {content:""; display: block; clear: both;}
+/* before end */
+
+
+/* tableStyle01  */
+.notitable{position:relative;background:#fff;}
+.tableStyle01 {border-top:1px solid #545454;border-bottom:1px solid #d5d5d5;width:100%;}
+.tableStyle01 table {width:100%;}
+.tableStyle01 table th, .tableStyle01 table td {height:35px; vertical-align:middle; border:1px solid #e9e9e9;}
+.tableStyle01 table thead th {padding:10px 0 10px; text-align:center; font-size:15px; color:#000000; border-width:0 0 0 0; background:#f8f8f8;font-weight:400;line-height:22px;}
+.tableStyle01 table tbody td {padding:10px 8px; text-align:center; border-width:1px 0 0 0;color:#555555; background:#fff;font-size:15px;line-height:20px;}
+.tableStyle01 table tbody td .new{display:inline-block;margin-left:10px;width:14px;height:14px;font-weight:700;font-size:10px;line-height:14px;text-align:center;border-radius:3px;color:#fff;background:#188bc7;}
+.tableStyle01 table tbody tr:hover td{background:#f0f5f9;}
+.tableStyle01.tr td {padding-right:12px; text-align:right;}/* td 전체 오른쪽 정렬 */
+.tableStyle01 td a:hover {text-decoration:underline;}
+.tableStyle01 .inner {overflow:hidden; overflow-y:auto; width:1160px; height:240px;} /* 영역 전체 스크롤 */
+
+.tableStyle01 table tbody td .name{color:#555555;font-weight:700;}
+.tableStyle01 table tbody td .data{color:#555555;font-weight:700;font-size:12px;padding-top:3px;}
+.tableStyle01 table tbody td .ok{color:#4085d0;font-weight:700;}
+.tableStyle01 table tbody td .refuse{color:#f34545;font-weight:700;}
+.tableStyle01 table tbody td .ok_img{padding-right:0;}
+.tableStyle01 table tbody td .arrow{color:#bbbbbb;font-size:12px;}

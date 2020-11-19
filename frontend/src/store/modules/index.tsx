@@ -4,19 +4,22 @@ import { connectRouter } from 'connected-react-router';
 import sampleStore,  { sampleUserSaga } from './sampleStore';
 import userStore,  { userSaga } from './userStore';
 import rowStore from './rowStore';
-import { UserState, ListState, SampleUserState } from '../state';
+import advertiserStore,  { advertiserSaga } from './advertiserStore';
+import { UserState, ListState, SampleUserState, AdvertiserState } from '../state';
 
 const rootReducer = (history: any) => combineReducers({
     router: connectRouter(history),
     sampleStore,
     userStore,
-	rowStore,
+    rowStore,
+    advertiserStore
 });
 
 export function* rootSaga() {
     yield all([
         sampleUserSaga(),
         userSaga(),
+        advertiserSaga()
     ]);
 }
 
@@ -27,5 +30,6 @@ export default rootReducer;
 export type RootState = {
     sampleState: SampleUserState,
     userState: UserState,
-	rowState: ListState,
+    rowState: ListState,
+    advertiserState: AdvertiserState
 };

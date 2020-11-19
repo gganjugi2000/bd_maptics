@@ -1,4 +1,4 @@
-import { call, put, getContext } from 'redux-saga/effects';
+import { call, put } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
 // import { startLoading, finishLoading } from '../modules/loading';
 
@@ -27,7 +27,7 @@ export default function createRequestOfficeSaga(type, request, forwardLocation) 
                 console.log("createRequestOfficeSaga response ===============================");
                 console.log(response);
                 console.log("createRequestOfficeSaga response end ===========================");
-                yield put(push('/users'))
+                yield put(push(forwardLocation));
             }
         } catch (e) {
             yield put({
@@ -35,6 +35,7 @@ export default function createRequestOfficeSaga(type, request, forwardLocation) 
                 payload: e,
                 error: true,
             });
+            alert("오류 발생 " + e);
         }
         // yield put(finishLoading(type)); // 로딩 끝
     };

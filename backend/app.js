@@ -28,10 +28,16 @@ app.use(verifyToken);
 const user = require('./src/rest/users');
 const sample = require('./src/rest/sample');
 const health = require('./src/rest/health');
+// 광고주 관리
+const advertiser = require('./src/rest/advertiser');
+
 
 app.use('/user', user);
 app.use('/sample', sample);
 app.use('/health', health);
+
+// 광고주 관리
+app.use('/advertiser', advertiser);
 
 // Custom Error Handling
 app.use(customErrHandler);

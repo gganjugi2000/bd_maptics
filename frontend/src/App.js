@@ -6,9 +6,18 @@ import logo from './logo.svg';
 import styles from './App.css';
 import classNames from 'classnames/bind';
 
-
 // left menu
 import SideMenu from './components/SideMenu';
+// header
+import Header from './components/Header/Header';
+// footer
+import Footer from './components/Footer/Footer';
+
+// 광고주 관리
+import AdvertiserLayout from './domain/Advertiser/AdvertiserLayout';
+
+// 캠페인 관리
+import CampaignLayout from './domain/Campaign/CampaignLayout';
 
 
 // sample menu
@@ -45,27 +54,38 @@ function App({ history, context }) {
     <ConnectedRouter history={history} context={context}>
       <>
         <div className={cx("root")}>
-          <SideMenu setLeftSize={showHideLeft} leftSize={leftSize} />
-          <div className={cx("main")}>
-            <Main setLeftSize={showHideLeft} leftSize={leftSize} />
-            <Switch>
-              <Route exact path="/users"  component={UserListContainer} />
-              <Route exact path="/users/create"  component={UserFormContainer} />
-              <Route exact path="/users/:id" component={UserInfoContainer} />
+            <SideMenu setLeftSize={showHideLeft} leftSize={leftSize} />
+            <div className={cx("container")} style={{'transform': `translate3d(${leftSize === 260 ? '0' : '-260px'}, 0, 0)`, width : `calc(100% - ${leftSize}px)`}}>
+              <Header setLeftSize={showHideLeft} leftSize={leftSize} />
+              <div className={cx("contents")}>
+                <Switch>
+                  <Route exact path="/main.html" component={() => <Main setLeftSize={showHideLeft} leftSize={leftSize} /> } />
+                  {/* 광고주 관리 */}
+                  <Route exact path="/advertiser" component={AdvertiserLayout} />
 
-              <Route exact path="/products" children={<h3>Produ</h3>} />
-              <Route exact path="/stats" children={<h3>Two</h3>} />
-              <Route exact path="/axios_test"  component={AxiosTest} />
-			        <Route exact path="/list"  children={<List />} />
-              <Route exact path="/sample"  component={UserListContainer} />
+                  {/* 캠페인 관리 */}
+                  <Route exact path="/campaign" component={CampaignLayout} />
 
-              {/* Sample ===========================================================*/}
-              <Route exact path="/sample"  component={SampleUserListContainer} />
-              <Route exact path="/sample/create"  component={SampleUserFormContainer} />
-              <Route exact path="/sample/:id" component={SampleUserInfoContainer} />
-              {/* Sample end ===========================================================*/}
-            </Switch>
-          </div>
+                  
+                  <Route exact path="/users"  component={UserListContainer} />
+                  <Route exact path="/users/create"  component={UserFormContainer} />
+                  <Route exact path="/users/:id" component={UserInfoContainer} />
+
+                  <Route exact path="/products" children={<h3>Produ</h3>} />
+                  <Route exact path="/stats" children={<h3>Two</h3>} />
+                  <Route exact path="/axios_test"  component={AxiosTest} />
+                  <Route exact path="/list"  children={<List />} />
+                  <Route exact path="/sample"  component={UserListContainer} />
+
+                  {/* Sample ===========================================================*/}
+                  <Route exact path="/sample"  component={SampleUserListContainer} />
+                  <Route exact path="/sample/create"  component={SampleUserFormContainer} />
+                  <Route exact path="/sample/:id" component={SampleUserInfoContainer} />
+                  {/* Sample end ===========================================================*/}
+                </Switch>
+              </div>
+            </div>
+          <Footer />
         </div>
       </>
     </ConnectedRouter>

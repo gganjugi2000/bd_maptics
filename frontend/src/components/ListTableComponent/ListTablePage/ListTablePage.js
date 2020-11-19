@@ -5,7 +5,7 @@ import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
 
 // 컴포넌트 정의
-const ListTablePage = ({ nowPage, limit, handleChangePage, totalCount }) => {
+const ListTablePage = ({ nowPage, limit, totalCount, handleChangePage }) => {
 
     const [nowSector, setNowSector] = useState(1);
     let pages = 0;
@@ -13,20 +13,19 @@ const ListTablePage = ({ nowPage, limit, handleChangePage, totalCount }) => {
 
     const handleMove = (type) => {
         if (type == 'first') {
-            handleChangePage(1);
+            // handleChangePage(1);
+            setNowSector(1);
         } else if (type == 'last') {
-
+            setNowSector(Math.ceil(totalCount/(limit*10)));
         } else if (type == 'prev') {
             if(nowSector > 1) {
                 pageLength = 0;
                 setNowSector(nowSector - 1);
-                handleChangePage(nowSector - 1);
             }
         } else if (type == 'next') {
             if(nowSector*limit*10 < totalCount) {
                 pageLength = 0;
                 setNowSector(nowSector + 1);
-                handleChangePage(nowSector + 1);
             }
         }
     }
@@ -45,7 +44,8 @@ const ListTablePage = ({ nowPage, limit, handleChangePage, totalCount }) => {
                     {[...Array(totalCount)].map((item, i) => {
                         if( i % limit == 0 && i > (nowSector-1)*10) {
                             pages = (nowSector-1) * 10 + pageLength + 1
-                            if(pageLength < 10) {
+                            let maxPage = Math.ceil((totalCount - limit*(nowSector-1)*10)/limit)
+                            if(pageLength < maxPage && pageLength < 10) {
                                 pageLength++
                                 return (
                                     <li key={pages} onClick={handleMovePage} data-page={pages}>{pages}</li>

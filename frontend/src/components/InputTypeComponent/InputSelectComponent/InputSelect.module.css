@@ -1,0 +1,4 @@
+.inselect {width:120px;position:relative;display:inline-block;}
+.inselect:after	{width:120px;height:28px;content:'';position:absolute;top:1px;right:1px;pointer-events:none;background-position:0 -255px;}
+.inselect select	{height:30px;position:relative;padding:0 10px;font-size:12px;color:#777;cursor:pointer;border:1px solid #d7d7d7;-webkit-appearance:none;-moz-appearance:none;appearance:none;}
+.inselect select::-ms-expand {display:none;}

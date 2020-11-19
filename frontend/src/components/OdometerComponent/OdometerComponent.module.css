@@ -1,0 +1,4 @@
+/* span component로 분리 */
+.board_cont{padding:0 10px;margin:0;}
+.board_cont .total{display:inline-block;padding-top:10px;line-height:40px;text-align:center;color:#555;font-weight:700}
+.board_cont .total > span{display:inline-block;text-align:center;color:#4085d0;}

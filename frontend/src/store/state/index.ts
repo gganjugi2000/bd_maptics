@@ -45,6 +45,29 @@ export const initSessionState = {
     token: null,
 }
 
+////////// advertiser State //////////
+////////////////////////////
+export type AdvertiserState = {
+    advertiserList: any[],
+    advertiserInfo: {},
+    existId: number,
+    status: string,
+    totalCount: number,
+    searchCount: number,
+}
+
+export const initAdvertiserState = {
+    code: null,
+    error: null,
+    msg: null,
+    advertiserList: [],
+    advertiserInfo: {},
+    existId: 0,
+    status: "",
+    totalCount: 0,
+    searchCount: 0
+}
+
 ////////// user State //////////
 ////////////////////////////
 export type UserState = {
@@ -52,7 +75,8 @@ export type UserState = {
     userInfo: {},
     forwardLocation: "/",
     status: string,
-    totalCount: number
+    totalCount: number,
+    searchCount: number,
 }
 
 export const initUserState = {
@@ -61,7 +85,8 @@ export const initUserState = {
     msg: null,
     userList: [],
     status: "",
-    totalCount: 0
+    totalCount: 0,
+    searchCount: 0
 }
 
 export type ListState = {

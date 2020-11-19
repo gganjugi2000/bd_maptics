@@ -1,0 +1,9 @@
+.all_Search {margin-bottom:20px;border-bottom:1px solid #CCC;padding:15px 10px;}
+.all_Search input[type="text"]{font-size:12px;height:35px;padding:0 0 0 10px;margin-right: 20px;background-color:#eceff3;border:1px solid #dddddd;}
+.all_Search p{display:inline-block;vertical-align:middle;}
+
+/* button component로 분리 할지 말지  */
+.btn_normal{display:inline-block;float:right;width:80px;height:35px;border-radius:3px;font-weight:700;background:#89adc8;color:#FFFFFF;}
+
+/* span component로 분리 할지 말지  */
+.all_Search > span{display:inline-block;text-align:center;font-size:15px;height:35px;padding:0 10px 0 10px;}

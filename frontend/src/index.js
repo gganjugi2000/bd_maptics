@@ -1,3 +1,7 @@
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
+import 'react-app-polyfill/ie11';
+import 'react-app-polyfill/stable';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider, ReactReduxContext } from 'react-redux';
@@ -6,6 +10,8 @@ import configure, { runSaga, history } from './store/configure';
 
 import App from './App';
 import './index.css';
+import 'react-tippy/dist/tippy.css';
+
 
 export const store = configure(history);
 

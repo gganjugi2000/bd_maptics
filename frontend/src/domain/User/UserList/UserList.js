@@ -7,7 +7,7 @@ import ListTable from '../../../components/ListTableComponent/ListTable';
 const cx = classNames.bind(styles);
 
 // 컴포넌트 정의
-const UserList = ({ rowData, totalCount, handleUserDispatch }) => {
+const UserList = ({ rowData, totalCount, handleUserDispatch, handleUserCreate }) => {
 
     const ColGroup = () => {
         return (
@@ -46,6 +46,7 @@ const UserList = ({ rowData, totalCount, handleUserDispatch }) => {
                 rowData={rowData}
                 totalCount={totalCount}
                 handleTableDispatch={handleUserDispatch}
+                handleTableDataCreate={handleUserCreate}
             />
         </div>
     )

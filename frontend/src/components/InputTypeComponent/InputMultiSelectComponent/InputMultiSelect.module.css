@@ -1,0 +1,34 @@
+/* .input-container {
+    padding:10px 15px;
+    width:100%;
+    height:var(--address-nav-height);
+    font-size:12px;
+    color:#000;
+    border-bottom:var(--address-nav-border-bottom) solid #c5c5c5;
+    background-color:#fff;
+    transition: 0.7s;
+} */
+/* .input-label {
+    width: 350px;
+    height: 70px;
+    padding-left: 10px;
+    padding-right: 35px;
+    border: 1px solid #f8f8f8;
+    font-size: 13px;
+    color: #757782;
+    line-height: 35px;
+    text-align: left;
+    align-items: flex-start;
+} */
+/* .input-select {
+    height: 40px;
+    font-size: 13px;
+    color: #848484;
+    background: #fff url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAYAAAD68A/GAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ1IDc5LjE2MzQ5OSwgMjAxOC8wOC8xMy0xNjo0MDoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo5NGU0Yzk5OC0zYmY0LWYzNDQtOWVjYi04NDRhMjI5YWEzMzAiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NDNENzIxOERENTMwMTFFQThFMDI4Njc0QzlDNzE4MjQiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NDNENzIxOENENTMwMTFFQThFMDI4Njc0QzlDNzE4MjQiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MzRiMzI2ZDgtM2Y5NS0yMTQ5LThjNDgtZDg2NDkxYTY5NTMyIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjk0ZTRjOTk4LTNiZjQtZjM0NC05ZWNiLTg0NGEyMjlhYTMzMCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PunfKkQAAABbSURBVHjaYjx/4fY0BgaGTAb8YDoTkMgF4n14FIHk8kAK/wJxEBDfwaIIJBYMxH+YoAIfgdgTSjMgiXkB8QcQhwlNdxDUhr9Qk27DJFmwuAfkZkYg3ossARBgAL/oFWDLUl1RAAAAAElFTkSuQmCC) no-repeat 79px 50%;
+    box-shadow: 0 0 6px 2px rgba(0,0,0,.1), 0 0 0 0 rgba(0,0,0,.1);
+    border-radius: 4px;
+    border: 1px solid #f8f8f8;
+    padding: 10px;
+    margin-right: 7px;
+    cursor: pointer;
+} */

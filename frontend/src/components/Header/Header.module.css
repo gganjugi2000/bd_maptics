@@ -1,5 +1,5 @@
 /* category 상단영역 */
-.catetop{position:relative;height:240px;padding:0;clear: both;display: block;}
+.catetop{position:relative;height:60px;padding:10;margin:10px;clear: both;display: block;}
 .catetop h2{position:relative; font-size:22px;color:#2b2929;font-weight: bold;padding-top: 5px;display: inline-block; background:#fff;}
 .catetop h2 div {position:absolute; top:40px; left:0; background:#fff; border:2px solid #ccc; width:200px;}
 .catetop h2 div ul {display:inline-block; height:100%; width:100%; padding:15px;}

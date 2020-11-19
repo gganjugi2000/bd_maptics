@@ -195,6 +195,7 @@ const userStore = handleActions(
             ...state,
             userList: data.result.data,
             totalCount: data.result.totalCount,
+            searchCount: data.result.searchCount,
             // userInfo: {}
         }),
         [CREATE_COMPANY_USER_SUCCESS]: (state, { payload: data }) => ({

@@ -17,7 +17,8 @@ const dummyMenu = [
     {name: "Stats", id: "3", url: "/stats"},
     {name: "Test_axios", id: "4", url: "/axios_test"},
     {name: "List", id: "3", url: "/List"},
-    {name: "Sample", id: "90", url: "/Sample"}
+    {name: "Sample", id: "90", url: "/Sample"},
+    {name: "Advertiser Management", id: "90", url: "/advertiser"}
 ];
 
 
@@ -42,7 +43,9 @@ const SideMenu = ({leftSize}) => {
                         </div>
                         <div className={cx("lnbm", "mt30")}>
                             <ul>
-                                <li className={cx("mb20")}><a href="" className={cx("current")}>캠페인 관리</a></li>
+                                <li className={cx("mb20", "current")}><Link to="/main.html">Main</Link></li>
+                                <li className={cx("mb20")}><Link to="/advertiser">광고주 관리</Link></li>
+                                <li className={cx("mb20")}><Link to="/campaign">캠페인 관리</Link></li>
                                 <p className={cx("mb20")}>- 캠페인 관리</p>
                                 <p className={cx("mb20")}>- 예약 관리</p>
                                 <p>- 히스토리</p>
