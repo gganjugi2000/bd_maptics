@@ -59,35 +59,39 @@ const ListTable = ({
             <div className={cx("tableStyle01")} rel={limit}>
                 <div className={cx("board_cont")}>
                     <span className={cx("total")} >
-                        전체 
-                        <OdometerComponent
-                            value={totalCount}
-                            format="(,ddd)"
-                            duration="500"
-                        />
-                        명 중 검색 된 
-                        <OdometerComponent
-                            value={searchCount}
-                            format="(,ddd)"
-                            duration="500"
-                        />
-                        명
-                        <ListTableSortMode
-                            handleTableSortMode={handleTableSortMode}
-                        />
-                        <ListTableRowMode
-                            handleTableRowMode={handleTableRowMode}
-                        />
-                        {handleTableDataCreate && 
-                            <div style={{float:'right'}}>
-                                <Button
-                                    type="create"
-                                    onClick={handleTableDataCreate}
-                                    >
-                                    생성
-                                </Button>
-                            </div>
-                        }
+                        <div className={cx("lSide")}>
+                            전체
+                            <OdometerComponent
+                                value={totalCount}
+                                format="(,ddd)"
+                                duration="500"
+                            />
+                            명 중 검색 된
+                            <OdometerComponent
+                                value={searchCount}
+                                format="(,ddd)"
+                                duration="500"
+                            />
+                            명
+                        </div>
+                        <div className={cx("rSide")}>
+                            <ListTableSortMode
+                                handleTableSortMode={handleTableSortMode}
+                            />
+                            <ListTableRowMode
+                                handleTableRowMode={handleTableRowMode}
+                            />
+                            {handleTableDataCreate &&
+                                <div style={{float:'right'}}>
+                                    <Button
+                                        type="create"
+                                        onClick={handleTableDataCreate}
+                                        >
+                                        생성
+                                    </Button>
+                                </div>
+                            }
+                        </div>
                     </span>
                 </div>
                 <table>

@@ -1,6 +1,17 @@
 .all_Search {margin-bottom:20px;border-bottom:1px solid #CCC;padding:15px 10px;}
-.all_Search input[type="text"]{font-size:12px;height:35px;padding:0 0 0 10px;margin-right: 20px;background-color:#eceff3;border:1px solid #dddddd;}
+.all_Search input[type="text"]{font-size:12px;width:calc(100% - 100px); box-sizing: border-box; height:35px;padding:0 0 0 10px;margin-right: 20px;background-color:#eceff3;border:1px solid #dddddd;}
 .all_Search p{display:inline-block;vertical-align:middle;}
+.all_Search ul {display:inline-block; width:calc(100% - 100px)}
+.all_Search ul li {float:left; width:33%; padding-bottom:20px;}
+.all_Search ul li.secondLine {padding-bottom:0;}
+.all_Search ul li label {margin-right: 10px; width:70px;}
+.all_Search ul li .datepickerWrap {display:inline-block; width: calc(100% - 100px);}
+.all_Search ul li .datepickerWrap span {display:inline-block; box-sizing: border-box}
+.all_Search ul li .datepickerWrap span:nth-child(1),
+.all_Search ul li .datepickerWrap span:nth-child(3) {width: 45%}
+.all_Search ul li .datepickerWrap span:nth-child(2) {width: 10%; text-align:center; padding:0 3px;}
+.all_Search ul li .datepickerWrap input {width:100%;}
+.all_Search button:not([class^="react"]) {height:90px; margin:0;}
 
 /* button component로 분리 할지 말지  */
 .btn_normal{display:inline-block;float:right;width:80px;height:35px;border-radius:3px;font-weight:700;background:#89adc8;color:#FFFFFF;}

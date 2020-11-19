@@ -125,68 +125,83 @@ const AdvertiserSearchBar = ({
     // render
     return (
         <div className={cx("all_Search")}>
-            <input
-                id="advertiserId"
-                type="text"
-                placeholder="아이디"
-                value={advertiserSearchData.advts_id}
-                onChange={(e) => {
-                    changeAdvertiserId(e, e.target.value);
-                }}
-                onKeyPress={(e) => {
-                    if(e.key === 'Enter') {
-                        changeAdvertiserId(e, e.target.value);
-                    }
-                }}
-            />
-            <input
-                id="advts_nm"
-                type="text"
-                placeholder="광고주명"
-                value={advertiserSearchData.advts_nm}
-                onChange={(e) => {
-                    changeAdvertiserName(e, e.target.value);
-                }}
-                onKeyPress={(e) => {
-                    if(e.key === 'Enter') {
-                        changeAdvertiserName(e, e.target.value);
-                    }
-                }}
-            />
-            <input
-                id="advts_mng_nm"
-                type="text"
-                placeholder="담당자명"
-                value={advertiserSearchData.advts_mng_nm}
-                onChange={(e) => {
-                    changeManagerName(e, e.target.value);
-                }}
-                onKeyPress={(e) => {
-                    if(e.key === 'Enter') {
-                        changeManagerName(e, e.target.value);
-                    }
-                }}
-            />
-            등록일
-            <span>
-                <DatePicker
-                    id="reg_start_dt"
-                    selected={advertiserSearchData.reg_start_dt}
-                    onChange={date => changeRegStartDate(date)}
-                    isClearable="true"
-                    dateFormat="yyyy/MM/dd"
-                />
-            </span>
-            ~
-            <span>
-                <DatePicker
-                    id="reg_end_dt"
-                    selected={advertiserSearchData.reg_end_dt}
-                    onChange={date => changeRegEndDate(date)}
-                    isClearable="true"
-                    dateFormat="yyyy/MM/dd"
-                />
-            </span>
+            <ul>
+                <li>
+                    <label>아이디</label>
+                    <input
+                        id="advertiserId"
+                        type="text"
+                        placeholder="아이디"
+                        value={advertiserSearchData.advts_id}
+                        onChange={(e) => {
+                            changeAdvertiserId(e, e.target.value);
+                        }}
+                        onKeyPress={(e) => {
+                            if(e.key === 'Enter') {
+                                changeAdvertiserId(e, e.target.value);
+                            }
+                        }}
+                    />
+                </li>
+                <li>
+                    <label>광고주명</label>
+                    <input
+                        id="advts_nm"
+                        type="text"
+                        placeholder="광고주명"
+                        value={advertiserSearchData.advts_nm}
+                        onChange={(e) => {
+                            changeAdvertiserName(e, e.target.value);
+                        }}
+                        onKeyPress={(e) => {
+                            if(e.key === 'Enter') {
+                                changeAdvertiserName(e, e.target.value);
+                            }
+                        }}
+                    />
+                </li>
+                <li>
+                    <label>담당자명</label>
+                    <input
+                        id="advts_mng_nm"
+                        type="text"
+                        placeholder="담당자명"
+                        value={advertiserSearchData.advts_mng_nm}
+                        onChange={(e) => {
+                            changeManagerName(e, e.target.value);
+                        }}
+                        onKeyPress={(e) => {
+                            if(e.key === 'Enter') {
+                                changeManagerName(e, e.target.value);
+                            }
+                        }}
+                    />
+                </li>
+                <li className={cx("secondLine", "date")}>
+                    <label>등록일</label>
+                    <div className={cx("datepickerWrap")}>
+                        <span>
+                            <DatePicker
+                                id="reg_start_dt"
+                                selected={advertiserSearchData.reg_start_dt}
+                                onChange={date => changeRegStartDate(date)}
+                                isClearable="true"
+                                dateFormat="yyyy/MM/dd"
+                            />
+                        </span>
+                        <span>~</span>
+                        <span>
+                            <DatePicker
+                                id="reg_end_dt"
+                                selected={advertiserSearchData.reg_end_dt}
+                                onChange={date => changeRegEndDate(date)}
+                                isClearable="true"
+                                dateFormat="yyyy/MM/dd"
+                            />
+                        </span>
+                    </div>
+                </li>
+            </ul>
             <Button
                 type="search"
                 onClick={e => { 

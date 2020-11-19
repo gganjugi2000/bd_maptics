@@ -7,7 +7,11 @@
 .listPaging li{display:inline-block; padding:5px; border:1px solid #eee; margin:5px; width:15px; text-align:center; cursor:pointer;}
 .listPaging:after {content:""; display: block; clear: both;}
 /* before end */
-
+.board_cont .total {}
+.board_cont .lSide {float:left; padding:35px 0 0 5px; font-weight:bold;}
+.board_cont .rSide {float:right;}
+.board_cont button{display:inline-block;}
+.board_cont select{display:inline-block; height:35px; margin-right:10px;}
 
 /* tableStyle01  */
 .notitable{position:relative;background:#fff;}
