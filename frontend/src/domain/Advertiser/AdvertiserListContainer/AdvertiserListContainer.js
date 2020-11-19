@@ -18,7 +18,7 @@ const AdvertiserListContainer = () => {
     const [openCreate, setOpenCreate] = useState(false);
     const [openDetail, setOpenDetail] = useState(false);
     const [infoId, setInfoId] = useState(null);
-    const [pagingQuery, setPagingQuery] = useState({cur:1, page_size:20});
+    const [pagingQuery, setPagingQuery] = useState({cur:1, page_size:10});
     const [searchQuery, setSearchQuery] = useState({});
     const { advertiserList, totalCount, searchCount } = useSelector((state) => state.advertiserStore);
 
@@ -66,7 +66,7 @@ const AdvertiserListContainer = () => {
         setSearchQuery(obj);
         // nowPage : 현재 페이지
         // limit : 테이블에서 보여질 수
-        dispatch(listAdvertiser(Object.assign(obj, {cur:1, page_size:20})));
+        dispatch(listAdvertiser(Object.assign(obj, {cur:1, page_size:10})));
     };
 
     // render

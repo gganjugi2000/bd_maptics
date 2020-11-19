@@ -13,7 +13,6 @@ const ListTablePage = ({ nowPage, limit, totalCount, handleChangePage }) => {
 
     const handleMove = (type) => {
         if (type == 'first') {
-            // handleChangePage(1);
             setNowSector(1);
         } else if (type == 'last') {
             setNowSector(Math.ceil(totalCount/(limit*10)));
@@ -23,7 +22,7 @@ const ListTablePage = ({ nowPage, limit, totalCount, handleChangePage }) => {
                 setNowSector(nowSector - 1);
             }
         } else if (type == 'next') {
-            if(nowSector*limit*10 < totalCount) {
+            if(nowSector < Math.ceil(totalCount/(limit*10))) {
                 pageLength = 0;
                 setNowSector(nowSector + 1);
             }
@@ -42,7 +41,7 @@ const ListTablePage = ({ nowPage, limit, totalCount, handleChangePage }) => {
                 <li className={cx("first")} onClick={()=> handleMove('first')}>&lt;&lt;</li>
                 <li className={cx("prev")} onClick={()=> handleMove('prev')}>&lt;</li>
                     {[...Array(totalCount)].map((item, i) => {
-                        if( i % limit == 0 && i > (nowSector-1)*10) {
+                        if( i % limit == 0 && i >= (nowSector-1)*10) {
                             pages = (nowSector-1) * 10 + pageLength + 1
                             let maxPage = Math.ceil((totalCount - limit*(nowSector-1)*10)/limit)
                             if(pageLength < maxPage && pageLength < 10) {

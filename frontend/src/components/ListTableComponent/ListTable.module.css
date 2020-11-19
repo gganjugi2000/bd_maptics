@@ -10,6 +10,7 @@
 .board_cont .total {}
 .board_cont .lSide {float:left; padding:35px 0 0 5px; font-weight:bold;}
 .board_cont .rSide {float:right;}
+.board_cont .count {color:red !important;}
 .board_cont button{display:inline-block;}
 .board_cont select{display:inline-block; height:35px; margin-right:10px;}
 

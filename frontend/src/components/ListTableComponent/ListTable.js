@@ -26,7 +26,7 @@ const ListTable = ({
     // ======================================================
     // table state 
     // ------------------------------------------------------
-    const [limit, setLimit] = useState(20);
+    const [limit, setLimit] = useState(10);
     const [sort, setSort] = useState('desc');
     const [nowPage, setNowPage] = useState(1);
     // ======================================================
@@ -60,19 +60,7 @@ const ListTable = ({
                 <div className={cx("board_cont")}>
                     <span className={cx("total")} >
                         <div className={cx("lSide")}>
-                            전체
-                            <OdometerComponent
-                                value={totalCount}
-                                format="(,ddd)"
-                                duration="500"
-                            />
-                            명 중 검색 된
-                            <OdometerComponent
-                                value={searchCount}
-                                format="(,ddd)"
-                                duration="500"
-                            />
-                            명
+                            전체 <span className={cx("count")}>{totalCount}</span>명 중 검색 된 <span className={cx("count")}>{searchCount}</span>명
                         </div>
                         <div className={cx("rSide")}>
                             <ListTableSortMode

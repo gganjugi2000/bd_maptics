@@ -13,6 +13,7 @@ const ListTableRowMode = ({ handleTableRowMode }) => {
     return (
         <div className={cx("listAmount")}>
             <select onChange={onChangeMode}>
+                <option value='10'>10개</option>
                 <option value='20'>20개</option>
                 <option value='40'>40개</option>
                 <option value='80'>80개</option>
