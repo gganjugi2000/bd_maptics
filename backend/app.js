@@ -48,14 +48,16 @@ app.use((err, req, res, next) => {
     res.status(err.status || 500).send({result: {code: err.status || 500, message: err.message, data : ""}});
 });
 
-// process
-//   .on('unhandledRejection', (reason, p) => {
-//     console.error(reason, 'Unhandled Rejection at Promise', p);
-//   })
-//   .on('uncaughtException', err => {
-//     console.error(err, 'Uncaught Exception thrown');
-//     process.exit(1);
-//   });
+//unhandledRejection, uncaughtException 오류 처리
+process
+  .on('unhandledRejection', (reason, p) => {
+    logger.error(reason);
+    console.error(reason, 'Unhandled Rejection at Promise', p);
+  })
+  .on('uncaughtException', err => {
+    logger.error(err);
+    console.error(err, 'Uncaught Exception thrown');
+  });
   
 const port = normalizePort(process.env.PORT || '4000');
 if (process.env.NODE_ENV === "production") {
