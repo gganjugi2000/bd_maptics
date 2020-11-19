@@ -27,6 +27,7 @@
 .tableStyle01 td a:hover {text-decoration:underline;}
 .tableStyle01 .inner {overflow:hidden; overflow-y:auto; width:1160px; height:240px;} /* 영역 전체 스크롤 */
 
+.tableStyle01 table tbody td .link{color:#555555;font-weight:700;text-decoration: underline}
 .tableStyle01 table tbody td .name{color:#555555;font-weight:700;}
 .tableStyle01 table tbody td .data{color:#555555;font-weight:700;font-size:12px;padding-top:3px;}
 .tableStyle01 table tbody td .ok{color:#4085d0;font-weight:700;}

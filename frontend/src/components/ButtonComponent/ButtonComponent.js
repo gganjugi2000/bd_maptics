@@ -20,10 +20,12 @@ const ButtonComponent = React.forwardRef((props, ref) => {
             : (type === "update" ? cx("btn_update") 
             : (type === "delete" ? cx("btn_delete") 
             : (type === "close" ? cx("btn_close") 
+            : (type === "caution" ? cx("btn_caution") 
+            : (type === "complete" ? cx("btn_complete")
             : (type === "btn_black" ? cx("btn_black") 
             : (type === "btn_gray" ? cx("btn_gray") 
             : (type === "btn_small" ? cx("btn_small") 
-            : cx("btn_normal"))))))))}
+            : cx("btn_normal"))))))))))}
             onClick={onClick} 
             ref={ref}
             {...others}

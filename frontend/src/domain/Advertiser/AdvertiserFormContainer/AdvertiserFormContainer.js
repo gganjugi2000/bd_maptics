@@ -21,21 +21,12 @@ const AdvertiserFormContainer = ({
 
     const onCancel = () => {
         // state clear
-        // this.props.history.push("/users");
         popupClose();
-        history.push({
-            pathname:  "/advertiser"
-        });
     }
 
     const onSubmit = (e, advertiser) => {
         e.preventDefault();
-        console.log("onSubmit advertiser ==========================================================")
-        console.log(advertiser)
-        console.log("----------------------------------------------------------------")
-        let createAction = dispatch(createAdvertiser(advertiser));
-        console.log("createAction = " + createAction);
-        console.log(createAction)
+        dispatch(createAdvertiser(advertiser));
         popupClose();
     }
 

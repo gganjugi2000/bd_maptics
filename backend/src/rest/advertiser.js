@@ -244,10 +244,17 @@ router.post('/checkAdvertiserId', asyncHandler(async (req, res, next) => {
     const { advts_id } = req.body;
     let existCount = 0;
     // try {
-        if(advts_id && data != null && data.length > 0) {
+        if(advts_id) {
             data = await advertiserService.checkAdvertiserId(advts_id);
-            existCount = data[0].cnt;
+            console.log(data)
+            console.log(data.length)
+
+            if (data != null && data != undefined) {
+                existCount = data.length;
+            }
         }
+        console.log(existCount)
+        console.log("-------------------------------------------------------------------")
         res.status(200).send({result: {code: 200, message: "success", data : data, exist : existCount}});
     // } catch (err) {
     //     res.status(500).send({result: {code: 500, message: err.message, data : data}});

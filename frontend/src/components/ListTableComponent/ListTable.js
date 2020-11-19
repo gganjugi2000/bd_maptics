@@ -8,6 +8,9 @@ import ListTableRowMode from './ListTableRowMode/ListTableRowMode';
 import ListTableSortMode from './ListTableSortMode/ListTableSortMode';
 import ListTablePage from './ListTablePage/ListTablePage';
 import OdometerComponent from '../OdometerComponent/OdometerComponent';
+import {
+    changeFormat
+} from 'utiles/format/date/changeFormat';
 
 const cx = classNames.bind(styles);
 
@@ -106,6 +109,7 @@ const ListTable = ({
                                                             <Link to={headItem.to + item[headItem.id]}>{item[headItem.label_id]}</Link>
                                                         ) : (headItem["type"] !== undefined && headItem.type === "callback" ? (
                                                             <label 
+                                                                className={cx("link")}
                                                                 onClick={(e) => {
                                                                     handleCallbackData(e, item[headItem.id]);
                                                                 }}
@@ -113,7 +117,7 @@ const ListTable = ({
                                                                 {item[headItem.id]}
                                                              </label>
                                                         ) 
-                                                        : (item[headItem.id]))
+                                                        : (headItem["data_type"] !== undefined && headItem.data_type === "date" ? changeFormat(item[headItem.id], 'YYYY-MM-DD hh:mm:DD') : item[headItem.id]))
                                                     )}
                                                 </span>
                                             </td>

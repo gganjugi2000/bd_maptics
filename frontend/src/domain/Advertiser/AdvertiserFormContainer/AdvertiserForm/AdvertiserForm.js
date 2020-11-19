@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { checkAdvertiserId, clearAdvertiserInfo } from 'store/modules/advertiserStore';
 import styles from './AdvertiserForm.module.css';
@@ -45,7 +45,7 @@ const emailProviderOptions = [
 // 컴포넌트 정의
 const AdvertiserForm = ({ onSubmit, onCancel }) => {
     const dispatch = useDispatch();
-    const existAdvertiserId = useSelector((state) => state.advertiserStore.existId);
+    const existAdvtsId = useSelector((state) => state.advertiserStore.existId);
     const [advertiser, setAdvertiser] = useState({
         "advts_id" : "",
         "advts_nm" : "",
@@ -80,15 +80,22 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
         "phone_no_middle" : false,
         "phone_no_end" : false,
     });
-    const [execCheckAdvertiserId, setExecCheckAdvertiserId] = useState(false);
+    const [execCheckAdvtsId, setExecCheckAdvtsId] = useState(false);
+    const [checkAdvtsId, setCheckAdvtsId] = useState(false);
     const [advtsImgFile, setAdvtsImgFile] = useState(null);
     const [helpMsg, setHelpMsg] = useState("");
     const advtsImgRef = useRef();
 
-    // // life cycle
-    // useEffect(() => {
-
-    // }, []) // page loading 
+    // life cycle
+    useEffect(() => {
+        setCheckAdvtsId(existAdvtsId);
+        if(existAdvtsId > 0) {
+            setAdvertiserCaution({
+                ...advertiserCaution
+                , advts_id: "입력하신 아이디는 사용 중 입니다."
+            });
+        }
+    }, []) // page loading 
     
     const setImageData = (fileData) => {
         setAdvertiser({
@@ -102,6 +109,8 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
     }
 
     const setAdvertiserIdValue = (e, value) => {
+        setExecCheckAdvtsId(false);
+
         if(!validAdvertiserId(value)){
             setAdvertiserCaution({
                 ...advertiserCaution
@@ -268,9 +277,9 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
     }
 
     const handleDupleIdCheck = (e) => {
+        e.preventDefault();
         if(advertiser.advts_id !== null && advertiser.advts_id !== "") {
             dispatch(checkAdvertiserId(advertiser.advts_id));
-            
         } else {
             setAdvertiserCaution({
                 ...advertiserCaution
@@ -280,7 +289,7 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
             return;
         }
 
-        setExecCheckAdvertiserId(true);
+        setExecCheckAdvtsId(true);
     }
 
     const handleSubmit = (e) => {
@@ -294,15 +303,14 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
             advtsIdMsg = "영문,영문+숫자,5자 이상 입력 해야 합니다.";
         }
 
-        if(existAdvertiserId < 1){
+        if(existAdvtsId < 1){
             existAdvtsIdValid = true;
-            
         } else { 
             advtsIdMsg = "입력하신 아이디는 사용 중 입니다.";
             advtsIdValid = false;
         }
 
-        if(execCheckAdvertiserId) {
+        if(execCheckAdvtsId) {
             execCheckAdvtsIdValid = true;
         } else {
             advtsIdMsg = "아이디 중복체크를 해주세요";
@@ -457,12 +465,12 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
                         <td>
                             <p className={cx("board_notice")}>
                                 <Button
-                                    type="btn_small"
+                                    type={execCheckAdvtsId && checkAdvtsId === 0 ? "complete" : "caution"}
                                     onClick={(e) => {
                                         handleDupleIdCheck(e);
                                     }}
                                     >
-                                    중복확인
+                                    {execCheckAdvtsId && checkAdvtsId === 0 ? "체크완료" : "중복확인"}
                                 </Button>
                             </p>
                             <InputText 

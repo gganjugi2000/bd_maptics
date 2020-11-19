@@ -36,7 +36,7 @@ const AdvertiserList = ({
             {id: "advts_mng_nm",name: "담당자명"},
             {id: "email_addr",name: "이메일 계정"},
             {id: "phone_no",name: "연락처"},
-            {id: "reg_dt",name: "등록일"},
+            {id: "reg_dt",name: "등록일", data_type: 'date'},
         ];
 
     // render
