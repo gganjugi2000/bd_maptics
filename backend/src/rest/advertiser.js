@@ -242,7 +242,7 @@ router.post('/modifyInfo', asyncHandler(async (req, res, next) => {
 router.post('/checkAdvertiserId', asyncHandler(async (req, res, next) => {
     let data = null;
     const { advts_id } = req.body;
-    let existCount = 0;
+    let existCount = -1;
     // try {
         if(advts_id) {
             data = await advertiserService.checkAdvertiserId(advts_id);

@@ -23,14 +23,15 @@ export default function createRequestOfficeSaga(type, request, forwardLocation) 
                 meta: response,
             });
             
-            if(type !== null && type !== undefined 
-                && (type.indexOf("CREATE") > 0 || type.indexOf("UPDATE") > 0 || type.indexOf("DELETE") > 0)) {
-                    alert("완료 되었습니다.");
+            if(type.indexOf("CREATE") > 0) {
+                alert("등록이 완료 되었습니다.");
+            } else if(type.indexOf("UPDATE") > 0) {
+                alert("수정이 완료 되었습니다.");
+            } else if(type.indexOf("DELETE") > 0) {
+                alert("삭제 완료 되었습니다.");
             }
-            if(forwardLocation && response !== null && response.statusText === "OK") {
-                console.log("createRequestOfficeSaga response ===============================");
-                console.log(response);
-                console.log("createRequestOfficeSaga response end ===========================");
+
+            if(forwardLocation) {
                 yield put(push(forwardLocation));
             }
         } catch (e) {

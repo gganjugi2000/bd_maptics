@@ -2,8 +2,7 @@ import { createAction, handleActions } from 'redux-actions';
 import {
     authAxios
 } from '../lib/createAxiosInstance';
-import { takeLatest } from 'redux-saga/effects';
-import { put } from 'redux-saga/effects';
+import { takeLatest, put, call } from 'redux-saga/effects';
 import createRequestOfficeSaga, {
     createRequestOfficeActionTypes,
 } from '../lib/createRequestOfficeSaga';
@@ -107,18 +106,43 @@ export const clearAdvertiserInfo = createAction(CLEAR_ADVERTISER_INFO);
 
 const forwardLocation = '/advertiser';
 
-function* clearSaga() {
-    yield put({
-        type: CLEAR_ADVERTISER_INFO,
-    })
-}
-
 const listAdvertiserSaga = createRequestOfficeSaga(LIST_ADVERTISER, listAdvertiserAPI);
 const createAdvertiserSaga = createRequestOfficeSaga(CREATE_ADVERTISER, createAdvertiserAPI, forwardLocation);
 const getAdvertiserSaga = createRequestOfficeSaga(GET_ADVERTISER, getAdvertiserAPI);
 const updateAdvertiserSaga = createRequestOfficeSaga(UPDATE_ADVERTISER, updateAdvertiserAPI, forwardLocation);
 const deleteAdvertiserSaga = createRequestOfficeSaga(DELETE_ADVERTISER, deleteAdvertiserAPI, forwardLocation);
-const checkAdvertiserIdSaga = createRequestOfficeSaga(CHECK_ADVERTISER_ID, checkAdvertiserIdAPI);
+const checkAdvertiserIdSaga = createCheckAdvertiserIdSaga(CHECK_ADVERTISER_ID, checkAdvertiserIdAPI);
+
+function createCheckAdvertiserIdSaga(type, request, forwardLocation) {
+    const SUCCESS = `${type}_SUCCESS`;
+    const FAILURE = `${type}_FAILURE`;
+
+    return function*(action) {
+        try {
+            const response = yield call(request, action.payload);
+            yield put({
+                type: SUCCESS,
+                payload: response.data,
+                meta: response,
+            });
+
+            if(response !== null && response.statusText === "OK") {
+                if(response.data.result.exist === 0) {
+                    alert("사용가능한 아이디 입니다.");
+                } else {
+                    alert("사용 불가능한 아이디 입니다.");
+                }
+            }
+        } catch (e) {
+            yield put({
+                type: FAILURE,
+                payload: e,
+                error: true,
+            });
+        }
+    };
+}
+
 
 export function* advertiserSaga() {
     yield takeLatest(LIST_ADVERTISER, listAdvertiserSaga);
@@ -127,7 +151,6 @@ export function* advertiserSaga() {
     yield takeLatest(UPDATE_ADVERTISER, updateAdvertiserSaga);
     yield takeLatest(DELETE_ADVERTISER, deleteAdvertiserSaga);
     yield takeLatest(CHECK_ADVERTISER_ID, checkAdvertiserIdSaga);
-    // yield takeEvery(CLEAR_ADVERTISER_INFO, clearSaga);
 }
 
 const initState = initAdvertiserState ;
@@ -164,6 +187,7 @@ const advertiserStore = handleActions(
         [CLEAR_ADVERTISER_INFO]: (state) => ({
             ...state,
             advertiserInfo: {},
+            existId: -1,
         }),
     },
     initState

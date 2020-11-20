@@ -26,7 +26,7 @@ const AdvertiserListContainer = () => {
     useEffect(() => {
         // 데이터 불러오기
         dispatch(listAdvertiser(pagingQuery));
-    }, [dispatch]) // page loading 
+    }, []) // page loading 
     
     const handleCreatePopupOpen = (e) => {
         setOpenCreate(true);
@@ -83,12 +83,12 @@ const AdvertiserListContainer = () => {
                 handleAdvertiserCreate={handleCreatePopupOpen}
                 handleAdvertiserDetail={handleAdvertiserDetail}
             />
-            {openCreate ? <Popup id="createPopup" title="광고주 등록" close={handleCreatePopupClose}>
+            {openCreate ? 
                 <AdvertiserForm popupClose={handleCreatePopupClose} />
-            </Popup> : null}
-            {openDetail && infoId ? <Popup id="detailPopup" title="광고주 상세정보" close={handleDetailPopupClose}>
+             : null}
+            {openDetail && infoId ? 
                 <AdvertiserInfo popupClose={handleDetailPopupClose} infoId={infoId} />
-            </Popup> : null}
+             : null}
         </>
     )
 }

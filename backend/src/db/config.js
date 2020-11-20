@@ -16,7 +16,7 @@ exports.getConfig = () => {
     } else {
         config = {
             'mysql': {
-                'host': '150.20.118.53',
+                'host': '150.20.14.75',
                 'port': '3306',
                 'user': 'bd_maptics',
                 'password': 'Bluedigm1!',

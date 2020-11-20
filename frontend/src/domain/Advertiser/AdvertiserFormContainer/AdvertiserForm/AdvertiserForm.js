@@ -46,6 +46,7 @@ const emailProviderOptions = [
 const AdvertiserForm = ({ onSubmit, onCancel }) => {
     const dispatch = useDispatch();
     const existAdvtsId = useSelector((state) => state.advertiserStore.existId);
+
     const [advertiser, setAdvertiser] = useState({
         "advts_id" : "",
         "advts_nm" : "",
@@ -81,22 +82,19 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
         "phone_no_end" : false,
     });
     const [execCheckAdvtsId, setExecCheckAdvtsId] = useState(false);
-    const [checkAdvtsId, setCheckAdvtsId] = useState(false);
     const [advtsImgFile, setAdvtsImgFile] = useState(null);
     const [helpMsg, setHelpMsg] = useState("");
     const advtsImgRef = useRef();
 
-    // life cycle
+    // clean
     useEffect(() => {
-        setCheckAdvtsId(existAdvtsId);
-        if(existAdvtsId > 0) {
-            setAdvertiserCaution({
-                ...advertiserCaution
-                , advts_id: "입력하신 아이디는 사용 중 입니다."
-            });
+        return () => {
+            setAdvertiser(null);
+            setAdvertiserValid(null);
+            setAdvertiserCaution(null);
         }
-    }, []) // page loading 
-    
+    }, []);
+
     const setImageData = (fileData) => {
         setAdvertiser({
             ...advertiser
@@ -110,18 +108,19 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
 
     const setAdvertiserIdValue = (e, value) => {
         setExecCheckAdvtsId(false);
+        dispatch(clearAdvertiserInfo());
 
-        if(!validAdvertiserId(value)){
-            setAdvertiserCaution({
-                ...advertiserCaution
-                , advts_id: "영문,영문+숫자,5자 이상 입력 가능합니다."
-            });
-        } else {
-            setAdvertiserCaution({
-                ...advertiserCaution
-                , advts_id: ""
-            });
-        }
+        // if(!validAdvertiserId(value)){
+        //     setAdvertiserCaution({
+        //         ...advertiserCaution
+        //         , advts_id: "영문,영문+숫자,5자 이상 입력 가능합니다."
+        //     });
+        // } else {
+        //     setAdvertiserCaution({
+        //         ...advertiserCaution
+        //         , advts_id: ""
+        //     });
+        // }
 
         setAdvertiser({
             ...advertiser
@@ -129,18 +128,33 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
         });
     }
 
-    const setAdvertiserNameValue = (e, value) => {
-        if(!validAdvertiserName(value)){
-            setAdvertiserCaution({
-                ...advertiserCaution
-                , advts_nm: "한글/영문,2자 이상 입력 가능합니다."
-            });
+    const handleDupleIdCheck = (e) => {
+        e.preventDefault();
+        if(!isEmpty(advertiser.advts_id) && advertiser.advts_id.length > 4) {
+            dispatch(checkAdvertiserId(advertiser.advts_id));
         } else {
             setAdvertiserCaution({
                 ...advertiserCaution
-                , advts_nm: ""
+                , advts_id: "영문,영문+숫자,5자 이상 입력 가능합니다."
             });
+            alert("광고주 아이디를 입력 해 주세요.");
+            return;
         }
+        setExecCheckAdvtsId(true);
+    }
+
+    const setAdvertiserNameValue = (e, value) => {
+        // if(!validAdvertiserName(value)){
+        //     setAdvertiserCaution({
+        //         ...advertiserCaution
+        //         , advts_nm: "한글/영문,2자 이상 입력 가능합니다."
+        //     });
+        // } else {
+        //     setAdvertiserCaution({
+        //         ...advertiserCaution
+        //         , advts_nm: ""
+        //     });
+        // }
 
         setAdvertiser({
             ...advertiser
@@ -149,17 +163,17 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
     }
 
     const setAdvertiserMngNameValue = (e, value) => {
-        if(!validAdvertiserMngName(value)){
-            setAdvertiserCaution({
-                ...advertiserCaution
-                , advts_mng_nm: "한글/영문,2자 이상 입력 가능합니다."
-            });
-        } else {
-            setAdvertiserCaution({
-                ...advertiserCaution
-                , advts_mng_nm: ""
-            });
-        }
+        // if(!validAdvertiserMngName(value)){
+        //     setAdvertiserCaution({
+        //         ...advertiserCaution
+        //         , advts_mng_nm: "한글/영문,2자 이상 입력 가능합니다."
+        //     });
+        // } else {
+        //     setAdvertiserCaution({
+        //         ...advertiserCaution
+        //         , advts_mng_nm: ""
+        //     });
+        // }
 
         setAdvertiser({
             ...advertiser
@@ -168,17 +182,17 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
     }
 
     const setEmailValue = (e, value) => {
-        if(!validEmail(value)){
-            setAdvertiserCaution({
-                ...advertiserCaution
-                , email_addr: "이메일 형식이 올바르지 않습니다."
-            });
-        } else {
-            setAdvertiserCaution({
-                ...advertiserCaution
-                , email_addr: ""
-            });
-        }
+        // if(!validEmail(value)){
+        //     setAdvertiserCaution({
+        //         ...advertiserCaution
+        //         , email_addr: "이메일 형식이 올바르지 않습니다."
+        //     });
+        // } else {
+        //     setAdvertiserCaution({
+        //         ...advertiserCaution
+        //         , email_addr: ""
+        //     });
+        // }
 
         setAdvertiser({
             ...advertiser
@@ -188,17 +202,17 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
 
     const setEmailProviderValue = (obj) => {
         console.log(obj);
-        if(!isEmpty(obj) && !validEmailProvider(obj.value)){
-            setAdvertiserCaution({
-                ...advertiserCaution
-                , email_addr_provider: "이메일 형식이 올바르지 않습니다."
-            });
-        } else {
-            setAdvertiserCaution({
-                ...advertiserCaution
-                , email_addr_provider: ""
-            });
-        }
+        // if(!isEmpty(obj) && !validEmailProvider(obj.value)){
+        //     setAdvertiserCaution({
+        //         ...advertiserCaution
+        //         , email_addr_provider: "이메일 형식이 올바르지 않습니다."
+        //     });
+        // } else {
+        //     setAdvertiserCaution({
+        //         ...advertiserCaution
+        //         , email_addr_provider: ""
+        //     });
+        // }
 
         setAdvertiser({
             ...advertiser
@@ -208,17 +222,17 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
 
     const setPhoneNoFirstValue = (obj) => {
         console.log(obj);
-        if(!isEmpty(obj) && !validPhoneFirst(obj.value)){
-            setAdvertiserCaution({
-                ...advertiserCaution
-                , phone_no_first: "숫자,3~4자 입력 가능합니다."
-            });
-        } else {
-            setAdvertiserCaution({
-                ...advertiserCaution
-                , phone_no_first: ""
-            });
-        }
+        // if(!isEmpty(obj) && !validPhoneFirst(obj.value)){
+        //     setAdvertiserCaution({
+        //         ...advertiserCaution
+        //         , phone_no_first: "숫자,3~4자 입력 가능합니다."
+        //     });
+        // } else {
+        //     setAdvertiserCaution({
+        //         ...advertiserCaution
+        //         , phone_no_first: ""
+        //     });
+        // }
 
         setAdvertiser({
             ...advertiser
@@ -227,17 +241,17 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
     }
 
     const setPhoneNoMiddleValue = (e, value) => {
-        if(!validPhoneMiddle(value)){
-            setAdvertiserCaution({
-                ...advertiserCaution
-                , phone_no_middle: "숫자,3~4자 입력 가능합니다."
-            });
-        } else {
-            setAdvertiserCaution({
-                ...advertiserCaution
-                , phone_no_middle: ""
-            });
-        }
+        // if(!validPhoneMiddle(value)){
+        //     setAdvertiserCaution({
+        //         ...advertiserCaution
+        //         , phone_no_middle: "숫자,3~4자 입력 가능합니다."
+        //     });
+        // } else {
+        //     setAdvertiserCaution({
+        //         ...advertiserCaution
+        //         , phone_no_middle: ""
+        //     });
+        // }
 
         setAdvertiser({
             ...advertiser
@@ -246,17 +260,17 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
     }
 
     const setPhoneNoEndValue = (e, value) => {
-        if(!validPhoneEnd(value)){
-            setAdvertiserCaution({
-                ...advertiserCaution
-                , phone_no_end: "숫자,4자 입력 가능합니다."
-            });
-        } else {
-            setAdvertiserCaution({
-                ...advertiserCaution
-                , phone_no_end: ""
-            });
-        }
+        // if(!validPhoneEnd(value)){
+        //     setAdvertiserCaution({
+        //         ...advertiserCaution
+        //         , phone_no_end: "숫자,4자 입력 가능합니다."
+        //     });
+        // } else {
+        //     setAdvertiserCaution({
+        //         ...advertiserCaution
+        //         , phone_no_end: ""
+        //     });
+        // }
 
         setAdvertiser({
             ...advertiser
@@ -276,22 +290,6 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
         advtsImgRef.current.filePopupOpen();
     }
 
-    const handleDupleIdCheck = (e) => {
-        e.preventDefault();
-        if(advertiser.advts_id !== null && advertiser.advts_id !== "") {
-            dispatch(checkAdvertiserId(advertiser.advts_id));
-        } else {
-            setAdvertiserCaution({
-                ...advertiserCaution
-                , advts_id: "영문,영문+숫자,5자 이상 입력 가능합니다."
-            });
-            alert("광고주 아이디를 입력 해 주세요.");
-            return;
-        }
-
-        setExecCheckAdvtsId(true);
-    }
-
     const handleSubmit = (e) => {
         e.preventDefault();
         let advtsIdValid, existAdvtsIdValid, execCheckAdvtsIdValid, advtsNmValid, advtsMngNmValid, advtsImgValid, emailAddrValid, emailAddrProviderValid, phoneNoFirstValid, phoneNoMiddleValid, phoneNoEndValid = false;
@@ -306,7 +304,7 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
         if(existAdvtsId < 1){
             existAdvtsIdValid = true;
         } else { 
-            advtsIdMsg = "입력하신 아이디는 사용 중 입니다.";
+            advtsIdMsg = "사용 불가능한 아이디 입니다.";
             advtsIdValid = false;
         }
 
@@ -431,6 +429,9 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
         onSubmit(e, formData);
     };
 
+    console.log("Form render ----------------------------");
+    console.log(existAdvtsId)
+    console.log("-------------------------------------------------")
     // render
     return (
         <>
@@ -465,12 +466,12 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
                         <td>
                             <p className={cx("board_notice")}>
                                 <Button
-                                    type={execCheckAdvtsId && checkAdvtsId === 0 ? "complete" : "caution"}
+                                    type={execCheckAdvtsId && existAdvtsId === 0 && advertiser.advts_id.length > 4 ? "complete" : "caution"}
                                     onClick={(e) => {
                                         handleDupleIdCheck(e);
                                     }}
                                     >
-                                    {execCheckAdvtsId && checkAdvtsId === 0 ? "체크완료" : "중복확인"}
+                                    {execCheckAdvtsId && existAdvtsId === 0 && advertiser.advts_id.length > 4 ? "체크완료" : "중복확인"}
                                 </Button>
                             </p>
                             <InputText 

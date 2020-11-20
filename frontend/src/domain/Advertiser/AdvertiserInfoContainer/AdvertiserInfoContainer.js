@@ -3,7 +3,7 @@ import { useDispatch, useSelector, useCallback } from 'react-redux';
 import { getAdvertiser, deleteAdvertiser, updateAdvertiser, clearAdvertiserInfo } from 'store/modules/advertiserStore';
 import { useHistory } from "react-router";
 import AdvertiserInfo from './AdvertiserInfo';
-
+import Popup from '../../../components/PopupComponent';
 
 // 컨테이너 정의
 const AdvertiserInfoContainer = ({
@@ -13,42 +13,25 @@ const AdvertiserInfoContainer = ({
     }) => {
 
     const dispatch = useDispatch();
-    const history = useHistory();
     const result = useSelector((state) => state.advertiserStore.status);
     const advertiserInfo = useSelector((state) => state.advertiserStore.advertiserInfo);
     const stateCheck = useSelector(state => state);
 
     // life cycle
     useEffect(() => {
-        console.log("advertiserInfo ================= ")
-        console.log(match)
-        console.log(infoId)
         dispatch(getAdvertiser(infoId));
-
-        // // clear
-        // return () => {
-        //     // dispatch(clearAdvertiserInfo());
-        // }
     }, []) // page loading 
 
-    const onCancel = () => {
+    const onCancel = (e) => {
+        e.preventDefault();
+        dispatch(clearAdvertiserInfo());
         popupClose();
-        // history.push({
-        //     pathname:  "/advertiser"
-        // });
     }
 
     const onDelete = () => {
         if(window.confirm('아이디 [ ' + infoId + ' ] 광고주를 삭제하시겠습니까?')){
             dispatch(deleteAdvertiser(infoId));
-
-            popupClose();
-            if(result === "advertiser/UPDATE_ADVERTISER_SUCCESS"){
-                alert("result check");
-            }
-            // history.push({
-            //     pathname:  "/users"
-            // });    
+            popupClose(); 
         }
     }
 
@@ -61,7 +44,9 @@ const AdvertiserInfoContainer = ({
     // render
     return (
         <>
-            {advertiserInfo && <AdvertiserInfo advertiserInfo={advertiserInfo} onSubmit={onSubmit} onDelete={onDelete} onCancel={onCancel} />}
+            <Popup id="detailPopup" title="광고주 상세정보" close={onCancel}>
+                {advertiserInfo && <AdvertiserInfo advertiserInfo={advertiserInfo} onSubmit={onSubmit} onDelete={onDelete} onCancel={onCancel} />}
+            </Popup>
         </>
     )
 }

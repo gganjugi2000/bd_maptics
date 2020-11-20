@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createAdvertiser } from 'store/modules/advertiserStore';
 import { useHistory } from "react-router";
 import AdvertiserForm from './AdvertiserForm';
+import Popup from '../../../components/PopupComponent';
 
 
 // 컨테이너 정의
@@ -21,7 +22,9 @@ const AdvertiserFormContainer = ({
 
     const onCancel = () => {
         // state clear
-        popupClose();
+        if(window.confirm('작성 중인 정보가 삭제됩니다. \n 창을 닫으시겠습니까?')){
+            popupClose(); 
+        }
     }
 
     const onSubmit = (e, advertiser) => {
@@ -32,7 +35,11 @@ const AdvertiserFormContainer = ({
 
     // render
     return (
-        <AdvertiserForm onSubmit={onSubmit} onCancel={onCancel}  />
+        <>
+            <Popup id="createPopup" title="광고주 등록" close={onCancel}>
+                <AdvertiserForm onSubmit={onSubmit} onCancel={onCancel}  />
+            </Popup>
+        </>
     )
 }
 

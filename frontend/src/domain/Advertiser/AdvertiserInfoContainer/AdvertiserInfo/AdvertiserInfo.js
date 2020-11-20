@@ -17,7 +17,6 @@ import {
     validPhoneEnd
 } from 'utiles/validation/common';
 import {
-    validAdvertiserId,
     validAdvertiserName,
     validAdvertiserMngName
 } from 'utiles/validation/validateAdvertiser';
@@ -80,6 +79,14 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
     const advtsImgRef = useRef();
 
     useEffect(() => {
+        return function clean() {
+            setAdvertiser(null);
+            setAdvertiserCaution(null);
+            setAdvertiserValid(null);
+        }
+    }, []);
+
+    useEffect(() => {
         if(!isEmpty(advertiserInfo)){
             let emailAddr = "";
             let emailAddrProvider = "";
@@ -110,7 +117,7 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
             console.log("----------------------------------")
             
             setAdvertiser({
-                ...advertiserValid
+                ...advertiser
                 , advts_id: advertiserInfo.advts_id
                 , advts_nm: advertiserInfo.advts_nm
                 , advts_mng_nm: advertiserInfo.advts_mng_nm
@@ -124,6 +131,7 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
             });
         }
     }, [advertiserInfo]) // page loading 
+
 
     const setImageData = (fileData) => {
         setAdvertiser({
@@ -378,7 +386,7 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
             || !advtsMngNmValid || !advtsImgValid 
             || !emailAddrValid || !emailAddrProviderValid
             || !phoneNoFirstValid || !phoneNoMiddleValid || !phoneNoEndValid) {
-            alert("입력 항목 validation 오류");
+            alert("입력 항목 오류");
             return;
         }
 
@@ -398,6 +406,10 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
     };
 
     // render
+
+    if(advertiser.advts_id === "") 
+        return (<div></div>);
+
     return (
         <>
             <span className={cx("add_title")}>기본 정보 작성 <span color='red'>{helpMsg}</span></span>
@@ -432,7 +444,7 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
                             <InputText 
                                 id="advts_id"
                                 size="27"
-                                placeholder="광고주 아이디"
+                                placeholder=""
                                 value={advertiser.advts_id}
                                 caution={advertiserCaution.advts_id}
                                 disabled
@@ -445,12 +457,13 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
                             <InputText 
                                 id="advts_nm"
                                 size="27"
-                                placeholder="광고주 명을 입력해주세요."
+                                placeholder=""
                                 value={advertiser.advts_nm}
                                 caution={advertiserCaution.advts_nm}
                                 onChange={(e) => {
                                     setAdvertiserNameValue(e, e.target.value);
                                 }}
+                                disabled
                             />
                         </td>
                     </tr>
@@ -460,7 +473,7 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
                             <InputText 
                                 id="advts_mng_nm"
                                 size="27"
-                                placeholder="담당자 명을 입력해주세요."
+                                placeholder=""
                                 value={advertiser.advts_mng_nm}
                                 caution={advertiserCaution.advts_mng_nm}
                                 onChange={(e) => {
@@ -475,7 +488,7 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
                             <InputText 
                                 id="email_addr"
                                 style={{width: "100px"}}
-                                placeholder="이메일을 입력해주세요."
+                                placeholder=""
                                 value={advertiser.email_addr}
                                 caution={advertiserCaution.email_addr}
                                 onChange={(e) => {
@@ -564,7 +577,9 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
             <div className={cx("btn_set")}>
                 <Button
                     type="btn_gray"
-                    onClick={onCancel}
+                    onClick={(e) => {
+                        onCancel(e);
+                    }}
                     >
                     취소
                 </Button>

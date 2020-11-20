@@ -62,7 +62,7 @@ export const initAdvertiserState = {
     msg: null,
     advertiserList: [],
     advertiserInfo: {},
-    existId: 0,
+    existId: -1,
     status: "",
     totalCount: 0,
     searchCount: 0
