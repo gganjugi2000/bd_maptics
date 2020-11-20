@@ -25,47 +25,36 @@ const dummyMenu = [
 // 컴포넌트 정의
 const SideMenu = ({leftSize}) => {
 
+    // <div className={cx("logo")}>
+    //     <Link to={"main.html"}><img src={imageLogo} alt="ATS2.0 Admin Sambol" /> Maptics Admin</Link>
+    // </div>
+    // <li className={cx("mb20")}><Link to="/campaign">캠페인 관리</Link></li>
+    //                         <p className={cx("mb20")}>- 캠페인 관리</p>
+    //                         <p className={cx("mb20")}>- 예약 관리</p>
+    //                         <p>- 히스토리</p>
     // render
     return (
-        <div>
-            <div className={cx("lnbarea")} style={{'transform': `translate3d(${leftSize === 260 ? '0' : '-260px'}, 0, 0)`}}>
-                <div className={cx("logo")}>
-                    <Link to={"main.html"}><img src={imageLogo} alt="ATS2.0 Admin Sambol" /> Maptics Admin</Link>
-                </div>
-                <div className={cx("myInFo")}>
-                    <img src={manPic} alt="성별:남자 로그인 후 이미지" />
-                        <div className={cx("profile")}>
-                            <ul>
-                                <li className={cx("logouT")}><img src={btnLogout} alt="log out" /></li>
-                                <li className={cx("mt10")}><span>Maptics Master 님</span></li>
-                                <li><span className={cx("term")}>전략 사업팀</span></li>
-                            </ul>
-                        </div>
-                        <div className={cx("lnbm", "mt30")}>
-                            <ul>
-                                <li className={cx("mb20", "current")}><Link to="/main.html">Main</Link></li>
-                                <li className={cx("mb20")}><Link to="/advertiser">광고주 관리</Link></li>
-                                <li className={cx("mb20")}><Link to="/campaign">캠페인 관리</Link></li>
-                                <p className={cx("mb20")}>- 캠페인 관리</p>
-                                <p className={cx("mb20")}>- 예약 관리</p>
-                                <p>- 히스토리</p>
-                            </ul>
-                        </div>
-                </div>
+        <div className={cx("lnbarea")} style={{'transform': `translate3d(${leftSize === 260 ? '0' : '-260px'}, 0, 0)`}}>
+            <div className={cx("logo")}>
+                <Link to={"/"}><img src={imageLogo} alt="" /> Maptics Admin</Link>
             </div>
-
-            {/*<div className={cx("side-body")}>
-                <ul>
-                {dummyMenu && dummyMenu.map((menuItem, i) => {
-                    console.log(menuItem)
-                    return (
-                        <li key={i}>
-                            <Link to={menuItem.url}>{menuItem.name}</Link>
-                        </li>
-                    );
-                })}
-                </ul>
-            </div>*/}
+            <div className={cx("myInFo")}>
+                <img src={manPic} alt="성별:남자 로그인 후 이미지" />
+                    <div className={cx("profile")}>
+                        <ul>
+                            <li className={cx("logouT")}><img src={btnLogout} alt="log out" /></li>
+                            <li className={cx("mt10")}><span>Maptics Master 님</span></li>
+                            <li><span className={cx("term")}>전략 사업팀</span></li>
+                        </ul>
+                    </div>
+                    <div className={cx("lnbm", "mt30")}>
+                        <ul>
+                            <li className={cx("mb20", "current")}><Link to="/">Main</Link></li>
+                            <li className={cx("mb20")}><Link to="/advertiser">광고주 관리</Link></li>
+                            <li className={cx("mb20")}><Link to="/campaign">캠페인 관리</Link></li>
+                        </ul>
+                    </div>
+            </div>
         </div>
     )
 }
