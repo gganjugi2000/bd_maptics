@@ -858,7 +858,7 @@ const CampaignForm = ({ advertiserInfo, onSubmit, onCancel, handleAdvtsSearchPop
                             </td>
                         </tr>
                         <tr>
-                            <th scope="row"><label2 for="PTjoin_name" className={cx("label2")}>MMS/RCS 이미지 첨부</label2></th>
+                            <th scope="row"><label2 for="PTjoin_name" className={cx("label2")}>MMS/<br />RCS 이미지 첨부</label2></th>
                             <td colspan="3">
                                 <span className={cx("photo")} style={{width: "250px",height: "150px", padding: '0px'}}>
                                     <ImageDropZone

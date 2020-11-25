@@ -5,13 +5,15 @@
 .all_Search ul li {float:left; width:33%; padding-bottom:10px;}
 .all_Search ul li.secondLine {padding-bottom:0;}
 .all_Search ul li label {margin-right: 10px; width:70px;}
+.all_Search ul li.adjust label{margin-right:22px;}
 .all_Search ul li .datepickerWrap {display:inline-block; width: calc(100% - 100px);}
 .all_Search ul li .datepickerWrap span {display:inline-block; box-sizing: border-box}
 .all_Search ul li .datepickerWrap span:nth-child(1),
 .all_Search ul li .datepickerWrap span:nth-child(3) {width: 45%}
 .all_Search ul li .datepickerWrap span:nth-child(2) {width: 10%; text-align:center; padding:0 3px;}
 .all_Search ul li .datepickerWrap input {width:100%;}
-.all_Search button:not([class^="react"]) {height:90px; margin:0;}
+.all_Search ul li .datepickerWrap input[value=""] { background:#ffffff url(../../../images/ico_calendar.gif) no-repeat right 50%; }
+.all_Search button:not([class^="react"]) {height:84px; margin:0;}
 
 /* button component로 분리 할지 말지  */
 .btn_normal{display:inline-block;float:right;width:80px;height:35px;border-radius:3px;font-weight:700;background:#89adc8;color:#FFFFFF;}

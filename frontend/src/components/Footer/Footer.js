@@ -8,8 +8,9 @@ import bgWoman from '../../images/bg_woman.png';
 const cx = classNames.bind(styles);
 
 // 컴포넌트 정의
-const Footer = () => {
+const Footer = ({leftSize, windowDimensions}) => {
 
+    console.log(windowDimensions)
     const handleSlidemenu = useCallback(
         (e) => {
 
@@ -17,7 +18,7 @@ const Footer = () => {
     )
     // render
     return (
-        <div className={cx("footerWrap")}>
+        <div className={cx("footerWrap")} style={{'transform': `translate3d(${leftSize === 260 ? '0' : '-260px'}, 0, 0)`, width : `calc(100% - ${leftSize}px)`}}>
             <div className={cx("copy")}>
                 <div className={cx("logo")}><span className="mr10">고객센터&nbsp;<strong>1544-9001</strong></span> <span className={cx("ml10")}>평일&nbsp;09:00 - 18:00</span></div>
                 <div className={cx("footer")}>Copyright &copy; 2019 By <strong>SKTelecom</strong> Co, Ltd. All Rights Reserved.</div>

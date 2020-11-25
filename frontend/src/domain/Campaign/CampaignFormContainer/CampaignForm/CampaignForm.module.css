@@ -1,4 +1,4 @@
-.regist_box	{position:relative;;margin-top:20px;padding:0;font-size:12px;overflow: hidden;}
+.regist_box	{position:relative;;margin-top:20px;padding:0;font-size:14px;overflow: hidden;}
 
 .add_title{ font-size:15px; color:#000; font-weight:bold;}
 
@@ -37,4 +37,5 @@
 
 .datepickerWrap {display:inline-block;}
 .datepickerWrap span {display:inline-block; box-sizing: border-box; height: 45px; padding-right: 5px;}
-.datepickerWrap span div input[type="text"]{height: 39px;}
+.datepickerWrap span div input[type="text"]{height: 30px;}
+.datepickerWrap input[value=""] { background:#ffffff url(../../../../images/ico_calendar.gif) no-repeat right 50%; }

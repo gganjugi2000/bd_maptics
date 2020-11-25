@@ -461,7 +461,7 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
                     <tr>
                         <th scope="row"><label htmlFor="PTjoin_name" className={cx("label")}><em className={cx("required")}>V</em>광고주 아이디</label></th>
                         <td>
-                            <p className={cx("board_notice")}>
+                            <p className={cx("board_notice", "idCheck")}>
                                 <Button
                                     type={execCheckAdvtsId && existAdvtsId === 0 && advertiser.advts_id.length > 4 ? "complete" : "caution"}
                                     onClick={(e) => {

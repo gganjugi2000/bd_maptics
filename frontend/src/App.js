@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Route, Switch } from 'react-router' // react-router v4/v5
 import { ConnectedRouter } from 'connected-react-router';
 
@@ -46,7 +46,26 @@ const cx = classNames.bind(styles);
 function App({ history, context }) {
   let sideMenu = null;
   // let sideMenu = null;
+  function getWindowDimensions() {
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+      width,
+      height
+    }
+  }
+  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [])
+
   const [leftSize, setLeftSize] = useState(260)
+  console.log(leftSize)
   const showHideLeft = () => {
     if(leftSize === 0){
       setLeftSize(260)
@@ -61,7 +80,7 @@ function App({ history, context }) {
       <>
         <div className={cx("root")}>
             <SideMenu setLeftSize={showHideLeft} leftSize={leftSize} />
-            <div className={cx("container")} style={{'transform': `translate3d(${leftSize === 260 ? '0' : '-260px'}, 0, 0)`, width : `calc(100% - ${leftSize}px)`}}>
+            <div className={cx("container")} rel={windowDimensions.height} style={{'transform': `translate3d(${leftSize === 260 ? '0' : '-260px'}, 0, 0)`, width : `calc(100% - ${leftSize}px)`, height : `calc(${windowDimensions.height}px - 60px)`}}>
               <Header setLeftSize={showHideLeft} leftSize={leftSize} />
               <div className={cx("contents")}>
                 <Switch>
@@ -93,7 +112,7 @@ function App({ history, context }) {
                 </Switch>
               </div>
             </div>
-          <Footer />
+          <Footer leftSize={leftSize} windowDimensions={windowDimensions} />
         </div>
       </>
     </ConnectedRouter>

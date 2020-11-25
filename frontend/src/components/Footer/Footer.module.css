@@ -1,5 +1,5 @@
 /* Footer */
-.footerWrap{display:block; width:100%; height:60px;border-top:1px solid #ccc;clear: both;}
+.footerWrap{position:absolute; bottom:0; left:260px; transition: transform .3s; display:block; width:100%; height:60px;border-top:1px solid #ccc;clear: both; overflow : hidden;}
 .footerWrap .copy{display:block;font-size:12px;}
 .footerWrap .logo {float:left; display:inline-block; line-height:60px; padding-left:40px; color:#777;}
 .footerWrap .footer {float:right; display:inline-block; text-align:right; color:#999; line-height:60px;padding-right:40px;}

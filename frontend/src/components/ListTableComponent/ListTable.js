@@ -103,7 +103,7 @@ const ListTable = ({
                                     {tableHead && tableHead.map((headItem, j) => {
                                         return (
                                             <td key={(i + 1) * (j + 1)} >
-                                                <span className={cx("data")} >
+                                                <span>
                                                     {headItem.id === "no" ? ((nowPage -1) * limit + (i + 1))
                                                     : (headItem["type"] !== undefined && headItem.type === "link" ? (
                                                             <Link to={headItem.to + item[headItem.id]}><label className={cx("link")}>{item[headItem.label_id]}</label></Link>
@@ -128,13 +128,13 @@ const ListTable = ({
                         })}                        
                     </tbody>
                 </table>
-                <ListTablePage
-                    nowPage={nowPage}
-                    limit={limit}
-                    totalCount={totalCount}
-                    handleChangePage={handleChangePage}
-                />
             </div>
+            <ListTablePage
+                nowPage={nowPage}
+                limit={limit}
+                totalCount={totalCount}
+                handleChangePage={handleChangePage}
+            />
         </div>
     )
 }

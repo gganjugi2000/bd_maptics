@@ -3,6 +3,7 @@
 
 .btn_set	{position:relative;margin-top:30px;text-align:center;}
 .board_notice	{position:relative;float:right;margin-bottom:14px;padding-left:17px;font-size:12px;color:#777;}
+.board_notice.idCheck{margin-bottom:0px;}
 .board_notice .required	{width:11px;height:6px;display:inline-block;margin:4px 5px 0 0;vertical-align:top;text-indent:-99px;overflow:hidden;background-position:0 -245px;}
 .board_write	{clear:both;border-top:2px solid #333;}
 .board_write table th	{width:120px;padding:15px;font-weight:normal;color:#333;text-align:left;border-bottom:1px solid #ccc;background-color:#f2f2f2;}

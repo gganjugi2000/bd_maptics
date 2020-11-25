@@ -245,7 +245,7 @@ const CampaignSearchBar = ({
                         </span>
                     </div>
                 </li>
-                <li className={cx("secondLine", "date")}>
+                <li className={cx("secondLine", "date", "adjust")}>
                     <label>발송일</label>
                     <div className={cx("datepickerWrap")}>
                         <span>
