@@ -32,6 +32,7 @@ export default function createRequestOfficeSaga(type, request, forwardLocation) 
             }
 
             if(forwardLocation) {
+                
                 yield put(push(forwardLocation));
             }
         } catch (e) {

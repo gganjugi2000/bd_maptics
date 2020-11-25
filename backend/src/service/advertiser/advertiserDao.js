@@ -108,6 +108,68 @@ exports.getAdvertiserList = (start_offset, page_size, searchQuery, sortQuery) =>
     });
 }
 
+exports.getAdvertiserSearchList = (start_offset, page_size, searchQuery, sortQuery) => {
+    let sql_query = "";
+    const sql = ` 
+                select
+                    advts_id
+                    , advts_nm
+                    , advts_mng_nm
+                    , advts_img
+                    , email_addr
+                    , phone_no
+                    , descp
+                    , use_yn
+                    , reg_id
+                    , reg_dt
+                    , upd_id
+                    , upd_dt
+                    from advertiser 
+                where use_yn = 'Y' 
+                `;
+    sql_query = sql_query.concat(sql);
+
+    if(Object.keys(searchQuery).length !== 0) {
+        sql_query = sql_query.concat("AND ( ");
+
+        let query = "";
+        // 광고주 검색 키워드
+        if(searchQuery.search_value != null && searchQuery.search_value != undefined) {
+            query += "advts_id like '%" + searchQuery.search_value + "%'";
+        
+            if(query != "") query += " OR ";
+                query += "advts_nm like '%" + searchQuery.search_value + "%'";
+        
+            if(query != "") query += " OR ";
+                query += "advts_mng_nm like '%" + searchQuery.search_value + "%'";
+        }
+        
+        sql_query = sql_query.concat(query);
+        sql_query = sql_query.concat(" ) ");
+    }
+
+    const orderByDesc = " order by reg_dt desc";
+    const orderByAsc = " order by reg_dt asc";
+    if(Object.keys(sortQuery).length !== 0) {
+        if(sortQuery.sort != null && sortQuery.sort != undefined && sortQuery.sort == "asc") {
+            sql_query = sql_query.concat(orderByAsc);
+        } else {
+            sql_query = sql_query.concat(orderByDesc);
+        }
+    } else {
+        sql_query = sql_query.concat(orderByDesc)
+    }
+
+    const limit = ` limit ${start_offset}, ${page_size} `;
+    sql_query = sql_query.concat(limit);
+
+    return new Promise(resolve => {
+        mysql.get_data('get_advertiser_search_list', sql_query, (result) => {
+            resolve(result);
+        });
+    });
+}
+
 exports.getAdvertiserInfoDetail = (advts_id) => {
     const sql = ` 
                 select

@@ -1,8 +1,8 @@
-.all_Search {margin-bottom:20px;border-bottom:1px solid #CCC;padding:15px 10px;}
+.all_Search {padding:10px 10px;}
 .all_Search input[type="text"]{font-size:12px;width:calc(100% - 100px); box-sizing: border-box; height:35px;padding:0 0 0 10px;margin-right: 20px;background-color:#eceff3;border:1px solid #dddddd;}
 .all_Search p{display:inline-block;vertical-align:middle;}
 .all_Search ul {display:inline-block; width:calc(100% - 100px)}
-.all_Search ul li {float:left; width:33%; padding-bottom:20px;}
+.all_Search ul li {float:left; width:33%; padding-bottom:10px;}
 .all_Search ul li.secondLine {padding-bottom:0;}
 .all_Search ul li label {margin-right: 10px; width:70px;}
 .all_Search ul li .datepickerWrap {display:inline-block; width: calc(100% - 100px);}

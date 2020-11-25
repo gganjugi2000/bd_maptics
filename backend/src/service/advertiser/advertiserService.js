@@ -10,6 +10,11 @@ exports.getAdvertiserList = async (start_offset, page_size, searchQuery, sortQue
     return data
 }
 
+exports.getAdvertiserSearchList = async (start_offset, page_size, searchQuery, sortQuery) => {
+    const data = await db_mysql.getAdvertiserSearchList(start_offset, page_size, searchQuery, sortQuery);
+    return data
+}
+
 exports.getAdvertiserInfoDetail = async (advts_id) => {
     const data = await db_mysql.getAdvertiserInfoDetail(advts_id);
     return data

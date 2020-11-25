@@ -1,16 +1,17 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { listAdvertiser } from 'store/modules/advertiserStore';
 import { useHistory } from "react-router";
+import { listAdvertiser } from 'store/modules/advertiserStore';
 import AdvertiserList from './AdvertiserList';
 import AdvertiserSearchBar from '../../../components/SearchBarComponent/AdvertiserSearchBar/AdvertiserSearchBar';
 import AdvertiserForm from '../AdvertiserFormContainer';
 import AdvertiserInfo from '../AdvertiserInfoContainer';
 import Button from '../../../components/ButtonComponent';
-import Popup from '../../../components/PopupComponent';
+
 
 // 컨테이너 정의
 const AdvertiserListContainer = () => {
+    
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -20,26 +21,26 @@ const AdvertiserListContainer = () => {
     const [infoId, setInfoId] = useState(null);
     const [pagingQuery, setPagingQuery] = useState({cur:1, page_size:10});
     const [searchQuery, setSearchQuery] = useState({});
-    const { advertiserList, totalCount, searchCount } = useSelector((state) => state.advertiserStore);
+    const { advertiserList, totalCount, searchCount, status } = useSelector((state) => state.advertiserStore);
 
     // life cycle
     useEffect(() => {
         // 데이터 불러오기
         dispatch(listAdvertiser(pagingQuery));
-    }, []) // page loading 
+    }, [dispatch, totalCount, status]);
     
     const handleCreatePopupOpen = (e) => {
         setOpenCreate(true);
     }
 
     const handleCreatePopupClose = (e) => {
-        setOpenCreate(false);
         dispatch(listAdvertiser(pagingQuery));
+        setOpenCreate(false);
     }
 
     const handleDetailPopupClose = (e) => {
-        setOpenDetail(false);
         dispatch(listAdvertiser(pagingQuery));
+        setOpenDetail(false);
     }
 
     const handleAdvertiserDetail = (value) => {
@@ -49,9 +50,6 @@ const AdvertiserListContainer = () => {
 
     // 광고주 정보 데이터 조회(페이지) 항목
     const handleAdvertiserDispatch = (obj) => {
-        console.log("handleAdvertiserDispatch obj =================== ")
-        console.log(obj)
-        console.log("------------------------------------------------- ")
         // nowPage : 현재 페이지
         // limit : 테이블에서 보여질 수
         setPagingQuery(obj);
@@ -60,14 +58,35 @@ const AdvertiserListContainer = () => {
 
     // Search 
     const handleSearchAdvertiserDispatch = (obj) => {
-        console.log("handleSearchAdvertiserDispatch obj =================== ")
-        console.log(obj)
-        console.log("------------------------------------------------- ")
         setSearchQuery(obj);
         // nowPage : 현재 페이지
         // limit : 테이블에서 보여질 수
         dispatch(listAdvertiser(Object.assign(obj, {cur:1, page_size:10})));
     };
+
+    const ColGroup = () => {
+        return (
+            <colgroup>
+                <col width={"10%"} />
+                <col width={"20%"} />
+                <col width={"10%"} />
+                <col width={"10%"} />
+                <col width={"20%"} />
+                <col width={"15%"} />
+                <col width={"15%"} />
+            </colgroup>
+        )
+    }
+    
+    const tableHead = [
+        {id: "no",name: "번호" },
+        {id: "advts_id", type: "callback", name: "아이디"},
+        {id: "advts_nm",name: "광고주명"},
+        {id: "advts_mng_nm",name: "담당자명"},
+        {id: "email_addr",name: "이메일 계정"},
+        {id: "phone_no",name: "연락처"},
+        {id: "reg_dt",name: "등록일", data_type: 'date'},
+    ];
 
     // render
     return (
@@ -79,9 +98,11 @@ const AdvertiserListContainer = () => {
                 rowData={advertiserList} 
                 totalCount={totalCount}
                 searchCount={searchCount}
+                colGroup={<ColGroup />}
+                tableHeadData={tableHead}
                 handleAdvertiserDispatch={handleAdvertiserDispatch}
                 handleAdvertiserCreate={handleCreatePopupOpen}
-                handleAdvertiserDetail={handleAdvertiserDetail}
+                handleAdvertiserCallback={handleAdvertiserDetail}
             />
             {openCreate ? 
                 <AdvertiserForm popupClose={handleCreatePopupClose} />

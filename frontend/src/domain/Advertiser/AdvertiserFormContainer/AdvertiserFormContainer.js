@@ -30,6 +30,7 @@ const AdvertiserFormContainer = ({
     const onSubmit = (e, advertiser) => {
         e.preventDefault();
         dispatch(createAdvertiser(advertiser));
+        
         popupClose();
     }
 

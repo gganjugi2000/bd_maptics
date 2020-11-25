@@ -89,6 +89,59 @@ router.get("/getList/:cur/:page_size", asyncHandler(async (req, res, next) => {
     });
 }));
 
+// 광고주 검색 List
+router.get("/getSearchList/:cur/:page_size", asyncHandler(async (req, res, next) => {
+    let start_offset = 0;                   // limit 변수
+    let totalPageCount = 0;                 // 전체 게시물의 숫자
+    // let page_list_size = 0;              // 페이지의 갯수 : 1 ~ n개 페이지
+    let page_size = req.params.page_size;   // 페이지에 보여지는 로우 갯수(예. 페이지당 10개)
+    let curPage = req.params.cur;           // 현재 페이지
+
+    let data = await advertiserService.getAdvertiserTotalCnt();   // 전체 게시물의 count
+    totalPageCount = data[0].cnt;
+
+    if (totalPageCount < 0) {
+      totalPageCount = 0;
+    }
+    console.log("현재 페이지 : " + curPage, "전체 페이지 : " + totalPageCount);
+    
+    let totalPage = Math.ceil(totalPageCount / page_size);        // 전체 페이지수 100/50 = 2
+    // if(totalPage < page_list_size) {
+    //   page_list_size = totalPage;
+    // }
+    // let curSet = Math.ceil(curPage / page_list_size);          // 현재 셋트 번호
+    // let startPage = ((curSet - 1) * page_size) + 1             // 현재 세트내 출력될 시작 페이지
+    // let endPage = (startPage + page_list_size) - 1;            // 현재 세트내 출력될 마지막 페이지
+    if (curPage < 0) {
+      start_offset = 0;
+    } else {
+      start_offset = (curPage - 1) * page_size;
+    }
+    
+    let searchQuery = {};
+    let sortQuery = {};
+    // 광고주 검색 키워드
+    if(req.query["search_value"] != null && req.query["search_value"] != undefined && req.query["search_value"] != '') {
+        searchQuery["search_value"] = req.query["search_value"];
+    }
+
+    // sort
+    if(req.query["sort"] != null && req.query["sort"] != undefined && req.query["sort"] != '') {
+        sortQuery.sort = req.query["sort"];
+    }
+
+    let resultData = await advertiserService.getAdvertiserSearchList(start_offset, page_size, searchQuery, sortQuery);
+    res.status(200).send({
+      result: {
+        code: 200,
+        message: "success",
+        data : resultData,
+        totalCount : totalPageCount,  // 총 카운트
+        page_size: page_size          // 페이지에 보여지는 로우
+      }
+    });
+}));
+
 
 // 광고주 상세 조회
 router.post('/getInfoDetail', asyncHandler(async (req, res, next) => {
@@ -122,9 +175,7 @@ router.post('/getInfoDetail', asyncHandler(async (req, res, next) => {
                 }
             }
         }
-        console.log("data_result ============================= ")
-        console.log(data_result);
-        console.log("----------------------------------------- ")
+
         res.status(200).send({result: {code: 200, message: "success", data : data_result}});
     // } catch (err) {
     //     res.status(500).send({result: {code: 500, message: err.message, data : data}});
@@ -199,19 +250,28 @@ router.post('/modifyInfo', asyncHandler(async (req, res, next) => {
     form.parse(req, async (err, field, file) => {
         if(!err) {
             // console.log('modify upload success!!');
-            const { advts_id, advts_nm, advts_mng_nm, advts_img, email_addr, phone_no, descp } = field;
+            const { advts_id, advts_nm, advts_mng_nm, email_addr, phone_no, descp } = field;
             let dbPath = null;
             
             if(advts_id) {
                 let advertiserDetailRet = await advertiserService.getAdvertiserInfoDetail(advts_id);
                 dbPath = advertiserDetailRet[0].advts_img;    // db에 저장된 old 경로 
-                
+                if(dbPath) {
+                    dbPath = dbPath.replace(/\\/g, '\\\\');
+                }
                 if(file.advts_img_file) { // front에서 넘어온 file name = advts_img_file 
                     console.log('업체 이미지 첨부 정상적으로 한경우!!');
                     let filePath = file.advts_img_file.path.replace(/\\/g, '\\\\');
                     let newPath = form.uploadDir + path.sep + file.advts_img_file.name;  // 수정 파일 upload 경로
-                    console.log("dbPath : " + dbPath, "filePath : " + filePath, "newPath : " + newPath);
                     
+                    console.log("dbPath : " + dbPath, "filePath : " + filePath, "newPath : " + newPath);
+                    console.log("====================================================");
+                    console.log("수정 체크 file.advts_img_file ===========================================");
+                    console.log(file.advts_img_file)
+                    console.log("----------------------------------------------------");
+                    console.log(filePath);    
+                    console.log(newPath); 
+                    console.log("=====================================================")               
                     // 기존의 파일은 삭제
                     fs.unlink(dbPath, function(err) {
                       if (err) throw err;

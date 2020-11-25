@@ -1,0 +1,39 @@
+.regist_box	{position:relative;;margin-top:20px;padding:0;font-size:12px;overflow: hidden;}
+
+.add_title{ font-size:15px; color:#000; font-weight:bold;}
+
+.board_write.t_border{border-top:1px solid #333;}
+.board_write table{border-top:1px solid #999999;width:100%;}
+.board_write table th	{padding:15px;font-weight:normal;color:#333;text-align:left;border-bottom:1px solid #ccc;background-color:#f2f2f2;}
+.board_write table td	{padding:10px 15px;border-bottom:1px solid #ccc;}
+.board_write .label	{display:block;position:relative;padding-left:22px;}
+.board_write .label2	{display:block;position:relative;padding-left:5px;}
+.board_write .required	{width:11px;height:6px;position:absolute;top:50%;left:0;margin-top:-3px;text-indent:-99px;overflow:hidden;background-position:0 -245px;}
+.board_write .intext	{height:28px;padding:0 10px;margin-right:5px;font-size:12px;color:#777;border:1px solid #d7d7d7;}
+.board_write .intext_read	{height:28px;padding:0 10px;margin-right:5px;font-size:12px;color:#777;border:1px solid #d7d7d7;background: #eeeeee;}
+.board_write .photo	{display:inline-block;padding:10px;margin-right:5px;font-size:12px;line-height:16px;color:#777;border:1px solid #d7d7d7;text-align: center;}
+.board_write .note	{font-size:12px;line-height:30px;color:#777;}
+.board_write .caution	{position:relative;margin-top:8px;padding-left:24px;font-size:12px;line-height:16px;color:#ed5520;}
+.board_write .caution:after	{width:16px;height:16px;content:'';position:absolute;top:0;left:0;background-position:0 -185px;}
+.board_write .at	{margin:0 8px 0 0;font-size:12px;color:#777;}
+.board_write .dash	{margin:0 3px 0 2px;font-size:20px;color:#777;}
+.board_write .inselect {position:relative;display:inline-block;padding:0 5px}
+.board_write .inselect:after	{width:31px;height:28px;content:'';position:absolute;top:1px;right:1px;pointer-events:none;background-position:0 -255px;}
+.board_write .inselect select	{height:30px;position:relative;padding:0 10px;font-size:12px;color:#777;cursor:pointer;border:1px solid #d7d7d7;-webkit-appearance:none;-moz-appearance:none;appearance:none;}
+.board_write .inselect select::-ms-expand {display:none;}
+.board_write .calendar input[type="text"]{font-size:12px;height:28px;padding:0 0 0 10px;background-color:#FFFFFF;border:1px solid #dddddd;}
+.board_write .calendar .calend {width:100px;cursor:pointer;background:url('../../../../images/ico_calendar.gif') right -3px no-repeat rgb(255, 255, 255);}
+.board_write .intextarea	{width:668px;height:158px;position:relative;padding:0 10px;font-size:12px;line-height:17px;color:#777;border:1px solid #d7d7d7;}
+.board_write .intextarea textarea	{width:100%;height:118px;padding-top:5px;border:0;font-size:12px;line-height:17px;color:#777;}
+
+.radio {overflow:hidden;display:inline-block;position:relative;height:26px;box-sizing:border-box;cursor:pointer;}
+.radio input {overflow:hidden;display:none;width:0px;height:0px;border:0 none;font-size:0;line-height:0;clip:rect(0 0 0 0);opacity:0;}
+/* .radio .ico {position:absolute;left:3px;top:3px;width:20px;height:20px;background:url("../../../../images/ico_radiocomm.png") no-repeat 0 0;}이미지는 디자인에 맞게 변경 */
+.radio .txt {display:inline-block;padding-left:30px;font-size:16px;color:#333;line-height:26px;}/* 텍스트는 디자인에 맞게 변경 */
+.radio .txt2 {display:inline-block;padding-left:30px;font-size:14px;color:#555;line-height:26px;}/* 텍스트는 디자인에 맞게 변경 */
+.radio input:checked + .ico {background-position:0 -40px;}/* 체크됐을때, 이미지변경 */
+
+.btn_set	{position:relative;margin-top:30px;text-align:center;}
+.datepickerWrap {display:inline-block;}
+.datepickerWrap span {display:inline-block; box-sizing: border-box; height: 45px; padding-right: 5px;}
+.datepickerWrap span div input[type="text"]{height: 39px;}

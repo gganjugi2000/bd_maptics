@@ -5,7 +5,6 @@ export function isEmpty (value) {
     return false;
 }
 
-
 export function isEquals (value1, value2) {
     console.log("isEquals ============ ")
     console.log(value1)
@@ -36,7 +35,8 @@ export function validEmail (value) {
 }
 
 export function validEmailProvider (value) {
-    const regExp = /^[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/; 
+    // const regExp = /^[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/; 
+    const regExp = /^((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     
     if (value === undefined || value === null)
         return false;
@@ -47,6 +47,18 @@ export function validEmailProvider (value) {
     return false;
 }
 
+// https://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url
+export function validURL (value) {
+    const regExp = /^[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/; 
+    
+    if (value === undefined || value === null)
+        return false;
+
+    if (value.match(regExp)) 
+        return true;
+        
+    return false;
+}
 
 export function validPhoneFirst (value) {
     const regExp = /^0[0-9]{2}$/; 
@@ -82,4 +94,24 @@ export function validPhoneEnd (value) {
         return true;
         
     return false;
+}
+
+export function isNumber (value) {
+    const regExp = /^[0-9]$/; 
+    
+    if (value === undefined || value === null)
+        return false;
+
+    if (value.match(regExp)) 
+        return true;
+        
+    return false;
+}
+
+export function checkByteOfValue (value) {
+    let checkByte = 0;
+    if(!isEmpty(value)) {
+        checkByte = unescape(encodeURI(value)).length;
+    }
+    return checkByte;
 }

@@ -1,14 +1,14 @@
 /* category 상단영역 */
-.catetop{position:relative;height:60px;padding:10;margin:10px;clear: both;display: block;}
+.catetop{position:relative;height:35px;padding:10;margin:10px;clear: both;display: block;}
 .catetop h2{position:relative; font-size:22px;color:#2b2929;font-weight: bold;padding-top: 5px;display: inline-block; background:#fff;}
-.catetop h2 div {position:absolute; top:40px; left:0; background:#fff; border:2px solid #ccc; width:200px;}
+.catetop h2 div {position:absolute; top:35px; left:0; background:#fff; border:2px solid #ccc; width:200px;}
 .catetop h2 div ul {display:inline-block; height:100%; width:100%; padding:15px;}
 .catetop h2 div li{font-size:14px; padding:5px;}
 .catetop h3{font-size:16px;line-height:22px;color:#aaa5a5;padding-top: 5px;display: inline-block;margin-left: 20px;}
 .catetop h3 a{color:#aaa5a5;}
 .catetop h3 a:hover{color:#2b2929;}
 .catetop_box{background: #f9f3e8;border-radius: 10px;margin-top: 20px;}
-.catetop_box > span{display:inline-block;padding:50px 0 0 40px;color:#676565;font-size: 22px;color: #ed3346;font-weight: bold;}
-.catetop_box > p{display:block;padding:20px 0 0 40px;color:#676565;font-size: 15px;color: #676565;}
+.catetop_box > span{display:inline-block;padding:50px 0 0 35px;color:#676565;font-size: 22px;color: #ed3346;font-weight: bold;}
+.catetop_box > p{display:block;padding:20px 0 0 35px;color:#676565;font-size: 15px;color: #676565;}
 .catetop_box > p:last-child{padding-top: 5px;padding-bottom: 45px}
 .catetop .main_visual{position:absolute;right:0;top:0;padding-top: 5px;}

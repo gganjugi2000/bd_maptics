@@ -54,7 +54,7 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
         "advts_img" : "",
         "email_addr" : "",
         "email_addr_provider" : "",
-        "phone_no_first" : "",
+        "phone_no_first" : { value: '010', label: '010' },
         "phone_no_middle" : "",
         "phone_no_end" : "",
         "descp" : ""
@@ -69,6 +69,7 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
         "phone_no_first" : "",
         "phone_no_middle" : "",
         "phone_no_end" : "",
+        "descp" : ""
     });
     const [advertiserValid, setAdvertiserValid] = useState({
         "advts_id" : false,
@@ -200,12 +201,11 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
         });
     }
 
-    const setEmailProviderValue = (obj) => {
-        console.log(obj);
+    const setEmailProviderValue = (e, value) => {
         // if(!isEmpty(obj) && !validEmailProvider(obj.value)){
         //     setAdvertiserCaution({
         //         ...advertiserCaution
-        //         , email_addr_provider: "이메일 형식이 올바르지 않습니다."
+        //         , email_addr_provider: "이메일 서비스 사이트 형식이 올바르지 않습니다."
         //     });
         // } else {
         //     setAdvertiserCaution({
@@ -216,7 +216,7 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
 
         setAdvertiser({
             ...advertiser
-            , email_addr_provider: obj
+            , email_addr_provider: value
         });
     }
 
@@ -335,25 +335,25 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
         } else {
             emailAddrMsg = "이메일 형식에 맞게 입력 해야 합니다.";
         }
-        if(!isEmpty(advertiser.email_addr_provider) && validEmailProvider(advertiser.email_addr_provider.value)){
+        if(!isEmpty(advertiser.email_addr_provider) && validEmailProvider(advertiser.email_addr_provider)){
             emailAddrProviderValid = true;
         } else {
-            emailAddrProviderMsg = "이메일 형식에 맞게 입력 해야 합니다.2";
+            emailAddrProviderMsg = "이메일 서비스 사이트 형식이 올바르지 않습니다."
         }
         if(!isEmpty(advertiser.phone_no_first) && validPhoneFirst(advertiser.phone_no_first.value)){
             phoneNoFirstValid = true;
         } else {
-            phoneNoFirstMsg = "전화 번호 형식에 맞게 입력 해야 합니다.1";
+            phoneNoFirstMsg = "식별번호 형식이 올바르지 않습니다.";
         }
         if(!isEmpty(advertiser.phone_no_middle) && validPhoneMiddle(advertiser.phone_no_middle)){
             phoneNoMiddleValid = true;
         } else {
-            phoneNoMiddleMsg = "전화 번호 형식에 맞게 입력 해야 합니다.2";
+            phoneNoMiddleMsg = "중간 번호 형식이 올바르지 않습니다.";
         }
         if(!isEmpty(advertiser.phone_no_end) && validPhoneEnd(advertiser.phone_no_end)){
             phoneNoEndValid = true;
         } else {
-            phoneNoEndMsg = "전화 번호 형식에 맞게 입력 해야 합니다.3";
+            phoneNoEndMsg = "마지막 번호 형식이 올바르지 않습니다.";
         }
         
         setAdvertiserValid({
@@ -410,11 +410,11 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
             || !advtsMngNmValid || !advtsImgValid 
             || !emailAddrValid || !emailAddrProviderValid
             || !phoneNoFirstValid || !phoneNoMiddleValid || !phoneNoEndValid) {
-            alert("입력 항목 validation 오류");
+            alert("입력 항목 오류");
             return;
         }
 
-        const emailAddr = advertiser.email_addr + "@" + advertiser.email_addr_provider.value;
+        const emailAddr = advertiser.email_addr + "@" + advertiser.email_addr_provider;
         const phoneNo = advertiser.phone_no_first.value + "-" + advertiser.phone_no_middle + "-" + advertiser.phone_no_end;
         let formData = new FormData();
         formData.append("advts_id", advertiser.advts_id);
@@ -429,9 +429,6 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
         onSubmit(e, formData);
     };
 
-    console.log("Form render ----------------------------");
-    console.log(existAdvtsId)
-    console.log("-------------------------------------------------")
     // render
     return (
         <>
@@ -521,28 +518,44 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
                         <td>
                             <InputText 
                                 id="email_addr"
-                                style={{width: "100px"}}
+                                style={{width: "80px"}}
                                 placeholder="이메일을 입력해주세요."
                                 value={advertiser.email_addr}
-                                caution={advertiserCaution.email_addr}
+                                caution={advertiserCaution.email_addr ? " " : ""}
                                 onChange={(e) => {
                                     setEmailValue(e, e.target.value);
                                 }}
                             />
                             <span className={cx("at")}>@</span>
-                            <span className={cx("inselect")}>
-                            <InputSelect
+                            
+                            <InputText 
+                                id="email_addr_provider"
+                                style={{width: "100px"}}
+                                placeholder="직접입력"
+                                value={advertiser.email_addr_provider}
+                                caution={advertiserCaution.email_addr_provider ? " " : ""}
+                                onChange={(e) => {
+                                    setEmailProviderValue(e, e.target.value);
+                                }}
+                            />
+                            {/* <InputSelect
                                 type="select"
                                 id="email_addr_provider"
                                 placeholder="직접입력"
                                 value={advertiser.email_addr_provider}
-                                caution={advertiserCaution.email_addr_provider}
+                                caution={advertiserCaution.email_addr_provider ? " " : ""}
                                 options={emailProviderOptions}
                                 onChange={(value) => {
                                     setEmailProviderValue(value);
                                 }}
-                            />
-                            </span>
+                            /> */}
+                            
+                            <div style={{display: 'inline-block'}}>
+                                {(advertiserCaution.email_addr !== "")
+                                ? <p className={cx("caution")}>{advertiserCaution.email_addr}</p> : null}
+                                {(advertiserCaution.email_addr_provider !== "")
+                                ? <p className={cx("caution")}>{advertiserCaution.email_addr_provider}</p> : null}
+                            </div>
                         </td>
                     </tr>
                     <tr>
@@ -554,7 +567,7 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
                                     id="phone_no_first"
                                     placeholder="Phone"
                                     value={advertiser.phone_no_first}
-                                    caution={advertiserCaution.phone_no_first}
+                                    caution={advertiserCaution.phone_no_first ? " " : ""}
                                     options={phoneFirstOptions}
                                     onChange={(value) => {
                                         setPhoneNoFirstValue(value);
@@ -566,9 +579,9 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
                                 id="phone_no_middle"
                                 style={{width: "50px"}}
                                 placeholder=""
-                                size="4"
+                                maxlength="4"
                                 value={advertiser.phone_no_middle}
-                                caution={advertiserCaution.phone_no_middle}
+                                caution={advertiserCaution.phone_no_middle ? " " : ""}
                                 onChange={(e) => {
                                     setPhoneNoMiddleValue(e, e.target.value);
                                 }}
@@ -578,13 +591,21 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
                                 id="phone_no_end"
                                 style={{width: "50px"}}
                                 placeholder=""
-                                size="4"
+                                maxlength="4"
                                 value={advertiser.phone_no_end}
-                                caution={advertiserCaution.phone_no_end}
+                                caution={advertiserCaution.phone_no_end ? " " : ""}
                                 onChange={(e) => {
                                     setPhoneNoEndValue(e, e.target.value);
                                 }}
                             />
+                            <div style={{display: 'inline-block'}}>
+                                {(advertiserCaution.phone_no_first !== "")
+                                ? <p className={cx("caution")}>{advertiserCaution.phone_no_first}</p> : null}
+                                {(advertiserCaution.phone_no_middle !== "")
+                                ? <p className={cx("caution")}>{advertiserCaution.phone_no_middle}</p> : null}
+                                {(advertiserCaution.phone_no_end !== "")
+                                ? <p className={cx("caution")}>{advertiserCaution.phone_no_end}</p> : null}
+                            </div>
                         </td>
                     </tr>
                     <tr>

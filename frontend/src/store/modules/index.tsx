@@ -5,21 +5,31 @@ import sampleStore,  { sampleUserSaga } from './sampleStore';
 import userStore,  { userSaga } from './userStore';
 import rowStore from './rowStore';
 import advertiserStore,  { advertiserSaga } from './advertiserStore';
-import { UserState, ListState, SampleUserState, AdvertiserState } from '../state';
+import campaignStore,  { campaignSaga } from './campaignStore';
+
+import { 
+    AdvertiserState, 
+    CampaignState, 
+    UserState, 
+    ListState, 
+    SampleUserState 
+} from '../state';
 
 const rootReducer = (history: any) => combineReducers({
     router: connectRouter(history),
+    advertiserStore,
+    campaignStore,
     sampleStore,
     userStore,
-    rowStore,
-    advertiserStore
+    rowStore
 });
 
 export function* rootSaga() {
     yield all([
+        advertiserSaga(),
+        campaignSaga(),
         sampleUserSaga(),
-        userSaga(),
-        advertiserSaga()
+        userSaga()
     ]);
 }
 

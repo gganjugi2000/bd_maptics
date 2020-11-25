@@ -21,7 +21,7 @@ const InputRadio = React.forwardRef((props, ref) => {
      } = props;
 
     return (
-        <div className={cx("input-container")}>
+        <div style={{float: 'left', display: 'inline-block', margin: '0px 10px'}} >
             {tip ? (
             <Tooltip
                 title={tip}
@@ -37,24 +37,24 @@ const InputRadio = React.forwardRef((props, ref) => {
                     name={name}
                     checked={checked}
                     onChange={onChange}
-                    className={styleClass ? cx(styleClass) : cx("input-text")} 
+                    className={cx("radio")} 
                     ref={ref}
                     {...others}
                 />
-            </Tooltip>
+             </Tooltip>
             ) : (
-            <input
-                id={id}
-                type="radio"
-                value={value}
-                name={name}
-                checked={checked}
-                onChange={onChange}
-                className={cx("input-text")} 
-                ref={ref}
-                {...others}
-            />)}
-            {label && <div className={cx("input-label")}><label>{label}</label></div>}
+                <input
+                    id={id}
+                    type="radio"
+                    value={value}
+                    name={name}
+                    checked={checked}
+                    onChange={onChange}
+                    ref={ref}
+                    {...others}
+                />
+                )}
+            {label && <label style={{margin: '5px 5px'}}>{label}</label>}
         </div>
     );
 });

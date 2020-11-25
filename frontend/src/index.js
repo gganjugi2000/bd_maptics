@@ -12,7 +12,6 @@ import App from './App';
 import './index.css';
 import 'react-tippy/dist/tippy.css';
 
-
 export const store = configure(history);
 
 runSaga();

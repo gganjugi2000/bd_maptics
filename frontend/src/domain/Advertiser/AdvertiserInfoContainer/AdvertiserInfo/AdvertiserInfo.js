@@ -114,6 +114,7 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
             console.log(phoneNoFirst)
             console.log(phoneNoMiddle)
             console.log(phoneNoEnd)
+            console.log(advertiserInfo.advts_img)
             console.log("----------------------------------")
             
             setAdvertiser({
@@ -123,8 +124,8 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
                 , advts_mng_nm: advertiserInfo.advts_mng_nm
                 , advts_img: advertiserInfo.advts_img
                 , email_addr: emailAddr
-                , email_addr_provider: { value: emailAddrProvider, label: emailAddrProvider } 
-                , phone_no_first: { value: phoneNoFirst, label: phoneNoFirst } 
+                , email_addr_provider: emailAddrProvider
+                , phone_no_first: (phoneNoFirst !== "" ? { value: phoneNoFirst, label: phoneNoFirst } : null)
                 , phone_no_middle: phoneNoMiddle
                 , phone_no_end: phoneNoEnd
                 , descp: advertiserInfo.descp
@@ -145,17 +146,17 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
     }
 
     const setAdvertiserNameValue = (e, value) => {
-        if(!validAdvertiserName(value)){
-            setAdvertiserCaution({
-                ...advertiserCaution
-                , advts_nm: "한글/영문,2자 이상 입력 가능합니다."
-            });
-        } else {
-            setAdvertiserCaution({
-                ...advertiserCaution
-                , advts_nm: ""
-            });
-        }
+        // if(!validAdvertiserName(value)){
+        //     setAdvertiserCaution({
+        //         ...advertiserCaution
+        //         , advts_nm: "한글/영문,2자 이상 입력 가능합니다."
+        //     });
+        // } else {
+        //     setAdvertiserCaution({
+        //         ...advertiserCaution
+        //         , advts_nm: ""
+        //     });
+        // }
 
         setAdvertiser({
             ...advertiser
@@ -164,17 +165,17 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
     }
 
     const setAdvertiserMngNameValue = (e, value) => {
-        if(!validAdvertiserMngName(value)){
-            setAdvertiserCaution({
-                ...advertiserCaution
-                , advts_mng_nm: "한글/영문,2자 이상 입력 가능합니다."
-            });
-        } else {
-            setAdvertiserCaution({
-                ...advertiserCaution
-                , advts_mng_nm: ""
-            });
-        }
+        // if(!validAdvertiserMngName(value)){
+        //     setAdvertiserCaution({
+        //         ...advertiserCaution
+        //         , advts_mng_nm: "한글/영문,2자 이상 입력 가능합니다."
+        //     });
+        // } else {
+        //     setAdvertiserCaution({
+        //         ...advertiserCaution
+        //         , advts_mng_nm: ""
+        //     });
+        // }
 
         setAdvertiser({
             ...advertiser
@@ -183,17 +184,17 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
     }
 
     const setEmailValue = (e, value) => {
-        if(!validEmail(value)){
-            setAdvertiserCaution({
-                ...advertiserCaution
-                , email_addr: "이메일 형식이 올바르지 않습니다."
-            });
-        } else {
-            setAdvertiserCaution({
-                ...advertiserCaution
-                , email_addr: ""
-            });
-        }
+        // if(!validEmail(value)){
+        //     setAdvertiserCaution({
+        //         ...advertiserCaution
+        //         , email_addr: "이메일 형식이 올바르지 않습니다."
+        //     });
+        // } else {
+        //     setAdvertiserCaution({
+        //         ...advertiserCaution
+        //         , email_addr: ""
+        //     });
+        // }
 
         setAdvertiser({
             ...advertiser
@@ -201,40 +202,39 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
         });
     }
 
-    const setEmailProviderValue = (obj) => {
-        console.log("EmailProvider === ");
-        console.log(obj);
-        if(!isEmpty(obj) && (obj.hasOwnProperty("value") ? !validEmailProvider(obj.value) : !validEmailProvider(obj))){
-            setAdvertiserCaution({
-                ...advertiserCaution
-                , email_addr_provider: "이메일 형식이 올바르지 않습니다."
-            });
-        } else {
-            setAdvertiserCaution({
-                ...advertiserCaution
-                , email_addr_provider: ""
-            });
-        }
+    const setEmailProviderValue = (e, value) => {
+        // console.log("EmailProvider === ");
+        // console.log(obj);
+        // if(!isEmpty(obj) && (obj.hasOwnProperty("value") ? !validEmailProvider(obj.value) : !validEmailProvider(obj))){
+        //     setAdvertiserCaution({
+        //         ...advertiserCaution
+        //         , email_addr_provider: "이메일 형식이 올바르지 않습니다."
+        //     });
+        // } else {
+        //     setAdvertiserCaution({
+        //         ...advertiserCaution
+        //         , email_addr_provider: ""
+        //     });
+        // }
 
         setAdvertiser({
             ...advertiser
-            , email_addr_provider: obj
+            , email_addr_provider: value
         });
     }
 
     const setPhoneNoFirstValue = (obj) => {
-        console.log(obj);
-        if(!isEmpty(obj) && !validPhoneFirst(obj.value)){
-            setAdvertiserCaution({
-                ...advertiserCaution
-                , phone_no_first: "숫자,3~4자 입력 가능합니다."
-            });
-        } else {
-            setAdvertiserCaution({
-                ...advertiserCaution
-                , phone_no_first: ""
-            });
-        }
+        // if(!isEmpty(obj) && !validPhoneFirst(obj.value)){
+        //     setAdvertiserCaution({
+        //         ...advertiserCaution
+        //         , phone_no_first: "숫자,3~4자 입력 가능합니다."
+        //     });
+        // } else {
+        //     setAdvertiserCaution({
+        //         ...advertiserCaution
+        //         , phone_no_first: ""
+        //     });
+        // }
 
         setAdvertiser({
             ...advertiser
@@ -243,17 +243,17 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
     }
 
     const setPhoneNoMiddleValue = (e, value) => {
-        if(!validPhoneMiddle(value)){
-            setAdvertiserCaution({
-                ...advertiserCaution
-                , phone_no_middle: "숫자,3~4자 입력 가능합니다."
-            });
-        } else {
-            setAdvertiserCaution({
-                ...advertiserCaution
-                , phone_no_middle: ""
-            });
-        }
+        // if(!validPhoneMiddle(value)){
+        //     setAdvertiserCaution({
+        //         ...advertiserCaution
+        //         , phone_no_middle: "숫자,3~4자 입력 가능합니다."
+        //     });
+        // } else {
+        //     setAdvertiserCaution({
+        //         ...advertiserCaution
+        //         , phone_no_middle: ""
+        //     });
+        // }
 
         setAdvertiser({
             ...advertiser
@@ -262,17 +262,17 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
     }
 
     const setPhoneNoEndValue = (e, value) => {
-        if(!validPhoneEnd(value)){
-            setAdvertiserCaution({
-                ...advertiserCaution
-                , phone_no_end: "숫자,4자 입력 가능합니다."
-            });
-        } else {
-            setAdvertiserCaution({
-                ...advertiserCaution
-                , phone_no_end: ""
-            });
-        }
+        // if(!validPhoneEnd(value)){
+        //     setAdvertiserCaution({
+        //         ...advertiserCaution
+        //         , phone_no_end: "숫자,4자 입력 가능합니다."
+        //     });
+        // } else {
+        //     setAdvertiserCaution({
+        //         ...advertiserCaution
+        //         , phone_no_end: ""
+        //     });
+        // }
 
         setAdvertiser({
             ...advertiser
@@ -317,7 +317,7 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
         } else {
             emailAddrMsg = "이메일 형식에 맞게 입력 해야 합니다.";
         }
-        if(!isEmpty(advertiser.email_addr_provider) && validEmailProvider(advertiser.email_addr_provider.value)){
+        if(!isEmpty(advertiser.email_addr_provider) && validEmailProvider(advertiser.email_addr_provider)){
             emailAddrProviderValid = true;
         } else {
             emailAddrProviderMsg = "이메일 형식에 맞게 입력 해야 합니다.2";
@@ -382,21 +382,19 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
         console.log(phoneNoEndMsg)
         console.log("----------------------------------------------------------------")
 
-        if(!advtsNmValid
-            || !advtsMngNmValid || !advtsImgValid 
+        if(!advtsNmValid || !advtsMngNmValid || !advtsImgValid 
             || !emailAddrValid || !emailAddrProviderValid
             || !phoneNoFirstValid || !phoneNoMiddleValid || !phoneNoEndValid) {
             alert("입력 항목 오류");
             return;
         }
 
-        const emailAddr = advertiser.email_addr + "@" + advertiser.email_addr_provider.value;
+        const emailAddr = advertiser.email_addr + "@" + advertiser.email_addr_provider;
         const phoneNo = advertiser.phone_no_first.value + "-" + advertiser.phone_no_middle + "-" + advertiser.phone_no_end;
         let formData = new FormData();
         formData.append("advts_id", advertiser.advts_id);
         formData.append("advts_nm", advertiser.advts_nm);
         formData.append("advts_mng_nm", advertiser.advts_mng_nm);
-        formData.append("advts_img", advertiser.advts_img);
         formData.append("advts_img_file", advtsImgFile);
         formData.append("email_addr", emailAddr);
         formData.append("phone_no", phoneNo);
@@ -404,11 +402,6 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
 
         onSubmit(e, formData);
     };
-
-    // render
-
-    if(advertiser.advts_id === "") 
-        return (<div></div>);
 
     return (
         <>
@@ -463,7 +456,6 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
                                 onChange={(e) => {
                                     setAdvertiserNameValue(e, e.target.value);
                                 }}
-                                disabled
                             />
                         </td>
                     </tr>
@@ -496,8 +488,17 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
                                 }}
                             />
                             <span className={cx("at")}>@</span>
-                            <span className={cx("inselect")}>
-                            <InputSelect
+                            <InputText 
+                                id="email_addr_provider"
+                                style={{width: "100px"}}
+                                placeholder="직접입력"
+                                value={advertiser.email_addr_provider}
+                                caution={advertiserCaution.email_addr_provider}
+                                onChange={(e) => {
+                                    setEmailProviderValue(e, e.target.value);
+                                }}
+                            />
+                            {/* <InputSelect
                                 type="select"
                                 id="email_addr_provider"
                                 placeholder="직접입력"
@@ -508,8 +509,7 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
                                 onChange={(value) => {
                                     setEmailProviderValue(value);
                                 }}
-                            />
-                            </span>
+                            /> */}
                         </td>
                     </tr>
                     <tr>
@@ -534,6 +534,7 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
                                 style={{width: "50px"}}
                                 placeholder=""
                                 size="4"
+                                maxlength="4"
                                 value={advertiser.phone_no_middle}
                                 caution={advertiserCaution.phone_no_middle}
                                 onChange={(e) => {
@@ -546,6 +547,7 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
                                 style={{width: "50px"}}
                                 placeholder=""
                                 size="4"
+                                maxlength="4"
                                 value={advertiser.phone_no_end}
                                 caution={advertiserCaution.phone_no_end}
                                 onChange={(e) => {

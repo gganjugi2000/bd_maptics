@@ -27,23 +27,9 @@ const Header = ({setLeftSize, leftSize}) => {
     // render
     return (
         <div className={cx("catetop")}>
-            <h2 onClick={handleSlideMenu} onMouseLeave={handleMenuOut} onMouseOverCapture={handleMenuOver} ><img src={slideMenu} alt="lnb영역 slide" /> 캠페인 관리
-            { showSubMenu ?
-                <div onMouseLeave={handleMenuOut}>
-                    <ul>
-                        <li>캠페인 관리 서브1</li>
-                        <li>캠페인 관리 서브2</li>
-                        <li>캠페인 관리 서브3</li>
-                        <li>캠페인 관리 서브4</li>
-                        <li>캠페인 관리 서브5</li>
-                        <li>캠페인 관리 서브6</li>
-                        <li>캠페인 관리 서브7</li>
-                    </ul>
-                </div> : null
-            }
+            <h2 onClick={handleSlideMenu} onMouseLeave={handleMenuOut} onMouseOverCapture={handleMenuOver} >
+                <img src={slideMenu} alt="lnb영역 slide" /> 캠페인 관리
             </h2>
-            <h3>예약 관리</h3>
-            <h3>히스토리</h3>
         </div>
     )
 }

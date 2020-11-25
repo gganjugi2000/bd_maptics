@@ -68,6 +68,30 @@ export const initAdvertiserState = {
     searchCount: 0
 }
 
+////////// campaign State //////////
+////////////////////////////
+export type CampaignState = {
+    campaignList: any[],
+    campaignInfo: {},
+    campaignAcknlg: any[],
+    status: string,
+    totalCount: number,
+    searchCount: number,
+}
+
+export const initCampaignState = {
+    code: null,
+    error: null,
+    msg: null,
+    campaignList: [],
+    campaignInfo: {},
+    campaignAcknlg: [],
+    existId: -1,
+    status: "",
+    totalCount: 0,
+    searchCount: 0
+}
+
 ////////// user State //////////
 ////////////////////////////
 export type UserState = {

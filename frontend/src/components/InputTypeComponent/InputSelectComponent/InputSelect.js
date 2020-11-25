@@ -82,7 +82,7 @@ const InputSelect = React.forwardRef((props, ref) => {
             ) : (
                 <Select
                     id={id}
-                    value={options.filter(option => value !== null && option.value === value.value)}
+                    value={options.filter(option => value !== null && value !== undefined && option.value === value.value)}
                     // value={value}
                     // defaultValue={value}
                     onChange={setSingleSelectValue}

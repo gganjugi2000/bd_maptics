@@ -20,7 +20,7 @@ const InputCheckBox = React.forwardRef((props, ref) => {
      } = props;
 
     return (
-        <div className={cx("input-container")}>
+        <>
             {tip ? (
             <Tooltip
                 title={tip}
@@ -35,7 +35,7 @@ const InputCheckBox = React.forwardRef((props, ref) => {
                     value={value}
                     checked={checked}
                     onChange={onChange}
-                    className={styleClass ? cx(styleClass) : cx("input-text")} 
+                    className={cx("input-text")} 
                     ref={ref}
                     {...others}
                 />
@@ -52,7 +52,7 @@ const InputCheckBox = React.forwardRef((props, ref) => {
                 {...others}
             />)}
             {label && <div className={cx("input-label")}><label>{label}</label></div>}
-        </div>
+        </>
     );
 });
 

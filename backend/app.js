@@ -30,7 +30,8 @@ const sample = require('./src/rest/sample');
 const health = require('./src/rest/health');
 // 광고주 관리
 const advertiser = require('./src/rest/advertiser');
-
+// 캠페인 관리
+const campaign = require('./src/rest/campaign');
 
 app.use('/user', user);
 app.use('/sample', sample);
@@ -38,6 +39,8 @@ app.use('/health', health);
 
 // 광고주 관리
 app.use('/advertiser', advertiser);
+// 캠페인 관리
+app.use('/campaign', campaign);
 
 // Custom Error Handling
 app.use(customErrHandler);

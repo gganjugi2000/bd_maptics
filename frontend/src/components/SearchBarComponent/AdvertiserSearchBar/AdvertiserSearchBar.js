@@ -131,7 +131,6 @@ const AdvertiserSearchBar = ({
                     <input
                         id="advertiserId"
                         type="text"
-                        placeholder="아이디"
                         value={advertiserSearchData.advts_id}
                         onChange={(e) => {
                             changeAdvertiserId(e, e.target.value);
@@ -148,7 +147,6 @@ const AdvertiserSearchBar = ({
                     <input
                         id="advts_nm"
                         type="text"
-                        placeholder="광고주명"
                         value={advertiserSearchData.advts_nm}
                         onChange={(e) => {
                             changeAdvertiserName(e, e.target.value);
@@ -165,7 +163,6 @@ const AdvertiserSearchBar = ({
                     <input
                         id="advts_mng_nm"
                         type="text"
-                        placeholder="담당자명"
                         value={advertiserSearchData.advts_mng_nm}
                         onChange={(e) => {
                             changeManagerName(e, e.target.value);

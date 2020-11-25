@@ -8,6 +8,6 @@
 .btn_complete	{width:88px;height:30px;display:inline-block;font-size:12px;line-height:inherit;;color:#FFFFFF;text-align:center;border:1px solid #999;background-color:#13d83e;vertical-align: top;}
 
 .btn_black	{width:140px;height:40px;display:inline-block;margin:0 9px 0 8px;padding:0;font-size:14px;line-height:40px;color:#fff;text-align:center;vertical-align:top;border:0;background-color:#333;}
-.btn_gray		{width:140px;height:40px;display:inline-block;margin:0 9px 0 8px;padding:0;font-size:14px;line-height:40px;color:#fff;text-align:center;vertical-align:top;border:0;background-color:#999;}
+.btn_gray	{width:140px;height:40px;display:inline-block;margin:0 9px 0 8px;padding:0;font-size:14px;line-height:40px;color:#fff;text-align:center;vertical-align:top;border:0;background-color:#999;}
 .btn_small	{width:88px;height:30px;display:inline-block;font-size:12px;line-height:inherit;;color:#333;text-align:center;border:1px solid #999;background-color:#fff;vertical-align: top;}
-
+.btn_big {width:130px;height:30px;display:inline-block;font-size:12px;line-height:inherit;;color:#333;text-align:center;border:1px solid #999;background-color:#fff;vertical-align: top;}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, withRouter } from "react-router-dom";
 
 import styles from './SideMenu.module.css';
@@ -24,6 +24,12 @@ const dummyMenu = [
 
 // 컴포넌트 정의
 const SideMenu = ({leftSize}) => {
+    const [selectedMenu, setSelectedMenu] = useState("");
+
+    // // life cycle
+    // useEffect(() => {
+        
+    // }, []) // page loading 
 
     // <div className={cx("logo")}>
     //     <Link to={"main.html"}><img src={imageLogo} alt="ATS2.0 Admin Sambol" /> Maptics Admin</Link>
@@ -33,6 +39,11 @@ const SideMenu = ({leftSize}) => {
     //                         <p className={cx("mb20")}>- 예약 관리</p>
     //                         <p>- 히스토리</p>
     // render
+
+    const handleSelectMenu = (value) => {
+        setSelectedMenu(value);
+    }
+
     return (
         <div className={cx("lnbarea")} style={{'transform': `translate3d(${leftSize === 260 ? '0' : '-260px'}, 0, 0)`}}>
             <div className={cx("logo")}>
@@ -49,9 +60,8 @@ const SideMenu = ({leftSize}) => {
                     </div>
                     <div className={cx("lnbm", "mt30")}>
                         <ul>
-                            <li className={cx("mb20", "current")}><Link to="/">Main</Link></li>
-                            <li className={cx("mb20")}><Link to="/advertiser">광고주 관리</Link></li>
-                            <li className={cx("mb20")}><Link to="/campaign">캠페인 관리</Link></li>
+                            <li className={cx("mb20")}><Link to="/advertiser" onClick={(e) => { handleSelectMenu('advertiser'); }}><span className={selectedMenu === "" || selectedMenu === 'advertiser' ? cx("current") : cx("mb20")}>광고주 관리</span></Link></li>
+                            <li className={cx("mb20")}><Link to="/campaign" onClick={(e) => { handleSelectMenu('campaign'); }}><span className={selectedMenu === 'campaign' ? cx("current") : cx("mb20")}>캠페인 관리</span></Link></li>
                         </ul>
                     </div>
             </div>

@@ -6,6 +6,9 @@ import logo from './logo.svg';
 import styles from './App.css';
 import classNames from 'classnames/bind';
 
+// router
+import RedirectPage from './routes/RedirectPage';
+
 // left menu
 import SideMenu from './components/SideMenu';
 // header
@@ -13,12 +16,15 @@ import Header from './components/Header/Header';
 // footer
 import Footer from './components/Footer/Footer';
 
+
+
 // 광고주 관리
 import AdvertiserLayout from './domain/Advertiser/AdvertiserLayout';
 
 // 캠페인 관리
 import CampaignLayout from './domain/Campaign/CampaignLayout';
-
+import CampaignFormContainer from './domain/Campaign/CampaignFormContainer';
+import CampaignInfoContainer from './domain/Campaign/CampaignInfoContainer';
 
 // sample menu
 import SampleUserListContainer from './domain/Sample/UserListContainer';
@@ -59,14 +65,16 @@ function App({ history, context }) {
               <Header setLeftSize={showHideLeft} leftSize={leftSize} />
               <div className={cx("contents")}>
                 <Switch>
-                  <Route exact path="/main.html" component={() => <Main setLeftSize={showHideLeft} leftSize={leftSize} /> } />
+                  <Route exact path="/" component={RedirectPage} />
                   {/* 광고주 관리 */}
                   <Route exact path="/advertiser" component={AdvertiserLayout} />
 
                   {/* 캠페인 관리 */}
                   <Route exact path="/campaign" component={CampaignLayout} />
-
+                  <Route exact path="/campaign/create" component={CampaignFormContainer} />
+                  <Route exact path="/campaign/:id" component={CampaignInfoContainer} />
                   
+
                   <Route exact path="/users"  component={UserListContainer} />
                   <Route exact path="/users/create"  component={UserFormContainer} />
                   <Route exact path="/users/:id" component={UserInfoContainer} />

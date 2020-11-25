@@ -4,11 +4,15 @@
 .lnbarea .myInFo{position:relative;text-align: center;}
 .lnbarea .myInFo .profile{position:relative;height:60px;line-height:60px;width:260px;text-align: center;}
 .lnbarea .myInFo .profile li{line-height: 20px;font-size:15px;color:#FFFFFF;}
+.lnbarea .myInFo .profile li span {line-height: 20px;font-size:15px;color:#FFFFFF;}
+.lnbarea .myInFo .profile li span.current{background:#ed3346;color:#fff;}
+
 .lnbarea .myInFo .profile .term{font-size:14px;color:#969ba1;}
 .lnbarea .myInFo .profile .logouT{position: absolute;top:0;right: 40px;}
 .lnbarea .lnbm {position:relative;width: 260px;text-align: center;}
-.lnbarea .lnbm ul li a{display:inline-block;line-height:50px;width: 180px;height:50px;padding:0;color:#8a8585;font-size:16px;background: #262424;border-radius: 5px;text-align: center;}
-.lnbarea .lnbm ul li a.current{background:#ed3346;color:#fff;}
-.lnbarea .lnbm ul li a:hover{}
+.lnbarea .lnbm ul li {display:inline-block;line-height:50px;width: 180px;height:50px;padding:0;color:#8a8585;font-size:16px;background: #262424;border-radius: 5px;text-align: center;}
+.lnbarea .lnbm ul li span{display:inline-block;line-height:50px;width: 180px;height:50px;padding:0;color:#fff;font-size:16px;background:#262424;border-radius: 5px;text-align: center;}
+.lnbarea .lnbm ul li span.current{display:inline-block;line-height:50px;width: 180px;height:50px;padding:0;color:#fff;font-size:16px;background:#ed3346;border-radius: 5px;text-align: center;}
+
 .lnbarea .lnbm p{display: block;color:#cccccc;text-align: left;padding-left: 50px;}
 .lnbarea .lnbm ul li .new{display:inline-block;width:14px;height:14px;font-weight:700;font-size:10px;line-height:14px;text-align:center;border-radius:3px;color:#fff;background:#188bc7;position:absolute;right:30px;top:22px}

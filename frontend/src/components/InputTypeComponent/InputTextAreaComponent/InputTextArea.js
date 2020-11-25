@@ -17,62 +17,49 @@ const InputTextArea = React.forwardRef((props, ref) => {
         tip, 
         placeholer, 
         value, 
+        caution,
+        maxByte,
+        maxByteLabel,
+        currentByte,
         onChange,
         styleClass,
         ...others
      } = props;
 
+
     return (
-        <div className={cx("input-textarea-container")}>
-            {label && <div className={cx("input-label")}><label>{label}</label></div>}
-            {tip ? (
-            <Tooltip
-                title={tip}
-                position="top"
-                trigger="mouseenter"
-                arrow="true"
-                sticky="true"
-            >
+        <>
+            <div style={{float: 'left', width: '100%'}}>
                 <textarea
                     id={id}
                     rows={rows}
                     cols={cols}
                     maxLength={maxLength}
                     placeholder={placeholer}
+                    value={value || ""}
                     onChange={onChange}
-                    className={styleClass ? cx(styleClass) : cx("intextarea")} 
+                    className={caution !== undefined && caution !== "" && caution !== " " ? cx("intextarea_caution") : cx("intextarea")} 
                     ref={ref}
                     {...others}
                 >
                     {value}
                 </textarea>
-            </Tooltip>
-            ) : (
-            <textarea
-                id={id}
-                rows={rows}
-                cols={cols}
-                maxLength={maxLength}
-                placeholder={placeholer}
-                value={value || ""}
-                onChange={onChange}
-                className={cx("intextarea")} 
-                ref={ref}
-                {...others}
-            >
-                {value}
-            </textarea>
-            )}
-        </div>
+                {maxByteLabel ? 
+                    <div style={{display: 'inline-block', height: '100%', verticalAlign: 'bottom', margin: "5px"}}>
+                        {currentByte}/{maxByte} Byte
+                    </div>
+                : null}
+            </div>
+            {caution !== "" && caution !== " " ? <p className={cx("caution")}>{caution}</p> : null}
+        </>
     );
 
-})
+});
 
 // default props 지정
 InputTextArea.defaultProps = {
     rows: 20,
-    cols: 100,
-    maxLength: 100,
+    maxLength: 1000,
 };
 
 export default InputTextArea;

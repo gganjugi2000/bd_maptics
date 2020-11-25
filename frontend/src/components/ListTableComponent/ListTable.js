@@ -106,7 +106,7 @@ const ListTable = ({
                                                 <span className={cx("data")} >
                                                     {headItem.id === "no" ? ((nowPage -1) * limit + (i + 1))
                                                     : (headItem["type"] !== undefined && headItem.type === "link" ? (
-                                                            <Link to={headItem.to + item[headItem.id]}>{item[headItem.label_id]}</Link>
+                                                            <Link to={headItem.to + item[headItem.id]}><label className={cx("link")}>{item[headItem.label_id]}</label></Link>
                                                         ) : (headItem["type"] !== undefined && headItem.type === "callback" ? (
                                                             <label 
                                                                 className={cx("link")}

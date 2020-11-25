@@ -1,5 +1,7 @@
+.board_notice .required, .board_write .required, .board_write .caution:after, .board_write .inselect:after{background-image:url('../../../images/icon.png');}
+
 .intext	{height:28px;padding:0 10px;margin-right:5px;font-size:12px;color:#777;border:1px solid #d7d7d7;}
 .intext_caution	{height:28px;padding:0 10px;margin-right:5px;font-size:12px;color:#777;border:1px solid #f82121;}
 .intext_read	{height:28px;padding:0 10px;margin-right:5px;font-size:12px;color:#777;border:1px solid #d7d7d7;background: #eeeeee;}
-.caution	{position:relative;margin-top:8px;padding-left:24px;font-size:12px;line-height:16px;color:#f82121;}
-.caution:after	{width:16px;height:16px;content:'';position:absolute;top:0;left:0;background-position:0 -185px;}
+.caution	{position:relative;margin-top:8px;padding-left:24px;font-size:12px;line-height:16px;color:#ed5520;}
+/* .caution:after	{width:16px;height:16px;content:'';position:absolute;top:0;left:0;background-position:0 -185px;} */

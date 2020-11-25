@@ -12,7 +12,7 @@ export function validAdvertiserId (value) {
 }
 
 export function validAdvertiserName (value) {
-    const regExp = /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣|A-Za-z]{2,}$/; 
+    const regExp = /^(?!(?:[0-9]+)$)([ㄱ-ㅎ|ㅏ-ㅣ|가-힣|0-9A-Za-z]){2,}$/; 
     
     if (value === undefined || value === null)
         return false;
@@ -24,7 +24,7 @@ export function validAdvertiserName (value) {
 }
 
 export function validAdvertiserMngName (value) {
-    const regExp = /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣|A-Za-z]{2,}$/; 
+    const regExp = /^(?!(?:[0-9]+)$)([ㄱ-ㅎ|ㅏ-ㅣ|가-힣|0-9A-Za-z]){2,}$/; 
     
     if (value === undefined || value === null)
         return false;

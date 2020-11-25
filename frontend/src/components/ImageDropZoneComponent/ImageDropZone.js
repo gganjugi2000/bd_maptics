@@ -51,22 +51,17 @@ const ImageDropZone = React.forwardRef((props, ref) => {
             >
         {({getRootProps, getInputProps, isDragActive}) => {
             return (
-                <div {...getRootProps({className: isDragActive ? cx("baseStyle", "activeStyle") : cx("baseStyle")})} style={{width: '88%', height: '85%'}} className={isDragActive ? cx("baseStyle", "activeStyle") : cx("baseStyle")} >
+                <div {...getRootProps()} style={{width: '100%', height: '100%'}} >
                     <input {...getInputProps({
                             onDrop: e => e.stopPropagation()
                         })} />
-                    {imageData && imageData === undefined || imageData === null ? (
-                        <p className="dropzone-content">
-                            여기에 파일을 놓으려면 놓으십시오 <br />
-                            +
-                        </p>
+                    {imageData === undefined || imageData === null || imageData === '' ? (
+                        <div style={{textAlign: 'center', paddingTop: '20px'}}>MMS/RCS Image <br/>
+                        업로드할 파일을 선택 또는 파일을 끌어 놓기
+                        </div>
                     ) : (
-                        <img src={imageData} alt="여기에 일부 파일을 끌어다 놓거나 클릭하여 파일을 선택하세요" width="90%" height="90%" style={imageData !== "" ?  {display: 'inline-block'} : {display: 'none'}}/>
+                        <img src={imageData} alt="" width="100%" height="100%" style={imageData !== "" ?  {display: 'inline-block'} : {display: 'none'}}/>
                     )}
-
-                    {isDragActive ? (
-                        <p className="dropzone-content">여기에 일부 파일을 끌어다 놓거나 클릭하여 파일을 선택하세요</p>
-                    ) : (null)}
                 </div>
             );
         }}

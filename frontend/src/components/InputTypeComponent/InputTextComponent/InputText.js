@@ -24,12 +24,12 @@ const InputText = React.forwardRef((props, ref) => {
                     placeholder={placeholer}
                     value={value || ""}
                     onChange={onChange}
-                    className={caution !== "" ? cx("intext_caution") : cx("intext")} 
+                    className={caution !== "" && caution !== " " ? cx("intext_caution") : cx("intext")} 
                     ref={ref}
                     {...others}
             />
             {props.children}
-            {caution !== "" ? <p className={cx("caution", "caution:after")}>{caution}</p> : null}
+            {caution !== "" && caution !== " " ? <p className={cx("caution")}>{caution}</p> : null}
         </>
     );
 });

@@ -14,6 +14,7 @@ import { initAdvertiserState  } from '../state';
 // 수정 : /advertiser/updateInfo
 // 상세 : /advertiser/getInfoDetail
 // id중복체크 : /advertiser/checkAdvertiserId
+// single 검색 : /advertiser/getSearchList/
 
 const listAdvertiserAPI = (advertiser) => {
     return (
@@ -61,6 +62,13 @@ const checkAdvertiserIdAPI = (advertiserId) => {
     );
 };
 
+const searchListAdvertiserAPI = (advertiser) => {
+    return (
+        authAxios.get(
+            `/advertiser/getSearchList/${advertiser.cur}/${advertiser.page_size}`, {params: advertiser})
+    );
+};
+
 // action types
 const [
     LIST_ADVERTISER,
@@ -92,6 +100,11 @@ const [
     CHECK_ADVERTISER_ID_SUCCESS,
     CHECK_ADVERTISER_ID_FAILURE
 ] = createRequestOfficeActionTypes('advertiser/CHECK_ADVERTISER_ID');
+const [
+    SEARCH_LIST_ADVERTISER,
+    SEARCH_LIST_ADVERTISER_SUCCESS,
+    SEARCH_LIST_ADVERTISER_FAILURE
+] = createRequestOfficeActionTypes('campaign/SEARCH_LIST_ADVERTISER');
 
 const CLEAR_ADVERTISER_INFO = 'advertiser/CLEAR_ADVERTISER_INFO';
 
@@ -103,15 +116,18 @@ export const updateAdvertiser = createAction(UPDATE_ADVERTISER);
 export const deleteAdvertiser = createAction(DELETE_ADVERTISER); 
 export const checkAdvertiserId = createAction(CHECK_ADVERTISER_ID); 
 export const clearAdvertiserInfo = createAction(CLEAR_ADVERTISER_INFO);
+export const searchListAdvertiser = createAction(SEARCH_LIST_ADVERTISER); 
 
 const forwardLocation = '/advertiser';
 
 const listAdvertiserSaga = createRequestOfficeSaga(LIST_ADVERTISER, listAdvertiserAPI);
-const createAdvertiserSaga = createRequestOfficeSaga(CREATE_ADVERTISER, createAdvertiserAPI, forwardLocation);
+const createAdvertiserSaga = createRequestOfficeSaga(CREATE_ADVERTISER, createAdvertiserAPI);
 const getAdvertiserSaga = createRequestOfficeSaga(GET_ADVERTISER, getAdvertiserAPI);
 const updateAdvertiserSaga = createRequestOfficeSaga(UPDATE_ADVERTISER, updateAdvertiserAPI, forwardLocation);
 const deleteAdvertiserSaga = createRequestOfficeSaga(DELETE_ADVERTISER, deleteAdvertiserAPI, forwardLocation);
 const checkAdvertiserIdSaga = createCheckAdvertiserIdSaga(CHECK_ADVERTISER_ID, checkAdvertiserIdAPI);
+const searchListAdvertiserSaga = createRequestOfficeSaga(SEARCH_LIST_ADVERTISER, searchListAdvertiserAPI);
+
 
 function createCheckAdvertiserIdSaga(type, request, forwardLocation) {
     const SUCCESS = `${type}_SUCCESS`;
@@ -151,12 +167,20 @@ export function* advertiserSaga() {
     yield takeLatest(UPDATE_ADVERTISER, updateAdvertiserSaga);
     yield takeLatest(DELETE_ADVERTISER, deleteAdvertiserSaga);
     yield takeLatest(CHECK_ADVERTISER_ID, checkAdvertiserIdSaga);
+    yield takeLatest(SEARCH_LIST_ADVERTISER, searchListAdvertiserSaga);
 }
 
 const initState = initAdvertiserState ;
 const advertiserStore = handleActions(
     {
         [LIST_ADVERTISER_SUCCESS]: (state, { payload: data }) => ({
+            ...state,
+            advertiserList: data.result.data,
+            totalCount: data.result.totalCount,
+            searchCount: data.result.data.length,
+            status: LIST_ADVERTISER_SUCCESS,
+        }),
+        [SEARCH_LIST_ADVERTISER_SUCCESS]: (state, { payload: data }) => ({
             ...state,
             advertiserList: data.result.data,
             totalCount: data.result.totalCount,
@@ -174,6 +198,7 @@ const advertiserStore = handleActions(
         [UPDATE_ADVERTISER_SUCCESS]: (state, { payload: data }) => ({
             ...state,
             msg: data.result.data,
+            status: UPDATE_ADVERTISER_SUCCESS,
         }),
         [DELETE_ADVERTISER_SUCCESS]: (state, { payload: data }) => ({
             ...state,
