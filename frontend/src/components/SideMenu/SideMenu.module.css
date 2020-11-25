@@ -10,12 +10,12 @@
 .lnbarea .myInFo .profile .term{font-size:14px;color:#969ba1;}
 .lnbarea .myInFo .profile .logouT{position: absolute;top:0;right: 40px;}
 .lnbarea .lnbm {position:relative;width: 260px;text-align: center;}
-.lnbarea .lnbm ul li {display:inline-block;line-height:33px;width: 180px;height:30px;padding:0;color:#8a8585;background: #262424;}
+.lnbarea .lnbm ul li {display:inline-block;line-height:33px;width: 180px;height:30px;padding:0;color:#8a8585;}
 .lnbarea .lnbm ul li.title {display:inline-block;line-height:50px;width: 180px;height:50px;padding:0;color:#8a8585;font-size:16px; border-radius: 5px;}
 .lnbarea .lnbm ul li.title span.current{display:inline-block;line-height:50px;width: 180px;height:50px; padding:0;color:#fff;font-size:18px; font-weight:bold; background:#ed3346;border-radius: 5px;text-align: center;}
 
-.lnbarea .lnbm ul li span           {display:inline-block;line-height:30px;width:180px; height:38px;padding:0 0 0 12px;color:#ddd;font-size:14px;border-radius: 0px;text-align: left;}
-.lnbarea .lnbm ul li span.current   {color: #ed3346; font-weight:bold;}
+.lnbarea .lnbm ul li span           {display:inline-block;float:right;line-height:34px;width:155px; height:32px;padding:0 0 0 12px;color:#ccc;font-size:14px;border-radius: 0px;text-align: left; background: #262424;}
+.lnbarea .lnbm ul li span.current   {color: #fff; font-weight:bold;}
 
 .lnbarea .lnbm p{display: block;color:#cccccc;text-align: left;padding-left: 50px;}
 .lnbarea .lnbm ul li .new{display:inline-block;width:14px;height:14px;font-weight:700;font-size:10px;line-height:14px;text-align:center;border-radius:3px;color:#fff;background:#188bc7;position:absolute;right:30px;top:22px}
