@@ -60,8 +60,9 @@ const SideMenu = ({leftSize}) => {
                     </div>
                     <div className={cx("lnbm", "mt30")}>
                         <ul>
-                            <li className={cx("mb20")}><Link to="/advertiser" onClick={(e) => { handleSelectMenu('advertiser'); }}><span className={selectedMenu === "" || selectedMenu === 'advertiser' ? cx("current") : cx("mb20")}>광고주 관리</span></Link></li>
-                            <li className={cx("mb20")}><Link to="/campaign" onClick={(e) => { handleSelectMenu('campaign'); }}><span className={selectedMenu === 'campaign' ? cx("current") : cx("mb20")}>캠페인 관리</span></Link></li>
+                            <li className={cx("mb20", "title")}><span className={cx("current")}>캠페인</span></li>
+                            <li className={cx("mb10")}><Link to="/advertiser" onClick={(e) => { handleSelectMenu('advertiser'); }}><span className={selectedMenu === "" || selectedMenu === 'advertiser' ? cx("current") : cx("mb20")}>&middot; 광고주 관리</span></Link></li>
+                            <li className={cx("mb10")}><Link to="/campaign" onClick={(e) => { handleSelectMenu('campaign'); }}><span className={selectedMenu === 'campaign' ? cx("current") : cx("mb20")}>&middot; 캠페인 관리</span></Link></li>
                         </ul>
                     </div>
             </div>
