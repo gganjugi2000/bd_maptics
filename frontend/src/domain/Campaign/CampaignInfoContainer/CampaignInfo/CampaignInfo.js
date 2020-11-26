@@ -26,7 +26,6 @@ import {
 
 const cx = classNames.bind(styles);
 
-// TO-DO : email provider list db 관리?
 const dateAPOptions = [
     { value: 'am', label: '오전' },
     { value: 'pm', label: '오후' }
@@ -215,6 +214,9 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                 , udt_dt: changeFormat(campaignInfo.udt_dt, 'YYYY-MM-DD hh:mm:DD')
             });
 
+            setMsgTitleByte(checkByteOfValue(campaignInfo.mgs_title));
+            setMsgSummaryByte(checkByteOfValue(campaignInfo.msg_summary));
+
             if(!isEmpty(advertiserInfo) && advertiserInfo.advts_id !== campaignInfo.advts_id){
                 setAdvertiser({
                     ...advertiser
@@ -224,7 +226,11 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                     , advts_img: advertiserInfo.advts_img
                     , email_addr: advertiserInfo.email_addr
                     , phone_no: advertiserInfo.phone_no
-                });                    
+                });
+                setCampaign({
+                    ...campaign
+                    , advts_id: advertiserInfo.advts_id
+                });
             } else {
                 setAdvertiser({
                     ...advertiser
@@ -267,14 +273,12 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
     
     // TO-DO : csv 파일 validation check 추가
     const handleRctTargetFile = (e) => {
-        console.log(e.target.files[0]);
         console.log("setLinkPsYn2Value ================== ")
         console.log(e)
         console.log(e.target.files[0]);
         if(e.target.files[0]){
-
+            setRctTargetFile(e.target.files[0]);
         }
-        setRctTargetFile(e.target.files[0]);
     }
 
     const setUrlUploadData = (fileData) => {
@@ -541,11 +545,11 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
             senderNoMsg = "발신자 번호를 입력해 주세요.";
         }
 
-        if(!isEmpty(rctTargetFile)){
-            rctTargetValid = true;
-        } else { 
-            rctTargetMsg = "수신자 대상 csv파일을 업로드해 주세요.";
-        }
+        // if(!isEmpty(rctTargetFile)){
+        //     rctTargetValid = true;
+        // } else { 
+        //     rctTargetMsg = "수신자 대상 csv파일을 업로드해 주세요.";
+        // }
 
         setCampaignValid({
             ...campaignValid
@@ -561,7 +565,7 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
             , mgs_title: mgsTitleValid
             , msg_summary: msgSummaryValid
             , sender_no: senderNoValid
-            , rct_target: rctTargetValid
+            // , rct_target: rctTargetValid
         });
         setCampaignCaution({
             ...campaignCaution
@@ -613,7 +617,8 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
 
         if(!advtsIdValid || !cmpgnTitleValid || !cmpgnPpsValid  || !sendReqCntValid
             || !sendDtYmdValid || !sendDtApValid || !sendDtHhValid || !sendDtMmValid || !sendModeValid 
-            || !mgsTitleValid || !msgSummaryValid || !senderNoValid  || !rctTargetValid) {
+            || !mgsTitleValid || !msgSummaryValid || !senderNoValid) {
+                // || !rctTargetValid
             alert("입력 항목 오류");
             return;
         }
@@ -778,7 +783,7 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                     <tbody>
                         <tr>
                             <th scope="row"><label2 for="PTjoin_name" className={cx("label2")}>캠페인명</label2></th>
-                            <td colspan="3">
+                            <td colSpan="3">
                                 <InputText 
                                     id="cmpgn_title"
                                     size="100"
@@ -793,7 +798,7 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                         </tr>
                         <tr>
                             <th scope="row"><label2 for="PTjoin_name" className={cx("label2")}>캠페인 목적</label2></th>
-                            <td colspan="3">
+                            <td colSpan="3">
                                 <InputText 
                                     id="cmpgn_pps"
                                     size="100"
@@ -858,6 +863,7 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                                     <div className={cx("datepickerWrap")}>
                                         <span>
                                         <DatePicker
+                                            autoComplete='off'
                                             id="send_dt_ymd"
                                             selected={campaign.send_dt_ymd}
                                             onChange={date => setSendDtYmdValue(date)}
@@ -962,7 +968,7 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                         </tr>
                         <tr>
                             <th scope="row"><label2 for="PTjoin_name" className={cx("label2")}>메세지 제목</label2></th>
-                            <td colspan="3">
+                            <td colSpan="3">
                                 <div style={{float: 'left', width: '100%'}}>
                                     <InputText 
                                         id="mgs_title"
@@ -980,7 +986,7 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                         </tr>
                         <tr>
                             <th scope="row"><label2 for="PTjoin_attach" className={cx("label2")}>메세지 내용</label2></th>
-                            <td colspan="3">
+                            <td colSpan="3">
                                 <div style={{float: 'left', width: '100%'}}>
                                     <InputTextArea
                                         id="msg_summary"
@@ -1001,7 +1007,7 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                         </tr>
                         <tr>
                             <th scope="row"><label2 for="PTjoin_name" className={cx("label2")}>MMS/RCS 이미지 첨부</label2></th>
-                            <td colspan="3">
+                            <td colSpan="3">
                                 <span className={cx("photo")} style={{width: "180px",height: "100px"}}>
                                     <ImageDropZone
                                         imageData={campaign.msg_app_img}
@@ -1022,7 +1028,7 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                         </tr>
                         <tr>
                             <th scope="row"><label2 for="PTjoin_name" className={cx("label2")}>발신자 번호</label2></th>
-                            <td colspan="3">
+                            <td colSpan="3">
                                 <InputText 
                                     id="mgs_title"
                                     size="100"
@@ -1038,7 +1044,7 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                         </tr>
                         <tr>
                             <th scope="row"><label2 for="PTjoin_name" className={cx("label2")}>수신대상 업로드</label2></th>
-                            <td colspan="3">
+                            <td colSpan="3">
                                 <input 
                                     type="file" 
                                     id="rct_target" 
@@ -1057,7 +1063,7 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                         </tr>
                         <tr>
                             <th scope="row" rowSpan="3"><label2 for="PTjoin_name" className={cx("label2")}>링크URL개인화(선택)</label2></th>
-                            <td colspan="3">
+                            <td colSpan="3">
                                 <InputCheckBox 
                                     id="link_ps_yn_1"
                                     checked={campaign.link_ps_yn_1}
@@ -1080,7 +1086,7 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="3">
+                            <td colSpan="3">
                                 <InputCheckBox 
                                     id="link_ps_yn_2"
                                     checked={campaign.link_ps_yn_2}
@@ -1103,7 +1109,7 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="3">
+                            <td colSpan="3">
                                 <InputCheckBox 
                                     id="link_ps_yn_3"
                                     checked={campaign.link_ps_yn_3}
@@ -1133,7 +1139,7 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                                     <Link to="/form/url_upload_form.xlsx" target="_blank" download>엑셀양식파일 <br/> 다운로드</Link>
                                 </Button>
                             </th>
-                            <td colspan="3">
+                            <td colSpan="3">
                                 <div style={{float: 'left', width: '100%'}} >
                                     <input 
                                         type="file" 
@@ -1164,7 +1170,7 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                                     <Link to="/form/coupon_no_upload_form.xlsx" target="_blank" download>엑셀양식파일 <br/> 다운로드</Link>
                                 </Button>
                             </th>
-                            <td colspan="3">
+                            <td colSpan="3">
                                 <input 
                                     type="file" 
                                     id="cp_no_upload" 

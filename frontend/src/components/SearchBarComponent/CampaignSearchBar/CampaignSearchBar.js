@@ -172,10 +172,9 @@ const CampaignSearchBar = ({
             <ul>
                 <li>
                     <label>아이디</label>
-                    <input
+                    <input autocomplete="off"
                         id="advts_id"
                         type="text"
-                        className={cx("input-text")} 
                         value={campaignSearchData.advts_id}
                         onChange={(e) => {
                             changeAdvertiserId(e, e.target.value);
@@ -192,7 +191,6 @@ const CampaignSearchBar = ({
                     <input
                         id="advts_nm"
                         type="text"
-                        className={cx("input-text")} 
                         value={campaignSearchData.advts_nm}
                         onChange={(e) => {
                             changeAdvertiserName(e, e.target.value);
@@ -209,7 +207,6 @@ const CampaignSearchBar = ({
                     <input
                         id="cmpgn_title"
                         type="text"
-                        className={cx("input-text")} 
                         value={campaignSearchData.cmpgn_title}
                         onChange={(e) => {
                             changeCampaignName(e, e.target.value);
@@ -226,6 +223,7 @@ const CampaignSearchBar = ({
                     <div className={cx("datepickerWrap")}>
                         <span>
                             <DatePicker
+                                autoComplete='off'
                                 id="reg_start_dt"
                                 selected={campaignSearchData.reg_start_dt}
                                 onChange={date => changeRegStartDate(date)}
@@ -236,6 +234,7 @@ const CampaignSearchBar = ({
                         <span>~</span>
                         <span>
                             <DatePicker
+                                autoComplete='off'
                                 id="reg_end_dt"
                                 selected={campaignSearchData.reg_end_dt}
                                 onChange={date => changeRegEndDate(date)}
@@ -250,6 +249,7 @@ const CampaignSearchBar = ({
                     <div className={cx("datepickerWrap")}>
                         <span>
                             <DatePicker
+                                autoComplete='off'
                                 id="send_start_dt"
                                 selected={campaignSearchData.send_start_dt}
                                 onChange={date => changeSendStartDate(date)}
@@ -260,6 +260,7 @@ const CampaignSearchBar = ({
                         <span>~</span>
                         <span>
                             <DatePicker
+                                autoComplete='off'
                                 id="send_end_dt"
                                 selected={campaignSearchData.send_end_dt}
                                 onChange={date => changeSendEndDate(date)}

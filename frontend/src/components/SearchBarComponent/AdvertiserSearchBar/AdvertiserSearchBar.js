@@ -128,7 +128,7 @@ const AdvertiserSearchBar = ({
             <ul>
                 <li>
                     <label>아이디</label>
-                    <input
+                    <input autocomplete="off"
                         id="advertiserId"
                         type="text"
                         value={advertiserSearchData.advts_id}
@@ -144,7 +144,7 @@ const AdvertiserSearchBar = ({
                 </li>
                 <li>
                     <label>광고주명</label>
-                    <input
+                    <input autocomplete="off"
                         id="advts_nm"
                         type="text"
                         value={advertiserSearchData.advts_nm}
@@ -160,7 +160,7 @@ const AdvertiserSearchBar = ({
                 </li>
                 <li>
                     <label>담당자명</label>
-                    <input
+                    <input autocomplete="off"
                         id="advts_mng_nm"
                         type="text"
                         value={advertiserSearchData.advts_mng_nm}
@@ -179,6 +179,7 @@ const AdvertiserSearchBar = ({
                     <div className={cx("datepickerWrap")}>
                         <span>
                             <DatePicker
+                                autoComplete='off'
                                 id="reg_start_dt"
                                 selected={advertiserSearchData.reg_start_dt}
                                 onChange={date => changeRegStartDate(date)}
@@ -189,6 +190,7 @@ const AdvertiserSearchBar = ({
                         <span>~</span>
                         <span>
                             <DatePicker
+                                autoComplete='off'
                                 id="reg_end_dt"
                                 selected={advertiserSearchData.reg_end_dt}
                                 onChange={date => changeRegEndDate(date)}

@@ -155,6 +155,7 @@ const campaignStore = handleActions(
         }),
         [CLEAR_CAMPAIGN_INFO]: (state) => ({
             ...state,
+            advertiserInfo: {},
             campaignInfo: {},
             campaignAcknlg: [],
         }),

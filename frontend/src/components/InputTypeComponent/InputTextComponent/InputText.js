@@ -18,15 +18,16 @@ const InputText = React.forwardRef((props, ref) => {
     return (
         <>
             <input
-                    id={id}
-                    type="text"
-                    size={size}
-                    placeholder={placeholer}
-                    value={value || ""}
-                    onChange={onChange}
-                    className={caution !== "" && caution !== " " ? cx("intext_caution") : cx("intext")} 
-                    ref={ref}
-                    {...others}
+                autocomplete="off" 
+                id={id}
+                type="text"
+                size={size}
+                placeholder={placeholer}
+                value={value || ""}
+                onChange={onChange}
+                className={caution !== "" && caution !== " " ? cx("intext_caution") : cx("intext")} 
+                ref={ref}
+                {...others}
             />
             {props.children}
             {caution !== "" && caution !== " " ? <p className={cx("caution")}>{caution}</p> : null}

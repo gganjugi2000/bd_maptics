@@ -717,6 +717,7 @@ const CampaignForm = ({ advertiserInfo, onSubmit, onCancel, handleAdvtsSearchPop
                                     <div className={cx("datepickerWrap")}>
                                         <span>
                                             <DatePicker
+                                                autoComplete='off'
                                                 id="send_dt_ymd"
                                                 selected={campaign.send_dt_ymd}
                                                 onChange={date => setSendDtYmdValue(date)}

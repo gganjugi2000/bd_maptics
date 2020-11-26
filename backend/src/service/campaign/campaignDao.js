@@ -91,16 +91,16 @@ exports.getCampaignList = (start_offset, page_size, searchQuery, sortQuery) => {
         if(searchQuery.send_start_dt != null && searchQuery.send_start_dt != undefined 
             && searchQuery.send_end_dt != null && searchQuery.send_end_dt != undefined) {
             if(query != "") query += " OR ";
-                query += `( STR_TO_DATE(A.send_dt_ymd,'%Y%m%d') between '${searchQuery.send_start_dt} 00:00:00' and '${searchQuery.send_end_dt} 23:59:59' )`;
+                query += `( STR_TO_DATE(A.send_dt_ymd,'%Y-%m-%d') between '${searchQuery.send_start_dt} 00:00:00' and '${searchQuery.send_end_dt} 23:59:59' )`;
         } else if(searchQuery.send_start_dt != null && searchQuery.send_start_dt != undefined 
             && (searchQuery.send_end_dt == null || searchQuery.send_end_dt == undefined)) {
             if(query != "") query += " OR ";
-                query += `( STR_TO_DATE(A.send_dt_ymd,'%Y%m%d') between '${searchQuery.send_start_dt} 00:00:00' and '${searchQuery.send_start_dt} 23:59:59' )`;
+                query += `( STR_TO_DATE(A.send_dt_ymd,'%Y-%m-%d') between '${searchQuery.send_start_dt} 00:00:00' and '${searchQuery.send_start_dt} 23:59:59' )`;
 
         } else if((searchQuery.send_start_dt == null && searchQuery.send_start_dt == undefined)
             && (searchQuery.send_end_dt != null && searchQuery.send_end_dt != undefined)) {
             if(query != "") query += " OR ";
-                query += `( STR_TO_DATE(A.send_dt_ymd,'%Y%m%d') between '${searchQuery.send_end_dt} 00:00:00' and '${searchQuery.send_end_dt} 23:59:59' )`;
+                query += `( STR_TO_DATE(A.send_dt_ymd,'%Y-%m-%d') between '${searchQuery.send_end_dt} 00:00:00' and '${searchQuery.send_end_dt} 23:59:59' )`;
         }
 
         sql_query = sql_query.concat(query);

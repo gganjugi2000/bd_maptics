@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { createCampaign, searchAdvertiser } from 'store/modules/campaignStore';
+import { createCampaign, searchAdvertiser, clearCampaignInfo} from 'store/modules/campaignStore';
 import { useHistory } from "react-router";
 import CampaignForm from './CampaignForm';
 import ContentsTitle from '../../../components/TitleComponent/ContentsTitle/ContentsTitle';
@@ -18,7 +18,9 @@ const CampaignFormContainer = () => {
 
     // life cycle
     useEffect(() => {
-
+        return () => {
+            dispatch(clearCampaignInfo());
+        }
     }, []) // page loading 
 
     const handleAdvtsSearchPopupOpen = (e) => {
@@ -31,7 +33,7 @@ const CampaignFormContainer = () => {
 
     const onCancel = () => {
         // state clear
-        if(window.confirm('작성 중인 정보가 삭제됩니다. \n 취소 하시겠습니까?')){
+        if(window.confirm('작성 중인 정보가 삭제됩니다.\n취소 하시겠습니까?')){
             history.push({
                 pathname:  "/campaign"
             });
@@ -41,6 +43,7 @@ const CampaignFormContainer = () => {
     const onSubmit = (e, campaign) => {
         e.preventDefault();
         dispatch(createCampaign(campaign));
+        dispatch(clearCampaignInfo());
     }
 
     const handleSearchAdvertiser = (value) => {

@@ -1,5 +1,5 @@
-.intextarea	{width:668px;height:158px;position:relative;padding:0 10px;font-size:12px;line-height:17px;color:#777;border:1px solid #d7d7d7;}
-.intextarea_caution	{width:668px;height:158px;position:relative;padding:0 10px;font-size:12px;line-height:17px;color:#777;border:1px solid #f82121;}
+.intextarea	{width:668px;height:158px;padding:0 10px;font-size:12px;line-height:17px;color:#777;border:1px solid #d7d7d7;}
+.intextarea_caution	{width:668px;height:158px;padding:0 10px;font-size:12px;line-height:17px;color:#777;border:1px solid #f82121;}
 .caution	{position:relative;margin-top:8px;padding-left:24px;font-size:12px;line-height:16px;color:#ed5520;}
 
 /* .caution:after	{width:16px;height:16px;content:'';position:absolute;top:0;left:0;background-position:0 -185px;} */

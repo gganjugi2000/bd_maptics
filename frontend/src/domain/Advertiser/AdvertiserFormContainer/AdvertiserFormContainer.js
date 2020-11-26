@@ -22,7 +22,7 @@ const AdvertiserFormContainer = ({
 
     const onCancel = () => {
         // state clear
-        if(window.confirm('작성 중인 정보가 삭제됩니다. \n 창을 닫으시겠습니까?')){
+        if(window.confirm('작성 중인 정보가 삭제됩니다.\n창을 닫으시겠습니까?')){
             popupClose(); 
         }
     }
