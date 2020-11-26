@@ -1,4 +1,4 @@
-.all_Search {padding:15px 10px;}
+.all_Search {padding:10px 10px;}
 .all_Search input[type="text"]{font-size:12px;width:calc(100% - 100px); box-sizing: border-box; height:35px;padding:0 0 0 10px;margin-right: 20px;background-color:#eceff3;border:1px solid #dddddd;}
 .all_Search p{display:inline-block;vertical-align:middle;}
 .all_Search ul {display:inline-block; width:calc(100% - 100px)}

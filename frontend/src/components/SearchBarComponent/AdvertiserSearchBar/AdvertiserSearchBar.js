@@ -128,7 +128,7 @@ const AdvertiserSearchBar = ({
             <ul>
                 <li>
                     <label>아이디</label>
-                    <input autocomplete="off"
+                    <input autoComplete="off"
                         id="advertiserId"
                         type="text"
                         value={advertiserSearchData.advts_id}
@@ -144,7 +144,7 @@ const AdvertiserSearchBar = ({
                 </li>
                 <li>
                     <label>광고주명</label>
-                    <input autocomplete="off"
+                    <input autoComplete="off"
                         id="advts_nm"
                         type="text"
                         value={advertiserSearchData.advts_nm}
@@ -160,7 +160,7 @@ const AdvertiserSearchBar = ({
                 </li>
                 <li>
                     <label>담당자명</label>
-                    <input autocomplete="off"
+                    <input autoComplete="off"
                         id="advts_mng_nm"
                         type="text"
                         value={advertiserSearchData.advts_mng_nm}

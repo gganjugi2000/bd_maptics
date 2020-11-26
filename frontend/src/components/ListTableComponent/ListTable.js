@@ -117,7 +117,7 @@ const ListTable = ({
                                                                 {item[headItem.id]}
                                                              </label>
                                                         ) 
-                                                        : (headItem["data_type"] !== undefined && headItem.data_type === "date" ? changeFormat(item[headItem.id], 'YYYY-MM-DD hh:mm:DD') : item[headItem.id]))
+                                                        : (headItem["data_type"] !== undefined && headItem.data_type === "date" ? changeFormat(item[headItem.id], 'YYYY-MM-DD HH:mm:DD') : item[headItem.id]))
                                                     )}
                                                 </span>
                                             </td>

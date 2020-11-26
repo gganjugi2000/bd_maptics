@@ -255,7 +255,6 @@ exports.checkAdvertiserId = (advts_id) => {
                     , upd_dt
                     from advertiser 
                 where advts_id = '${advts_id}' `;
-    console.log(sql);
     return new Promise(resolve => {
         mysql.get_data('check_advertiser_id', sql, (result) => {
             resolve(result);

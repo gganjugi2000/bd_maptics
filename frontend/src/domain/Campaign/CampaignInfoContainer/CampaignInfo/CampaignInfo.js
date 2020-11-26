@@ -165,25 +165,55 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
     const advtsImgRef = useRef();
 
     
-    // clean
+    // // clean
     useEffect(() => {
         return () => {
             setCampaign(null);
             setCampaignCaution(null);
             setCampaignValid(null);
+            setAdvertiser(null);
         }
     }, []);
 
-    console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2")
-    console.log(campaignInfo)
-    console.log(campaignAcknlg)
-    console.log(advertiserInfo)
-    console.log("00000000000000000000000000000000000000000000000")
+
     useEffect(() => {
-        if(!isEmpty(campaignInfo)){
+        if(campaignInfo !== null && campaignInfo !== undefined && Object.keys(campaignInfo).length !== 0 ){
+            setMsgTitleByte(checkByteOfValue(campaignInfo.mgs_title));
+            setMsgSummaryByte(checkByteOfValue(campaignInfo.msg_summary));
+
+            setAdvertiser({
+                ...advertiser
+                , advts_id: campaignInfo.advts_id
+                , advts_nm: campaignInfo.advts_nm
+                , advts_mng_nm: campaignInfo.advts_mng_nm
+                , advts_img: campaignInfo.advts_img
+                , email_addr: campaignInfo.email_addr
+                , phone_no: campaignInfo.phone_no
+            });
+            
+            let advtsId = campaignInfo.advts_id;
+
+            if(advertiserInfo !== null && advertiserInfo !== undefined && Object.keys(advertiserInfo).length !== 0){
+                console.log("useEffect setAdvertiser ==============")
+                console.log(advertiserInfo);
+                console.log(campaignInfo);
+                console.log("-------------------------------------------")
+                setAdvertiser({
+                    ...advertiser
+                    , advts_id: advertiserInfo.advts_id
+                    , advts_nm: advertiserInfo.advts_nm
+                    , advts_mng_nm: advertiserInfo.advts_mng_nm
+                    , advts_img: advertiserInfo.advts_img
+                    , email_addr: advertiserInfo.email_addr
+                    , phone_no: advertiserInfo.phone_no
+                });
+
+                advtsId = advertiserInfo.advts_id
+            }
+            
             setCampaign({
                 ...campaign
-                , advts_id: campaignInfo.advts_id
+                , advts_id: advtsId
                 , cmpgn_id: campaignInfo.id
                 , advts_nm: campaignInfo.advts_nm
                 , advts_mng_nm: campaignInfo.advts_mng_nm
@@ -209,41 +239,14 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                 , link_ps_yn_2: (campaignInfo.link_ps_yn_2 === 'Y' ? true : false)
                 , link_ps_url_3: campaignInfo.link_ps_url_3
                 , link_ps_yn_3: (campaignInfo.link_ps_yn_3 === 'Y' ? true : false)
+                , url_upload: campaignInfo.url_upload
                 , url_upload_cv: (campaignInfo.url_upload_cv === 'Y' ? true : false)
                 , reg_dt: changeFormat(campaignInfo.reg_dt, 'YYYY-MM-DD hh:mm:DD')
                 , udt_dt: changeFormat(campaignInfo.udt_dt, 'YYYY-MM-DD hh:mm:DD')
             });
-
-            setMsgTitleByte(checkByteOfValue(campaignInfo.mgs_title));
-            setMsgSummaryByte(checkByteOfValue(campaignInfo.msg_summary));
-
-            if(!isEmpty(advertiserInfo) && advertiserInfo.advts_id !== campaignInfo.advts_id){
-                setAdvertiser({
-                    ...advertiser
-                    , advts_id: advertiserInfo.advts_id
-                    , advts_nm: advertiserInfo.advts_nm
-                    , advts_mng_nm: advertiserInfo.advts_mng_nm
-                    , advts_img: advertiserInfo.advts_img
-                    , email_addr: advertiserInfo.email_addr
-                    , phone_no: advertiserInfo.phone_no
-                });
-                setCampaign({
-                    ...campaign
-                    , advts_id: advertiserInfo.advts_id
-                });
-            } else {
-                setAdvertiser({
-                    ...advertiser
-                    , advts_id: campaignInfo.advts_id
-                    , advts_nm: campaignInfo.advts_nm
-                    , advts_mng_nm: campaignInfo.advts_mng_nm
-                    , advts_img: campaignInfo.advts_img
-                    , email_addr: campaignInfo.email_addr
-                    , phone_no: campaignInfo.phone_no
-                });
-            }
         }
-    }, [advertiserInfo, campaignInfo]) // page loading 
+  
+    }, [campaignInfo, advertiserInfo]) // page loading 
 
     const setMsgAppImageData = (fileData) => {
         setCampaign({
@@ -273,9 +276,10 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
     
     // TO-DO : csv 파일 validation check 추가
     const handleRctTargetFile = (e) => {
-        console.log("setLinkPsYn2Value ================== ")
+        console.log("handleRctTargetFile ================== ")
         console.log(e)
         console.log(e.target.files[0]);
+        e.preventDefault();
         if(e.target.files[0]){
             setRctTargetFile(e.target.files[0]);
         }
@@ -289,6 +293,7 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
     }
     
     const handleUrlUploadFile = (e) => {
+        e.preventDefault();
         setUrlUploadFile(e.target.files[0]);
     }
 
@@ -300,7 +305,8 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
     }
     
     const handleCpNoUploadFile = (e) => {
-        setCpNoUploadFile(e);
+        e.preventDefault();
+        setCpNoUploadFile(e.target.files[0]);
     }
 
     const handleAdvertiserSearch = (e) => {
@@ -719,7 +725,7 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                                     id="advts_id"
                                     size="27"
                                     placeholder="광고주 아이디"
-                                    value={advertiser.advts_id}
+                                    value={advertiser.advts_id || ''}
                                     caution={campaignCaution.advts_id}
                                     readOnly
                                 />
@@ -739,7 +745,7 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                                 <InputText 
                                     id="advts_nm"
                                     size="27"
-                                    value={advertiser.advts_nm}
+                                    value={advertiser.advts_nm || ''}
                                     readOnly
                                 />
                             </td>
@@ -748,7 +754,7 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                                 <InputText 
                                     id="advts_mng_nm"
                                     size="27"
-                                    value={advertiser.advts_mng_nm}
+                                    value={advertiser.advts_mng_nm || ''}
                                     readOnly
                                 />
                             </td>
@@ -759,7 +765,7 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                                 <InputText 
                                     id="email_addr"
                                     size="27"
-                                    value={advertiser.email_addr}
+                                    value={advertiser.email_addr || ''}
                                     readOnly
                                 />
                             </td>
@@ -768,7 +774,7 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                                 <InputText 
                                     id="phone_no"
                                     size="27"
-                                    value={advertiser.phone_no}
+                                    value={advertiser.phone_no || ''}
                                     readOnly
                                 />
                             </td>
@@ -1052,7 +1058,6 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                                     style={{width: "87%"}} 
                                     placeholder="CVS 파일만 업로드 가능합니다." 
                                     accept=".csv"
-                                    value={campaign.rct_target}
                                     onChange={(e) => {
                                         handleRctTargetFile(e);
                                     }}

@@ -186,14 +186,13 @@ const CampaignForm = ({ advertiserInfo, onSubmit, onCancel, handleAdvtsSearchPop
     
     // TO-DO : csv 파일 validation check 추가
     const handleRctTargetFile = (e) => {
-        console.log(e.target.files[0]);
-        console.log("setLinkPsYn2Value ================== ")
+        console.log("handleRctTargetFile ================== ")
         console.log(e)
         console.log(e.target.files[0]);
+        e.preventDefault();
         if(e.target.files[0]){
-
+            setRctTargetFile(e.target.files[0]);
         }
-        setRctTargetFile(e.target.files[0]);
     }
 
     const setUrlUploadData = (fileData) => {
@@ -204,6 +203,7 @@ const CampaignForm = ({ advertiserInfo, onSubmit, onCancel, handleAdvtsSearchPop
     }
     
     const handleUrlUploadFile = (e) => {
+        e.preventDefault();
         setUrlUploadFile(e.target.files[0]);
     }
 
@@ -215,13 +215,10 @@ const CampaignForm = ({ advertiserInfo, onSubmit, onCancel, handleAdvtsSearchPop
     }
     
     const handleCpNoUploadFile = (e) => {
-        setCpNoUploadFile(e);
+        e.preventDefault();
+        setCpNoUploadFile(e.target.files[0]);
     }
 
-    const handleAdvertiserSearch = (e) => {
-        alert('광고주 검색');
-    }
-    
     const setCampaignTitleValue = (e, value) => {
         setCampaign({
             ...campaign

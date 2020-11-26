@@ -9,6 +9,7 @@ const fileUpload = require('../utils/file/fileUpload');
 const formidable = require('formidable');
 const path = require('path');
 const fs = require('fs');
+// const util = require('util');
 
 // 캠페인 List
 router.get("/getList/:cur/:page_size", asyncHandler(async (req, res, next) => {
@@ -176,6 +177,8 @@ router.post('/addInfo', asyncHandler(async (req, res, next) => {
             let rctTargetFilePath = '';     // rct_target_file - 수신대상 csv 파일
             let urlUploadFilePath = '';     // url_upload_file - url 업로드
             let cpNoUploadFilePath = '';    // cp_no_upload_file - 쿠폰번호 업로드
+            // TO-DO :: campaign code 
+            // campaign code 를 별도로 관리할지... 아님 삭제
             let cmpgnCode = "ABCDE";
             if(file.msg_app_img_file) {
                 msgAppImgFilePath = file.msg_app_img_file.path.replace(/\\/g, '\\\\');
@@ -196,12 +199,39 @@ router.post('/addInfo', asyncHandler(async (req, res, next) => {
 
             await campaignService.addCampaignInfo(cmpgnCode, cmpgn_title, cmpgn_pps, advts_id, send_req_cnt, send_dt_ymd, send_dt_ap, send_dt_hh, send_dt_mm, use_cm, send_mode, mgs_title, msg_summary, msgAppImgFilePath, sender_no, rctTargetFilePath, link_ps_url_1, link_ps_yn_1, link_ps_url_2, link_ps_yn_2, link_ps_url_3, link_ps_yn_3, urlUploadFilePath, url_upload_cv, cpNoUploadFilePath);
             res.status(200).send({result: {code: 200, message: "success", data : ""}});
+            // res.end(util.inspect({fields: fields, files: files}));
         } else {
             console.log('upload fail!!');
             res.status(500).send({result: {code: 999, message: "error", data : err.message}});
         
         }
     });
+
+    // TO-DO : 업로드 파일의 저장 위치 변경
+    // end - 모든 request를 받고, 디스크에 모든 파일를 쓴후 발생하는 event
+    form.on('end', function(fields, files) { 
+        console.log("end ====================================================")
+        console.log(this.openedFiles); 
+        console.log(" 총 업로드 파일 갯수 == ", this.openedFiles.length); 
+        for(var i = 0; i < this.openedFiles.length; i++) { 
+            // Temporary location of our uploaded file 
+            var temp_path = this.openedFiles[i].path; 
+            // The file name of the uploaded file
+            var file_name = this.openedFiles[i].name; 
+            // Location where we want to copy the uploaded file 
+            // var new_location = './files/'; 
+            console.log("temp_path == ", temp_path); 
+            console.log("file_name == ", file_name); 
+            console.log(this.openedFiles[i]); 
+            // temp_path 로 받은 파일을, 원래 이름으로 변경하여 이동시킨다. 
+            // fs.move(temp_path, new_location + file_name, function (err) { 
+            // if (err) { 
+            //     console.error(err); 
+            // } else { 
+            //     console.log("success!") 
+            // } 
+    }});
+
 }));
 
 // 캠페인 정보 삭제
@@ -245,71 +275,96 @@ router.post('/modifyInfo', asyncHandler(async (req, res, next) => {
                 console.log("campaignDetailRet @@@@@@@@@@@@@@@@@@@@@@@@ ======================================")
                 console.log(campaignDetailRet)
                 console.log("----------------------------------------------------")
-
-                advtsImgFilePath = campaignDetailRet[0].advts_img;
-                msgAppImgFilePath = campaignDetailRet[0].msg_app_img; 
-                rctTargetFilePath = campaignDetailRet[0].rct_target; 
-                urlUploadFilePath = campaignDetailRet[0].url_upload; 
-                cpNoUploadFilePath = campaignDetailRet[0].cp_no_upload; 
+                if(campaignDetailRet[0].advts_img) {
+                    advtsImgFilePath = campaignDetailRet[0].advts_img.replace(/\\/g, '\\\\');
+                }
+                if(campaignDetailRet[0].msg_app_img) {
+                    msgAppImgFilePath = campaignDetailRet[0].msg_app_img.replace(/\\/g, '\\\\');
+                }
+                if(campaignDetailRet[0].rct_target) {
+                    rctTargetFilePath = campaignDetailRet[0].rct_target.replace(/\\/g, '\\\\');
+                }
+                if(campaignDetailRet[0].url_upload) {
+                    urlUploadFilePath = campaignDetailRet[0].url_upload.replace(/\\/g, '\\\\');
+                }
+                if(campaignDetailRet[0].cp_no_upload) {
+                    cpNoUploadFilePath = campaignDetailRet[0].cp_no_upload.replace(/\\/g, '\\\\');
+                }
                 
                 if(file.msg_app_img_file) {
-                    msgAppImgFilePath = file.msg_app_img_file.path.replace(/\\/g, '\\\\');
-                    console.log("msgAppImgFilePath : " + msgAppImgFilePath);
-                    
                     // 기존 파일 존재시 삭제
-                    if(msgAppImgFilePath != null && msgAppImgFilePath != "") {
-                        fs.unlink(msgAppImgFilePath, function(err) {
-                            if (err) throw err;
-                            console.log('file deleted');
-                        });
+                    if(msgAppImgFilePath != null && msgAppImgFilePath != "" && msgAppImgFilePath != 'undefiled') {
+                        if(fs.existsSync(msgAppImgFilePath)) {
+                            fs.unlink(msgAppImgFilePath, function(err) {
+                                if (err) throw err;
+                                console.log('file deleted');
+                            });
+                        }
                     }
+                    
                     // 수정 파일 upload 경로
                     msgAppImgFilePath = form.uploadDir + path.sep + file.msg_app_img_file.name;  
+                    msgAppImgFilePath = file.msg_app_img_file.path.replace(/\\/g, '\\\\');
+                    console.log("msgAppImgFilePath : " + msgAppImgFilePath);
                 }
                 if(file.rct_target_file ) {
-                    rctTargetFilePath = file.rct_target_file.path.replace(/\\/g, '\\\\');
-                    console.log("rctTargetFilePath : " + rctTargetFilePath);
-
                     // 기존 파일 존재시 삭제
-                    if(rctTargetFilePath != null && rctTargetFilePath != "") {
-                        fs.unlink(rctTargetFilePath, function(err) {
-                            if (err) throw err;
-                            console.log('file deleted');
-                        });
+                    if(rctTargetFilePath != null && rctTargetFilePath != "" && msgAppImgFilePath != 'undefiled') {
+                        if(fs.existsSync(rctTargetFilePath)) {
+                            fs.unlink(rctTargetFilePath, function(err) {
+                                if (err) throw err;
+                                console.log('file deleted');
+                            });
+                        }
                     }
+                    
                     // 수정 파일 upload 경로
                     rctTargetFilePath = form.uploadDir + path.sep + file.rct_target_file.name;  
+                    rctTargetFilePath = file.rct_target_file.path.replace(/\\/g, '\\\\');
+                    console.log("rctTargetFilePath : " + rctTargetFilePath);
                 }
                 if(file.url_upload_file) {
-                    urlUploadFilePath = file.url_upload_file.path.replace(/\\/g, '\\\\');
-                    console.log("urlUploadFilePath : " + urlUploadFilePath);
-
                     // 기존 파일 존재시 삭제
-                    if(urlUploadFilePath != null && urlUploadFilePath != "") {
-                        fs.unlink(urlUploadFilePath, function(err) {
-                            if (err) throw err;
-                            console.log('file deleted');
-                        });
+                    if(urlUploadFilePath != null && urlUploadFilePath != "" && msgAppImgFilePath != 'undefiled') {
+                        if(fs.existsSync(rctTargetFilePath)) {
+                            fs.unlink(urlUploadFilePath, function(err) {
+                                if (err) throw err;
+                                console.log('file deleted');
+                            });
+                        }
                     }
+                    
                     // 수정 파일 upload 경로
                     urlUploadFilePath = form.uploadDir + path.sep + file.url_upload_file.name;  
+                    urlUploadFilePath = file.url_upload_file.path.replace(/\\/g, '\\\\');
+                    console.log("urlUploadFilePath : " + urlUploadFilePath);
                 }
                 if(file.cp_no_upload_file) {
-                    cpNoUploadFilePath = file.cp_no_upload_file.path.replace(/\\/g, '\\\\');
-                    console.log("cpNoUploadFilePath : " + cpNoUploadFilePath);
-
                     // 기존 파일 존재시 삭제
-                    if(cpNoUploadFilePath != null && cpNoUploadFilePath != "") {
-                        fs.unlink(cpNoUploadFilePath, function(err) {
-                            if (err) throw err;
-                            console.log('file deleted');
-                        });
+                    if(cpNoUploadFilePath != null && cpNoUploadFilePath != "" && msgAppImgFilePath != 'undefiled') {
+                        if(fs.existsSync(rctTargetFilePath)) {
+                            fs.unlink(cpNoUploadFilePath, function(err) {
+                                if (err) throw err;
+                                console.log('file deleted');
+                            });
+                        }
                     }
+                    
                     // 수정 파일 upload 경로
                     cpNoUploadFilePath = form.uploadDir + path.sep + file.cp_no_upload_file.name;  
+                    cpNoUploadFilePath = file.cp_no_upload_file.path.replace(/\\/g, '\\\\');
+                    console.log("cpNoUploadFilePath : " + cpNoUploadFilePath);
                 }
 
-                await campaignService.modifyCampaignInfo(cmpgn_id, cmpgn_title, cmpgn_pps, advts_id, send_req_cnt, send_dt_ymd, send_dt_ap, send_dt_hh, send_dt_mm, use_cm, send_mode, mgs_title, msg_summary, msg_app_img, sender_no, rct_target, link_ps_url_1, link_ps_yn_1, link_ps_url_2, link_ps_yn_2, link_ps_url_3, link_ps_yn_3, url_upload, url_upload_cv, cp_no_upload);
+                console.log("================================================================================")
+                console.log("campaignDetailRet @@@@@@@@@@@@@@@@@@@@@@@@ ======================================")
+                console.log(msgAppImgFilePath)
+                console.log(rctTargetFilePath)
+                console.log(urlUploadFilePath)
+                console.log(cpNoUploadFilePath)
+                console.log("----------------------------------------------------")
+
+                await campaignService.modifyCampaignInfo(cmpgn_id, cmpgn_title, cmpgn_pps, advts_id, send_req_cnt, send_dt_ymd, send_dt_ap, send_dt_hh, send_dt_mm, use_cm, send_mode, mgs_title, msg_summary, msgAppImgFilePath, sender_no, rctTargetFilePath, link_ps_url_1, link_ps_yn_1, link_ps_url_2, link_ps_yn_2, link_ps_url_3, link_ps_yn_3, urlUploadFilePath, url_upload_cv, cpNoUploadFilePath);
                     res.status(200).send({result: {code: 200, message: "success", data : ""}});
 
             } else {
