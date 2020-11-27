@@ -64,29 +64,7 @@ const AdvertiserListContainer = () => {
         dispatch(listAdvertiser(Object.assign(obj, {cur:1, page_size:10})));
     };
 
-    const ColGroup = () => {
-        return (
-            <colgroup>
-                <col width={"10%"} />
-                <col width={"20%"} />
-                <col width={"10%"} />
-                <col width={"10%"} />
-                <col width={"20%"} />
-                <col width={"15%"} />
-                <col width={"15%"} />
-            </colgroup>
-        )
-    }
     
-    const tableHead = [
-        {id: "no",name: "번호" },
-        {id: "advts_id", type: "callback", name: "아이디"},
-        {id: "advts_nm",name: "광고주명"},
-        {id: "advts_mng_nm",name: "담당자명"},
-        {id: "email_addr",name: "이메일 계정"},
-        {id: "phone_no",name: "연락처"},
-        {id: "reg_dt",name: "등록일", data_type: 'date'},
-    ];
 
     // render
     return (
@@ -95,11 +73,9 @@ const AdvertiserListContainer = () => {
                 handleDispatch={handleSearchAdvertiserDispatch}
             />
             <AdvertiserList 
-                rowData={advertiserList} 
+                rowData={advertiserList}
                 totalCount={totalCount}
                 searchCount={searchCount}
-                colGroup={<ColGroup />}
-                tableHeadData={tableHead}
                 handleAdvertiserDispatch={handleAdvertiserDispatch}
                 handleAdvertiserCreate={handleCreatePopupOpen}
                 handleAdvertiserCallback={handleAdvertiserDetail}

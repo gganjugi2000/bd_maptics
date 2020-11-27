@@ -172,7 +172,7 @@ const CampaignSearchBar = ({
             <ul>
                 <li>
                     <label>아이디</label>
-                    <input autocomplete="off"
+                    <input autoComplete="off"
                         id="advts_id"
                         type="text"
                         value={campaignSearchData.advts_id}

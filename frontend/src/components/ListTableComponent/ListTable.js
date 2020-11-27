@@ -1,12 +1,11 @@
-import React, { useState }  from 'react';
+import React, { useEffect, useState }  from 'react';
 import { Link } from "react-router-dom";
 import styles from './ListTable.module.css';
 import classNames from 'classnames/bind';
 
-import Button from '../ButtonComponent';
-import ListTableRowMode from './ListTableRowMode/ListTableRowMode';
-import ListTableSortMode from './ListTableSortMode/ListTableSortMode';
 import ListTablePage from './ListTablePage/ListTablePage';
+import ListTableModeBaseBar from './ListTableModeBaseBar/ListTableModeBaseBar';
+
 import OdometerComponent from '../OdometerComponent/OdometerComponent';
 import {
     changeFormat
@@ -19,6 +18,8 @@ const ListTable = ({
         colGroup, 
         tableHead,
         rowData,
+        unit,
+        tableRowOptions,
         totalCount,
         searchCount,
         handleTableDataCreate,
@@ -33,6 +34,12 @@ const ListTable = ({
     const [sort, setSort] = useState('desc');
     const [nowPage, setNowPage] = useState(1);
     // ======================================================
+
+    useEffect(()=> {
+        if(tableRowOptions) {
+            setLimit(tableRowOptions[0].value);
+        }
+    }, []);
 
     const handleTableRowMode = (limit) => {
         setLimit(limit);
@@ -60,31 +67,15 @@ const ListTable = ({
     return (
         <div className={cx("notitable")}>
             <div className={cx("tableStyle01")} rel={limit}>
-                <div className={cx("board_cont")}>
-                    <span className={cx("total")} >
-                        <div className={cx("lSide")}>
-                            전체 <span className={cx("count")}>{totalCount}</span>명 중 검색 된 <span className={cx("count")}>{searchCount}</span>명
-                        </div>
-                        <div className={cx("rSide")}>
-                            <ListTableSortMode
-                                handleTableSortMode={handleTableSortMode}
-                            />
-                            <ListTableRowMode
-                                handleTableRowMode={handleTableRowMode}
-                            />
-                            {handleTableDataCreate &&
-                                <div style={{float:'right'}}>
-                                    <Button
-                                        type="create"
-                                        onClick={handleTableDataCreate}
-                                        >
-                                        생성
-                                    </Button>
-                                </div>
-                            }
-                        </div>
-                    </span>
-                </div>
+                <ListTableModeBaseBar 
+                    totalCount={totalCount}
+                    searchCount={searchCount}
+                    unit={unit}
+                    tableRowOptions={tableRowOptions}
+                    handleTableDataCreate={handleTableDataCreate}
+                    handleTableSortMode={handleTableSortMode}
+                    handleTableRowMode={handleTableRowMode}
+                />
                 <table>
                     {colGroup}
                     <thead>
@@ -97,7 +88,7 @@ const ListTable = ({
                         </tr>
                     </thead>
                     <tbody>
-                        {rowData && rowData.map((item, i) => {
+                        {rowData && rowData.length > 0 ? (rowData.map((item, i) => {
                             return (
                                 <tr key={`"tr_${(nowPage -1) * limit + (i + 1)}"`}>
                                     {tableHead && tableHead.map((headItem, j) => {
@@ -125,7 +116,13 @@ const ListTable = ({
                                     })}
                                 </tr>
                             );
-                        })}                        
+                        })) : (
+                            <tr >
+                                <td colSpan={tableHead && tableHead.length > 0 ? tableHead.length : 1} >
+                                    검색된 결과가 없습니다.
+                                </td>
+                            </tr>
+                        )}                        
                     </tbody>
                 </table>
             </div>
@@ -133,6 +130,7 @@ const ListTable = ({
                 nowPage={nowPage}
                 limit={limit}
                 totalCount={totalCount}
+                rowCount={rowData && rowData.length > 0 ? rowData.length : 0}
                 handleChangePage={handleChangePage}
             />
         </div>

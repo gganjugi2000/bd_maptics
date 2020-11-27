@@ -2,7 +2,13 @@ const mysql = require('../../db/mysql');
 const { search } = require('../../rest/campaign');
 
 exports.getCampaignTotalCnt = () => {
-    const sql = ` select count(*) cnt from campaign where use_yn = 'Y' `;
+    const sql = ` select 
+                    count(A.id) cnt 
+                  from campaign A, advertiser B  
+                  where 
+                    A.use_yn = 'Y' and B.use_yn = 'Y' 
+                    and A.advts_id = B.advts_id 
+                `;
     return new Promise(resolve => {
         mysql.get_data('get_campaign_cnt', sql, (result) => {
             resolve(result);
@@ -21,6 +27,7 @@ exports.getCampaignList = (start_offset, page_size, searchQuery, sortQuery) => {
                     ,A.advts_id
                     ,B.advts_nm 
                     ,A.send_req_cnt
+                    ,CONCAT(A.send_dt_ymd, ' ', case A.send_dt_ap when 'am' then '오전' when 'pm' then '오후' else '-' end, ' ',A.send_dt_hh,':',A.send_dt_mm) send_dt
                     ,A.send_dt_ymd
                     ,A.send_dt_ap
                     ,A.send_dt_hh
