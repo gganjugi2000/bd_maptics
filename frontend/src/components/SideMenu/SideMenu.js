@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { Link, withRouter } from "react-router-dom";
-
+import React from 'react';
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { selectedMenu } from 'store/modules/menuStore';
 import styles from './SideMenu.module.css';
 import classNames from 'classnames/bind';
 import imageLogo from '../../images/ats_sambol.png';
@@ -10,38 +11,15 @@ import manPic from '../../images/man_photo.png';
 
 const cx = classNames.bind(styles);
 
-const dummyMenu = [
-    {name: "Home", id: "0", url: "/"},
-    {name: "Users", id: "1", url: "/users"},
-    {name: "Products", id: "2", url: "/products"},
-    {name: "Stats", id: "3", url: "/stats"},
-    {name: "Test_axios", id: "4", url: "/axios_test"},
-    {name: "List", id: "3", url: "/List"},
-    {name: "Sample", id: "90", url: "/Sample"},
-    {name: "Advertiser Management", id: "90", url: "/advertiser"}
-];
-
 
 // 컴포넌트 정의
-const SideMenu = ({leftSize}) => {
-    const [selectedMenu, setSelectedMenu] = useState("");
-
-    // // life cycle
-    // useEffect(() => {
-        
-    // }, []) // page loading 
-
-    // <div className={cx("logo")}>
-    //     <Link to={"main.html"}><img src={imageLogo} alt="ATS2.0 Admin Sambol" /> Maptics Admin</Link>
-    // </div>
-    // <li className={cx("mb20")}><Link to="/campaign">캠페인 관리</Link></li>
-    //                         <p className={cx("mb20")}>- 캠페인 관리</p>
-    //                         <p className={cx("mb20")}>- 예약 관리</p>
-    //                         <p>- 히스토리</p>
-    // render
+const SideMenu = ({}) => {
+    const dispatch = useDispatch();
+    const selectMenu = useSelector((state) => state.menuStore.selectedMenu);
+    const leftSize = useSelector((state) => state.menuStore.leftSize);
 
     const handleSelectMenu = (value) => {
-        setSelectedMenu(value);
+        dispatch(selectedMenu(value));
     }
 
     return (
@@ -61,8 +39,8 @@ const SideMenu = ({leftSize}) => {
                     <div className={cx("lnbm", "mt30")}>
                         <ul>
                             <li className={cx("mb20", "title")}><span className={cx("current")}>캠페인</span></li>
-                            <li className={cx("mb10")}><Link to="/advertiser" onClick={(e) => { handleSelectMenu('advertiser'); }}><span className={selectedMenu === "" || selectedMenu === 'advertiser' ? cx("current") : cx("mb20")}>&middot; 광고주 관리</span></Link></li>
-                            <li className={cx("mb10")}><Link to="/campaign" onClick={(e) => { handleSelectMenu('campaign'); }}><span className={selectedMenu === 'campaign' ? cx("current") : cx("mb20")}>&middot; 캠페인 관리</span></Link></li>
+                            <li className={cx("mb10")}><Link to="/advertiser" onClick={(e) => { handleSelectMenu('advertiser'); }}><span className={selectMenu === "" || selectMenu === 'advertiser' ? cx("current") : cx("mb20")}>&middot; 광고주 관리</span></Link></li>
+                            <li className={cx("mb10")}><Link to="/campaign" onClick={(e) => { handleSelectMenu('campaign'); }}><span className={selectMenu === 'campaign' ? cx("current") : cx("mb20")}>&middot; 캠페인 관리</span></Link></li>
                         </ul>
                     </div>
             </div>

@@ -6,13 +6,15 @@ import userStore,  { userSaga } from './userStore';
 import rowStore from './rowStore';
 import advertiserStore,  { advertiserSaga } from './advertiserStore';
 import campaignStore,  { campaignSaga } from './campaignStore';
+import menuStore from './menuStore';
 
 import { 
     AdvertiserState, 
     CampaignState, 
     UserState, 
     ListState, 
-    SampleUserState 
+    SampleUserState, 
+    MenuState
 } from '../state';
 
 const rootReducer = (history: any) => combineReducers({
@@ -21,7 +23,8 @@ const rootReducer = (history: any) => combineReducers({
     campaignStore,
     sampleStore,
     userStore,
-    rowStore
+    rowStore,
+    menuStore
 });
 
 export function* rootSaga() {
@@ -41,5 +44,7 @@ export type RootState = {
     sampleState: SampleUserState,
     userState: UserState,
     rowState: ListState,
-    advertiserState: AdvertiserState
+    advertiserState: AdvertiserState,
+    campaignState: CampaignState,
+    menuState: MenuState
 };

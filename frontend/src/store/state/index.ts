@@ -92,6 +92,18 @@ export const initCampaignState = {
     searchCount: 0
 }
 
+////////// menu State //////////
+////////////////////////////
+export type MenuState = {
+    selectedMenu: string,
+    leftSize: number,
+}
+
+export const initMenuState = {
+    selectedMenu: "",
+    leftSize: 260,
+}
+
 ////////// user State //////////
 ////////////////////////////
 export type UserState = {

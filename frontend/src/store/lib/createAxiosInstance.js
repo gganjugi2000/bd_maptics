@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 // basic config for axios
-const APP_URL = 'http://localhost:3000/';
+// const APP_URL = 'http://localhost:3000/';
+const APP_URL = '/';
 
 const commonHeaders = {
   'content-type': 'application/json',
@@ -20,9 +21,7 @@ const options = {
 
 function createAxiosInstance() {
   const instance = axios.create(options);
-  console.log("createAxiosInstance instance ==============")
-  console.log(instance);
-  console.log("createAxiosInstance instance end ----------")
+  
 	return instance;
 }
 
@@ -30,9 +29,6 @@ function createAxiosInstanceWithAuth() {
   const instance = axios.create(options);
 
   instance.interceptors.request.use(config => {
-    console.log("createAxiosInstanceWithAuth interceptors request ==============")
-    console.log(config);
-    console.log("createAxiosInstanceWithAuth interceptors request end ----------")
 		// get Authorization info
 		const auth = localStorage.getItem('Auth');
 		if(auth) {
@@ -45,17 +41,11 @@ function createAxiosInstanceWithAuth() {
   });
   
 	instance.interceptors.response.use(response => {
-    console.log("createAxiosInstanceWithAuth interceptors response ==============")
-    console.log(response);
-    console.log("createAxiosInstanceWithAuth interceptors response end ----------")
 		return response;
 	}, error => {
 		return Promise.reject(error.response);
   });
   
-  console.log("createAxiosInstanceWithAuth instance ==============")
-  console.log(instance);
-  console.log("createAxiosInstanceWithAuth instance end ----------")
 	return instance;
 }
 

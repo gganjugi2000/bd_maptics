@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router' // react-router v4/v5
 import { ConnectedRouter } from 'connected-react-router';
 
@@ -15,7 +16,6 @@ import SideMenu from './components/SideMenu';
 import Header from './components/Header/Header';
 // footer
 import Footer from './components/Footer/Footer';
-
 
 
 // 광고주 관리
@@ -44,6 +44,7 @@ import List from './domain/List';
 const cx = classNames.bind(styles);
 
 function App({ history, context }) {
+  const leftSize = useSelector((state) => state.menuStore.leftSize);
   let sideMenu = null;
   // let sideMenu = null;
   function getWindowDimensions() {
@@ -64,24 +65,14 @@ function App({ history, context }) {
     return () => window.removeEventListener('resize', handleResize);
   }, [])
 
-  const [leftSize, setLeftSize] = useState(260)
-  console.log(leftSize)
-  const showHideLeft = () => {
-    if(leftSize === 0){
-      setLeftSize(260)
-    }
-    else {
-      setLeftSize(0)
-    }
-  }
-    // <Router>
+  
   return (
     <ConnectedRouter history={history} context={context}>
       <>
         <div className={cx("root")}>
-            <SideMenu setLeftSize={showHideLeft} leftSize={leftSize} />
+            <SideMenu  />
             <div className={cx("container")} rel={windowDimensions.height} style={{'transform': `translate3d(${leftSize === 260 ? '0' : '-260px'}, 0, 0)`, width : `calc(100% - ${leftSize}px)`, height : `calc(${windowDimensions.height}px - 60px)`}}>
-              <Header setLeftSize={showHideLeft} leftSize={leftSize} />
+              <Header  />
               <div className={cx("contents")}>
                 <Switch>
                   <Route exact path="/" component={RedirectPage} />
