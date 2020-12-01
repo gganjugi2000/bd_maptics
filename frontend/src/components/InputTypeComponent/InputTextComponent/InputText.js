@@ -18,7 +18,7 @@ const InputText = React.forwardRef((props, ref) => {
     return (
         <>
             <input
-                autocomplete="off" 
+                autoComplete="off" 
                 id={id}
                 type="text"
                 size={size}

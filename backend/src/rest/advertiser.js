@@ -152,9 +152,7 @@ router.post('/getInfoDetail', asyncHandler(async (req, res, next) => {
         if(advts_id) {
             data = await advertiserService.getAdvertiserInfoDetail(advts_id);
         }
-        console.log("get info data ======================================")
-        console.log(data)
-        console.log("----------------------------------------------------")
+        
         if(data != null && data.length > 0) {
             let imgPath = data[0].advts_img;
             let imgFile = "";
@@ -163,11 +161,8 @@ router.post('/getInfoDetail', asyncHandler(async (req, res, next) => {
                     imgFile = fs.readFileSync(imgPath,"base64");
                 }
             }
-            console.log("data check ============================= ")
-            console.log(data);
+            
             for(let key in data[0]){
-                console.log("key --- ")
-                console.log(key);
                 if(key == "advts_img" && imgFile != null && imgFile != "") {
                     data_result[key] = "data:image/png;base64, " + imgFile;
                 } else {
@@ -197,22 +192,22 @@ router.post('/addInfo', asyncHandler(async (req, res, next) => {
 
     form.parse(req, async (err, field, file) => {
         if(!err) {
-            const { advts_id, advts_nm, advts_mng_nm, advts_img, email_addr, phone_no, descp } = field;
+            const { advts_id, advts_nm, advts_mng_nm, org_advts_img_nm, advts_img_ext, advts_img_size, email_addr, phone_no, descp } = field;
             let filePath = '';
+            let fileName = '';
+            let fileExt = '';
+            let fileSize = 0;
 
             if(file.advts_img_file) { // front에서 넘어온 file name = advts_img_file
                 filePath = file.advts_img_file.path.replace(/\\/g, '\\\\');
-                console.log("filePath : " + filePath);
-                await advertiserService.addAdvertiserInfo(advts_id, advts_nm, advts_mng_nm, filePath, email_addr, phone_no, descp);
-                res.status(200).send({result: {code: 200, message: "success", data : ""}});
-            
-            } else {
-                console.log('front form에 advts_img_file 제외');
-                console.log("filePath : " + filePath);
-                await advertiserService.addAdvertiserInfo(advts_id, advts_nm, advts_mng_nm, filePath, email_addr, phone_no, descp);
-                res.status(200).send({result: {code: 200, message: "success", data : ""}});
-            }
-          
+                console.log("filePath : " + filePath);  
+                fileName = org_advts_img_nm;
+                fileExt = advts_img_ext;
+                fileSize = advts_img_size;
+            } 
+
+            await advertiserService.addAdvertiserInfo(advts_id, advts_nm, advts_mng_nm, filePath, fileName, fileExt, fileSize, email_addr, phone_no, descp);
+            res.status(200).send({result: {code: 200, message: "success", data : ""}});          
         } else {
             console.log('upload fail!!');
             res.status(500).send({result: {code: 999, message: "error", data : err.message}});
@@ -224,10 +219,26 @@ router.post('/addInfo', asyncHandler(async (req, res, next) => {
 // 광고주 정보 삭제
 router.post('/removeInfo', asyncHandler(async (req, res, next) => {
     const { advts_id } = req.body;
+    let data = null;
     if(advts_id) {
+        data = await advertiserService.getAdvertiserInfoDetail(advts_id);
+        
+        // 첨부 이미지 파일 삭제
+        if(data != null && data.length > 0) {
+            let imgPath = data[0].advts_img;
+
+            if(imgPath != null && imgPath != undefined && imgPath != "") {
+                if(fs.existsSync(imgPath)) {
+                    fs.unlink(imgPath, function(err) {
+                        if (err) throw err;
+                        console.log('file deleted');
+                    });
+                }
+            }
+        }
+
         await advertiserService.removeAdvertiserInfo(advts_id);
         res.status(200).send({result: {code: 200, message: "success", data : ""}});
-
     } else {
         res.status(500).send({result: {code: 999, message: "success", data : ""}});
 
@@ -250,46 +261,69 @@ router.post('/modifyInfo', asyncHandler(async (req, res, next) => {
     form.parse(req, async (err, field, file) => {
         if(!err) {
             // console.log('modify upload success!!');
-            const { advts_id, advts_nm, advts_mng_nm, email_addr, phone_no, descp } = field;
-            let dbPath = null;
-            
+            const { advts_id, del_advts_img, advts_nm, advts_mng_nm, org_advts_img_nm, advts_img_ext, advts_img_size, email_addr, phone_no, descp } = field;
             if(advts_id) {
+                let filePath = '';
+                let fileName = '';
+                let fileExt = '';
+                let fileSize = 0;
+
                 let advertiserDetailRet = await advertiserService.getAdvertiserInfoDetail(advts_id);
-                dbPath = advertiserDetailRet[0].advts_img;    // db에 저장된 old 경로 
-                if(dbPath) {
-                    dbPath = dbPath.replace(/\\/g, '\\\\');
+                filePath = advertiserDetailRet[0].advts_img;    // db에 저장된 old 경로
+                fileName = advertiserDetailRet[0].org_advts_img_nm;
+                fileExt = advertiserDetailRet[0].advts_img_ext;
+                fileSize = advertiserDetailRet[0].advts_img_size;
+
+                if(filePath) {
+                    filePath = filePath.replace(/\\/g, '\\\\');
                 }
+
+                // 기존 이미지 삭제
+                if(del_advts_img == 'true'){
+                    if(filePath != null && filePath != undefined && filePath != "") {
+                        if(fs.existsSync(filePath)) {
+                            fs.unlink(filePath, function(err) {
+                                if (err) throw err;
+                                console.log('file deleted');
+                            });
+                        }
+                    }
+                    filePath = "";
+                    fileName = '';
+                    fileExt = '';
+                    fileSize = 0;
+                }
+
                 if(file.advts_img_file) { // front에서 넘어온 file name = advts_img_file 
                     console.log('업체 이미지 첨부 정상적으로 한경우!!');
-                    let filePath = file.advts_img_file.path.replace(/\\/g, '\\\\');
-                    let newPath = form.uploadDir + path.sep + file.advts_img_file.name;  // 수정 파일 upload 경로
+                    // 기존의 파일은 삭제
+                    if(filePath != null && filePath != undefined && filePath != "") {
+                        if(fs.existsSync(filePath)) {
+                            fs.unlink(filePath, function(err) {
+                                if (err) throw err;
+                                console.log('file deleted');
+                            });
+                        }
+                    }
+
+                    filePath = file.advts_img_file.path.replace(/\\/g, '\\\\');
+                    fileName = org_advts_img_nm;
+                    fileExt = advts_img_ext;
+                    fileSize = advts_img_size;
+                    // let newPath = form.uploadDir + path.sep + file.advts_img_file.name;  // 수정 파일 upload 경로
                     
-                    console.log("dbPath : " + dbPath, "filePath : " + filePath, "newPath : " + newPath);
                     console.log("====================================================");
                     console.log("수정 체크 file.advts_img_file ===========================================");
                     console.log(file.advts_img_file)
                     console.log("----------------------------------------------------");
-                    console.log(filePath);    
-                    console.log(newPath); 
+                    console.log(filePath);
                     console.log("=====================================================")               
-                    // 기존의 파일은 삭제
-                    fs.unlink(dbPath, function(err) {
-                      if (err) throw err;
-                      console.log('file deleted');
-                    });
-
-                    await advertiserService.modifyAdvertiserInfo(advts_id, advts_nm, advts_mng_nm, filePath, email_addr, phone_no, descp);
-                    res.status(200).send({result: {code: 200, message: "success", data : ""}});
-
-                } else {
-                    console.log('front form에 advts_img_file 제외');
-                    await advertiserService.modifyAdvertiserInfo(advts_id, advts_nm, advts_mng_nm, dbPath, email_addr, phone_no, descp);
-                    res.status(200).send({result: {code: 200, message: "success", data : ""}});
-
                 }
+                await advertiserService.modifyAdvertiserInfo(advts_id, advts_nm, advts_mng_nm, filePath, fileName, fileExt, fileSize, email_addr, phone_no, descp);
+                res.status(200).send({result: {code: 200, message: "success", data : ""}});
+
             } else {
                 res.status(500).send({result: {code: 999, message: "error", data : 'advts_id is null'}});
-            
             }
         } else {
             console.log('modify upload fail!!');

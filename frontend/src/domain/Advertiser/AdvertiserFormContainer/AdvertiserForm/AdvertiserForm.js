@@ -13,6 +13,7 @@ import ImageDropZone from '../../../../components/ImageDropZoneComponent/ImageDr
 import {
     isEmpty,
     isEquals, 
+    validFileNameLength,
     validEmail,
     validEmailProvider,
     validPhoneFirst,
@@ -24,6 +25,9 @@ import {
     validAdvertiserName,
     validAdvertiserMngName
 } from 'utiles/validation/validateAdvertiser';
+import {
+    extractionFileExt
+} from 'utiles/utiles';
 
 const cx = classNames.bind(styles);
 
@@ -102,9 +106,17 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
             , advts_img: fileData
         });
     }
-    
+
     const setImageFile = (file) => {
         setAdvtsImgFile(file);
+    }
+
+    const deleteImageFile = (e) => {
+        setAdvertiser({
+            ...advertiser
+            , advts_img: ""
+        });
+        setAdvtsImgFile(null);
     }
 
     const setAdvertiserIdValue = (e, value) => {
@@ -221,7 +233,6 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
     }
 
     const setPhoneNoFirstValue = (obj) => {
-        console.log(obj);
         // if(!isEmpty(obj) && !validPhoneFirst(obj.value)){
         //     setAdvertiserCaution({
         //         ...advertiserCaution
@@ -292,7 +303,8 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        let advtsIdValid, existAdvtsIdValid, execCheckAdvtsIdValid, advtsNmValid, advtsMngNmValid, advtsImgValid, emailAddrValid, emailAddrProviderValid, phoneNoFirstValid, phoneNoMiddleValid, phoneNoEndValid = false;
+        let advtsIdValid, existAdvtsIdValid, execCheckAdvtsIdValid, advtsNmValid, advtsMngNmValid, emailAddrValid, emailAddrProviderValid, phoneNoFirstValid, phoneNoMiddleValid, phoneNoEndValid = false;
+        let advtsImgValid = true;
         let advtsIdMsg, advtsNmMsg, advtsMngNmMsg, advtsImgMsg, emailAddrMsg, emailAddrProviderMsg, phoneNoFirstMsg, phoneNoMiddleMsg, phoneNoEndMsg = "";
         
         if(!isEmpty(advertiser.advts_id) && validAdvertiserId(advertiser.advts_id)){
@@ -300,21 +312,18 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
         } else { 
             advtsIdMsg = "영문,영문+숫자,5자 이상 입력 해야 합니다.";
         }
-
         if(existAdvtsId < 1){
             existAdvtsIdValid = true;
         } else { 
             advtsIdMsg = "사용 불가능한 아이디 입니다.";
             advtsIdValid = false;
         }
-
         if(execCheckAdvtsId) {
             execCheckAdvtsIdValid = true;
         } else {
             advtsIdMsg = "아이디 중복체크를 해주세요";
             advtsIdValid = false;
         }
-
         if(!isEmpty(advertiser.advts_nm) && validAdvertiserName(advertiser.advts_nm)){
             advtsNmValid = true;
         } else {
@@ -325,10 +334,13 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
         } else {
             advtsMngNmMsg = "한글/영문,2자 이상 입력 해야 합니다.";
         }
-        if(!isEmpty(advertiser.advts_img)){
-            advtsImgValid = true;
-        } else {
-            advtsImgMsg = "이미지는 필수로 등록해야 합니다.";
+        if(!isEmpty(advtsImgFile)){
+            let fileName = advtsImgFile.name;
+
+            if(!validFileNameLength(fileName)) {
+                advtsImgMsg = "파일명이 너무 깁니다.";
+                advtsImgValid = false;
+            }
         }
         if(!isEmpty(advertiser.email_addr) && validEmail(advertiser.email_addr)){
             emailAddrValid = true;
@@ -338,7 +350,7 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
         if(!isEmpty(advertiser.email_addr_provider) && validEmailProvider(advertiser.email_addr_provider)){
             emailAddrProviderValid = true;
         } else {
-            emailAddrProviderMsg = "이메일 서비스 사이트 형식이 올바르지 않습니다."
+            emailAddrProviderMsg = "이메일 서비스 사이트 형식이 올바르지 않습니다.";
         }
         if(!isEmpty(advertiser.phone_no_first) && validPhoneFirst(advertiser.phone_no_first.value)){
             phoneNoFirstValid = true;
@@ -426,6 +438,12 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
         formData.append("phone_no", phoneNo);
         formData.append("descp", advertiser.descp);
 
+        if(advtsImgFile) {
+            formData.append("org_advts_img_nm", advtsImgFile.name);
+            formData.append("advts_img_ext", extractionFileExt(advtsImgFile.name));
+            formData.append("advts_img_size", advtsImgFile.size);
+        }
+
         onSubmit(e, formData);
     };
 
@@ -440,22 +458,38 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
                     <tr>
                         <th scope="row"><label htmlFor="PTjoin_name" className={cx("label")}><em className={cx("required")}>V</em>광고주이미지</label></th>
                         <td>
-                            <span className={cx("photo")} style={{width: "180px",height: "100px"}}>
-                                <ImageDropZone
-                                    imageData={advertiser.advts_img}
-                                    handleImageData={setImageData}
-                                    handleImageFile={setImageFile}
-                                    ref={advtsImgRef}
-                                />
-                            </span>
-                            <Button
-                                type="btn_small"
-                                onClick={(e) => {
-                                    openFileSelectPopup(e);
-                                }}
-                                >
-                                이미지업로드
-                            </Button>
+                            <div style={{float: 'left', width: '100%'}} >
+                                <span className={cx("photo")} style={{width: "180px",height: "100px"}}>
+                                    <ImageDropZone
+                                        imageData={advertiser.advts_img}
+                                        ref={advtsImgRef}
+                                        handleImageData={setImageData}
+                                        handleImageFile={setImageFile}
+                                    />
+                                </span>
+                                <div style={{display: 'inline-block', verticalAlign: 'top'}}>
+                                    <div style={{marginBottom: '5px'}}>
+                                        <Button
+                                            type="btn_small"
+                                            onClick={(e) => {
+                                                openFileSelectPopup(e);
+                                            }}
+                                            >
+                                            이미지업로드
+                                        </Button>
+                                    </div>
+                                    <div>
+                                        <Button
+                                            type="btn_small"
+                                            onClick={(e) => {
+                                                deleteImageFile(e);
+                                            }}
+                                            >
+                                            이미지 제거
+                                        </Button>
+                                    </div>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                     <tr>
@@ -474,6 +508,7 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
                             <InputText 
                                 id="advts_id"
                                 size="27"
+                                maxLength="20"
                                 placeholder="광고주 아이디"
                                 value={advertiser.advts_id}
                                 caution={advertiserCaution.advts_id}
@@ -489,6 +524,7 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
                             <InputText 
                                 id="advts_nm"
                                 size="27"
+                                maxLength="30"
                                 placeholder="광고주 명을 입력해주세요."
                                 value={advertiser.advts_nm}
                                 caution={advertiserCaution.advts_nm}
@@ -504,6 +540,7 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
                             <InputText 
                                 id="advts_mng_nm"
                                 size="27"
+                                maxLength="30"
                                 placeholder="담당자 명을 입력해주세요."
                                 value={advertiser.advts_mng_nm}
                                 caution={advertiserCaution.advts_mng_nm}
@@ -519,6 +556,7 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
                             <InputText 
                                 id="email_addr"
                                 style={{width: "80px"}}
+                                maxLength="64"
                                 placeholder="이메일을 입력해주세요."
                                 value={advertiser.email_addr}
                                 caution={advertiserCaution.email_addr ? " " : ""}
@@ -532,24 +570,13 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
                                 id="email_addr_provider"
                                 style={{width: "100px"}}
                                 placeholder="직접입력"
+                                maxLength="255"
                                 value={advertiser.email_addr_provider}
                                 caution={advertiserCaution.email_addr_provider ? " " : ""}
                                 onChange={(e) => {
                                     setEmailProviderValue(e, e.target.value);
                                 }}
                             />
-                            {/* <InputSelect
-                                type="select"
-                                id="email_addr_provider"
-                                placeholder="직접입력"
-                                value={advertiser.email_addr_provider}
-                                caution={advertiserCaution.email_addr_provider ? " " : ""}
-                                options={emailProviderOptions}
-                                onChange={(value) => {
-                                    setEmailProviderValue(value);
-                                }}
-                            /> */}
-                            
                             <div style={{display: 'inline-block'}}>
                                 {(advertiserCaution.email_addr !== "")
                                 ? <p className={cx("caution")}>{advertiserCaution.email_addr}</p> : null}
@@ -579,7 +606,7 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
                                 id="phone_no_middle"
                                 style={{width: "50px"}}
                                 placeholder=""
-                                maxlength="4"
+                                maxLength="4"
                                 value={advertiser.phone_no_middle}
                                 caution={advertiserCaution.phone_no_middle ? " " : ""}
                                 onChange={(e) => {
@@ -591,7 +618,7 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
                                 id="phone_no_end"
                                 style={{width: "50px"}}
                                 placeholder=""
-                                maxlength="4"
+                                maxLength="4"
                                 value={advertiser.phone_no_end}
                                 caution={advertiserCaution.phone_no_end ? " " : ""}
                                 onChange={(e) => {
@@ -616,7 +643,7 @@ const AdvertiserForm = ({ onSubmit, onCancel }) => {
                                 style={{width:"280px",height: "100px"}}
                                 rows={10}
                                 cols={70}
-                                maxLength={300}
+                                maxLength="300"
                                 value={advertiser.descp}
                                 caution={advertiserCaution.descp}
                                 onChange={(e) => {

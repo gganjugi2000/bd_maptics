@@ -79,6 +79,7 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
         "mgs_title" : "",
         "msg_summary" : "",
         "msg_app_img" : "",
+        "del_msg_app_img" : false,
         "sender_no" : "",
         "rct_target" : "",
         "link_ps_url_1" : "",
@@ -233,6 +234,7 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                 , msg_summary: campaignInfo.msg_summary
                 , msg_app_img: campaignInfo.msg_app_img
                 , sender_no: campaignInfo.sender_no
+                , rct_target: campaignInfo.rct_target
                 , link_ps_url_1: campaignInfo.link_ps_url_1
                 , link_ps_yn_1: (campaignInfo.link_ps_yn_1 === 'Y' ? true : false)
                 , link_ps_url_2: campaignInfo.link_ps_url_2
@@ -241,6 +243,7 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                 , link_ps_yn_3: (campaignInfo.link_ps_yn_3 === 'Y' ? true : false)
                 , url_upload: campaignInfo.url_upload
                 , url_upload_cv: (campaignInfo.url_upload_cv === 'Y' ? true : false)
+                , cp_no_upload: campaignInfo.cp_no_upload
                 , reg_dt: changeFormat(campaignInfo.reg_dt, 'YYYY-MM-DD hh:mm:DD')
                 , udt_dt: changeFormat(campaignInfo.udt_dt, 'YYYY-MM-DD hh:mm:DD')
             });
@@ -252,6 +255,7 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
         setCampaign({
             ...campaign
             , msg_app_img: fileData
+            , del_msg_app_img : false
         });
     }
     
@@ -262,7 +266,8 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
     const deleteMsgAppImage = (e) => {
         setCampaign({
             ...campaign
-            , msg_app_img: null
+            , msg_app_img: ""
+            , del_msg_app_img : true
         });
         setMsgAppImgFile(null);
     }
@@ -497,7 +502,7 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
             cmpgnPpsMsg = "캠페인 목적을 입력해야 합니다.";
         }
 
-        if(!isNaN(campaign.send_req_cnt) && campaign.send_req_cnt > 0 && campaign.send_req_cnt < 500001){
+        if(!isEmpty(campaign.send_req_cnt) && isNumber(campaign.send_req_cnt.toString()) && campaign.send_req_cnt > 0 && campaign.send_req_cnt < 500001){
             sendReqCntValid = true;
         } else { 
             sendReqCntMsg = "발송 요청 건수는 숫자, 1건 이상 500,000건 미만 이어야 합니다.";
@@ -524,7 +529,7 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
         if(!isEmpty(campaign.send_dt_mm)){
             sendDtMmValid = true;
         } else { 
-            sendDtMmMsg = "시간을 선택해 주세요.";
+            sendDtMmMsg = "분을 선택해 주세요.";
         }
 
         if(!isEmpty(campaign.send_mode)){
@@ -545,10 +550,10 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
             msgSummaryMsg = "메시지 내용을 입력해 주세요.";
         }
 
-        if(!isEmpty(campaign.sender_no)){
+        if(!isEmpty(campaign.sender_no) && isNumber(campaign.sender_no) && campaign.sender_no.length > 7){
             senderNoValid = true;
         } else { 
-            senderNoMsg = "발신자 번호를 입력해 주세요.";
+            senderNoMsg = "발신자 번호는 숫자, 8자리 이상 입력해 주세요. ";
         }
 
         // if(!isEmpty(rctTargetFile)){
@@ -582,7 +587,7 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
             , send_dt_ymd: sendDtYmdMsg
             , send_dt_ap: sendDtApMsg
             , send_dt_hh: sendDtHhMsg
-            , send_dt_mm: sendDtMmValid
+            , send_dt_mm: sendDtMmMsg
             , send_mode: sendModeMsg
             , mgs_title: mgsTitleMsg
             , msg_summary: msgSummaryMsg
@@ -644,6 +649,7 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
         formData.append("mgs_title", campaign.mgs_title);
         formData.append("msg_summary", campaign.msg_summary);
         formData.append("sender_no", campaign.sender_no);
+        formData.append("del_msg_app_img", campaign.del_msg_app_img);
         formData.append("link_ps_url_1", campaign.link_ps_url_1);
         formData.append("link_ps_yn_1", (campaign.link_ps_yn_1 ? 'Y' : 'N'));
         formData.append("link_ps_url_2", campaign.link_ps_url_2);
@@ -793,6 +799,7 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                                 <InputText 
                                     id="cmpgn_title"
                                     size="100"
+                                    maxLength="100"
                                     style={{width: "87%"}}
                                     value={campaign.cmpgn_title}
                                     caution={campaignCaution.cmpgn_title}
@@ -808,6 +815,7 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                                 <InputText 
                                     id="cmpgn_pps"
                                     size="100"
+                                    maxLength="100"
                                     style={{width: "87%"}}
                                     value={campaign.cmpgn_pps}
                                     caution={campaignCaution.cmpgn_pps}
@@ -823,7 +831,7 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                                 <InputText 
                                     id="send_req_cnt"
                                     size="100"
-                                    maxlength="6"
+                                    maxLength="6"
                                     style={{width: "70%"}}
                                     value={campaign.send_req_cnt}
                                     caution={campaignCaution.send_req_cnt}
@@ -875,6 +883,7 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                                             onChange={date => setSendDtYmdValue(date)}
                                             isClearable="true"
                                             dateFormat="yyyy/MM/dd"
+                                            minDate={new Date()}
                                         />
                                         </span>
                                     </div>
@@ -976,7 +985,22 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                             <th scope="row"><label2 for="PTjoin_name" className={cx("label2")}>메세지 제목</label2></th>
                             <td colSpan="3">
                                 <div style={{float: 'left', width: '100%'}}>
-                                    <InputText 
+                                    <InputTextArea
+                                        id="mgs_title"
+                                        rows={1}
+                                        cols={1}
+                                        maxLength={msgTitleMaxByte}
+                                        maxByte={msgTitleMaxByte}
+                                        maxByteLabel
+                                        currentByte={msgTitleByte}
+                                        value={campaign.mgs_title}
+                                        caution={campaignCaution.mgs_title}
+                                        style={{width:'668px',height:'28px', padding: '8px 10px'}}
+                                        onChange={(e) => {
+                                            setMgsTitleValue(e, e.target.value);
+                                        }}
+                                    />
+                                    {/* <InputText 
                                         id="mgs_title"
                                         size="100"
                                         style={{width: "87%"}}
@@ -986,7 +1010,7 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                                             setMgsTitleValue(e, e.target.value);
                                         }}
                                     />
-                                    {msgTitleByte}/{msgTitleMaxByte} Byte
+                                    {msgTitleByte}/{msgTitleMaxByte} Byte */}
                                 </div>
                             </td>
                         </tr>
@@ -1016,10 +1040,10 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                             <td colSpan="3">
                                 <span className={cx("photo")} style={{width: "180px",height: "100px"}}>
                                     <ImageDropZone
+                                        ref={advtsImgRef}
                                         imageData={campaign.msg_app_img}
                                         handleImageData={setMsgAppImageData}
                                         handleImageFile={handleMsgAppImageFile}
-                                        ref={advtsImgRef}
                                     />
                                 </span>
                                 <Button
@@ -1028,7 +1052,7 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                                         deleteMsgAppImage(e);
                                     }}
                                     >
-                                    이미지 제거
+                                    이미지 삭제
                                 </Button>
                             </td>
                         </tr>
@@ -1036,8 +1060,9 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                             <th scope="row"><label2 for="PTjoin_name" className={cx("label2")}>발신자 번호</label2></th>
                             <td colSpan="3">
                                 <InputText 
-                                    id="mgs_title"
+                                    id="sender_no"
                                     size="100"
+                                    maxLength="15"
                                     style={{width: "87%"}}
                                     value={campaign.sender_no}
                                     placeholder="숫자만 입력하세요."
@@ -1064,6 +1089,8 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                                 />
                                 {(campaignCaution.rct_target !== "")
                                  ? <p className={cx("caution", "caution:after")}>{campaignCaution.rct_target}</p> : null}
+                                 {(campaign.rct_target !== "" && campaign.rct_target !== "undefined")
+                                 ? <p className={cx("caution", "caution:after")}>{campaign.rct_target}</p> : <p className={cx("caution", "caution:after")}>첨부된 파일이 없습니다</p>}
                             </td>
                         </tr>
                         <tr>
@@ -1164,6 +1191,8 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                                         }}
                                     />
                                     <span className={cx("txt2")} style={{margin: '0px 10px'}}>URL 변환사용</span>
+                                    {(campaign.url_upload !== "" && campaign.url_upload !== "undefined")
+                                    ? <p className={cx("caution", "caution:after")}>{campaign.url_upload}</p> : <p className={cx("caution", "caution:after")}>첨부된 파일이 없습니다</p>}
                                 </div>
                             </td>
                         </tr>
@@ -1186,6 +1215,8 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                                         handleCpNoUploadFile(e);
                                     }}
                                 />
+                                {(campaign.cp_no_upload !== "" && campaign.cp_no_upload !== "undefined")
+                                 ? <p className={cx("caution", "caution:after")}>{campaign.cp_no_upload}</p> : <p className={cx("caution", "caution:after")}>첨부된 파일이 없습니다</p>}
                             </td>
                         </tr>
                     </tbody>

@@ -395,7 +395,7 @@ const CampaignForm = ({ advertiserInfo, onSubmit, onCancel, handleAdvtsSearchPop
             cmpgnPpsMsg = "캠페인 목적을 입력해야 합니다.";
         }
 
-        if(!isNaN(campaign.send_req_cnt) && campaign.send_req_cnt > 0 && campaign.send_req_cnt < 500001){
+        if(!isEmpty(campaign.send_req_cnt) && isNumber(campaign.send_req_cnt.toString()) && campaign.send_req_cnt > 0 && campaign.send_req_cnt < 500001){
             sendReqCntValid = true;
         } else { 
             sendReqCntMsg = "발송 요청 건수는 숫자, 1건 이상 500,000건 미만 이어야 합니다.";
@@ -422,7 +422,7 @@ const CampaignForm = ({ advertiserInfo, onSubmit, onCancel, handleAdvtsSearchPop
         if(!isEmpty(campaign.send_dt_mm)){
             sendDtMmValid = true;
         } else { 
-            sendDtMmMsg = "시간을 선택해 주세요.";
+            sendDtMmMsg = "분을 선택해 주세요.";
         }
 
         if(!isEmpty(campaign.send_mode)){
@@ -443,12 +443,12 @@ const CampaignForm = ({ advertiserInfo, onSubmit, onCancel, handleAdvtsSearchPop
             msgSummaryMsg = "메시지 내용을 입력해 주세요.";
         }
 
-        if(!isEmpty(campaign.sender_no)){
+        if(!isEmpty(campaign.sender_no) && isNumber(campaign.sender_no) && campaign.sender_no.length > 7){
             senderNoValid = true;
         } else { 
-            senderNoMsg = "발신자 번호를 입력해 주세요. ";
+            senderNoMsg = "발신자 번호는 숫자, 8자리 이상 입력해 주세요. ";
         }
-
+        
         if(!isEmpty(rctTargetFile)){
             rctTargetValid = true;
         } else { 
@@ -480,7 +480,7 @@ const CampaignForm = ({ advertiserInfo, onSubmit, onCancel, handleAdvtsSearchPop
             , send_dt_ymd: sendDtYmdMsg
             , send_dt_ap: sendDtApMsg
             , send_dt_hh: sendDtHhMsg
-            , send_dt_mm: sendDtMmValid
+            , send_dt_mm: sendDtMmMsg
             , send_mode: sendModeMsg
             , mgs_title: mgsTitleMsg
             , msg_summary: msgSummaryMsg
@@ -540,22 +540,27 @@ const CampaignForm = ({ advertiserInfo, onSubmit, onCancel, handleAdvtsSearchPop
 						<tr>
 							<th scope="row"><label2 for="PTjoin_name" className={cx("label2")}>광고주 아이디</label2></th>
 							<td colSpan="3">
-                                <InputText 
-                                    id="advts_id"
-                                    size="27"
-                                    placeholder="광고주 아이디"
-                                    value={advertiserInfo ? advertiserInfo.advts_id : ''}
-                                    caution={campaignCaution.advts_id}
-                                    readonly
-                                />
-								<Button
-                                    type="btn_small"
-                                    onClick={(e) => {
-                                        handleAdvtsSearchPopupOpen(e);
-                                    }}
-                                    >
-                                    광고주조회
-                                </Button>
+                                <div style={{display:'inline-block', marginRight: '10px'}}>
+                                    <InputText 
+                                        id="advts_id"
+                                        size="27"
+                                        placeholder="광고주 아이디"
+                                        value={advertiserInfo ? advertiserInfo.advts_id : ''}
+                                        caution={campaignCaution.advts_id}
+                                        readonly
+                                    />
+                                </div>
+                                <div style={{display:'inline-block', verticalAlign:'top'}}>
+                                    <Button
+                                        type="btn_small"
+                                        onClick={(e) => {
+                                            handleAdvtsSearchPopupOpen(e);
+                                        }}
+                                        >
+                                        광고주조회
+                                    </Button>
+                                </div>
+                                                                                    
 							</td>
 						</tr>
 						<tr>
@@ -612,6 +617,7 @@ const CampaignForm = ({ advertiserInfo, onSubmit, onCancel, handleAdvtsSearchPop
                                 <InputText 
                                     id="cmpgn_title"
                                     size="100"
+                                    maxLength="100"
                                     style={{width: "87%"}}
                                     value={campaign.cmpgn_title}
                                     caution={campaignCaution.cmpgn_title}
@@ -627,6 +633,7 @@ const CampaignForm = ({ advertiserInfo, onSubmit, onCancel, handleAdvtsSearchPop
                                 <InputText 
                                     id="cmpgn_pps"
                                     size="100"
+                                    maxLength="100"
                                     style={{width: "87%"}}
                                     value={campaign.cmpgn_pps}
                                     caution={campaignCaution.cmpgn_pps}
@@ -642,7 +649,7 @@ const CampaignForm = ({ advertiserInfo, onSubmit, onCancel, handleAdvtsSearchPop
                                 <InputText 
                                     id="send_req_cnt"
                                     size="100"
-                                    maxlength="6"
+                                    maxLength="6"
                                     style={{width: "70%"}}
                                     value={campaign.send_req_cnt}
                                     caution={campaignCaution.send_req_cnt}
@@ -720,6 +727,7 @@ const CampaignForm = ({ advertiserInfo, onSubmit, onCancel, handleAdvtsSearchPop
                                                 onChange={date => setSendDtYmdValue(date)}
                                                 isClearable="true"
                                                 dateFormat="yyyy/MM/dd"
+                                                minDate={new Date()}
                                             />
                                         </span>
                                     </div>
@@ -821,7 +829,22 @@ const CampaignForm = ({ advertiserInfo, onSubmit, onCancel, handleAdvtsSearchPop
                             <th scope="row"><label2 for="PTjoin_name" className={cx("label2")}>메세지 제목</label2></th>
                             <td colspan="3">
                                 <div style={{float: 'left', width: '100%'}}>
-                                    <InputText 
+                                    <InputTextArea
+                                        id="mgs_title"
+                                        rows={1}
+                                        cols={1}
+                                        maxLength={msgTitleMaxByte}
+                                        maxByte={msgTitleMaxByte}
+                                        maxByteLabel
+                                        currentByte={msgTitleByte}
+                                        value={campaign.mgs_title}
+                                        caution={campaignCaution.mgs_title}
+                                        style={{width:'668px',height:'28px', padding: '8px 10px'}}
+                                        onChange={(e) => {
+                                            setMgsTitleValue(e, e.target.value);
+                                        }}
+                                    />
+                                    {/* <InputText 
                                         id="mgs_title"
                                         size="100"
                                         style={{width: "87%"}}
@@ -831,7 +854,7 @@ const CampaignForm = ({ advertiserInfo, onSubmit, onCancel, handleAdvtsSearchPop
                                             setMgsTitleValue(e, e.target.value);
                                         }}
                                     />
-                                    {msgTitleByte}/{msgTitleMaxByte} Byte
+                                    {msgTitleByte}/{msgTitleMaxByte} Byte */}
                                 </div>
                             </td>
                         </tr>
@@ -860,10 +883,10 @@ const CampaignForm = ({ advertiserInfo, onSubmit, onCancel, handleAdvtsSearchPop
                             <td colspan="3">
                                 <span className={cx("photo")} style={{width: "250px",height: "150px", padding: '0px'}}>
                                     <ImageDropZone
+                                        ref={advtsImgRef}
                                         imageData={campaign.msg_app_img}
                                         handleImageData={setMsgAppImageData}
                                         handleImageFile={handleMsgAppImageFile}
-                                        ref={advtsImgRef}
                                     />
                                 </span>
                                 <Button
@@ -880,8 +903,9 @@ const CampaignForm = ({ advertiserInfo, onSubmit, onCancel, handleAdvtsSearchPop
                             <th scope="row"><label2 for="PTjoin_name" className={cx("label2")}>발신자 번호</label2></th>
                             <td colspan="3">
                                 <InputText 
-                                    id="mgs_title"
+                                    id="sender_no"
                                     size="100"
+                                    maxLength="15"
                                     style={{width: "87%"}}
                                     value={campaign.sender_no}
                                     placeholder="숫자만 입력하세요."
@@ -906,6 +930,8 @@ const CampaignForm = ({ advertiserInfo, onSubmit, onCancel, handleAdvtsSearchPop
                                         handleRctTargetFile(e);
                                     }}
                                 />
+                                {(campaignCaution.rct_target !== "")
+                                 ? <p className={cx("caution", "caution:after")}>{campaignCaution.rct_target}</p> : null}
                             </td>
                         </tr>
                         <tr>

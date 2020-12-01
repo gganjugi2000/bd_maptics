@@ -59,6 +59,7 @@ const InputTextArea = React.forwardRef((props, ref) => {
 // default props 지정
 InputTextArea.defaultProps = {
     rows: 20,
+    cols: 50,
     maxLength: 1000,
 };
 

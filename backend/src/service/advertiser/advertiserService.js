@@ -20,8 +20,8 @@ exports.getAdvertiserInfoDetail = async (advts_id) => {
     return data
 }
 
-exports.addAdvertiserInfo = async (advts_id, advts_nm, advts_mng_nm, advts_img, email_addr, phone_no, descp, use_yn, reg_id, reg_dt, upd_id, upd_dt) => {
-    await db_mysql.addAdvertiserInfo(advts_id, advts_nm, advts_mng_nm, advts_img, email_addr, phone_no, descp, use_yn, reg_id, reg_dt, upd_id, upd_dt);
+exports.addAdvertiserInfo = async (advts_id, advts_nm, advts_mng_nm, advts_img, org_advts_img_nm, advts_img_ext, advts_img_size, email_addr, phone_no, descp, use_yn, reg_id, reg_dt, upd_id, upd_dt) => {
+    await db_mysql.addAdvertiserInfo(advts_id, advts_nm, advts_mng_nm, advts_img, org_advts_img_nm, advts_img_ext, advts_img_size, email_addr, phone_no, descp, use_yn, reg_id, reg_dt, upd_id, upd_dt);
 }
 
 exports.removeAdvertiserInfo = async (advts_id) => {
@@ -29,9 +29,9 @@ exports.removeAdvertiserInfo = async (advts_id) => {
         await db_mysql.removeAdvertiserInfo(advts_id);
 }
 
-exports.modifyAdvertiserInfo = async (advts_id, advts_nm, advts_mng_nm, advts_img, email_addr, phone_no, descp, use_yn, upd_id, upd_dt) => {
+exports.modifyAdvertiserInfo = async (advts_id, advts_nm, advts_mng_nm, advts_img, org_advts_img_nm, advts_img_ext, advts_img_size, email_addr, phone_no, descp, use_yn, upd_id, upd_dt) => {
     if(advts_id)
-        await db_mysql.modifyAdvertiserInfo(advts_id, advts_nm, advts_mng_nm, advts_img, email_addr, phone_no, descp, use_yn, upd_id, upd_dt);
+        await db_mysql.modifyAdvertiserInfo(advts_id, advts_nm, advts_mng_nm, advts_img, org_advts_img_nm, advts_img_ext, advts_img_size, email_addr, phone_no, descp, use_yn, upd_id, upd_dt);
 }
 
 exports.checkAdvertiserId = async (advts_id) => {

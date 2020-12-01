@@ -36,4 +36,4 @@
 .btn_set	{position:relative;margin-top:30px;text-align:center;}
 .datepickerWrap {display:inline-block;}
 .datepickerWrap span {display:inline-block; box-sizing: border-box; height: 45px; padding-right: 5px;}
-.datepickerWrap span div input[type="text"]{height: 39px;}
+.datepickerWrap span div input[type="text"]{height: 35px;width: 140px;}

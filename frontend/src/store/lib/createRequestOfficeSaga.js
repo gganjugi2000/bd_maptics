@@ -32,7 +32,6 @@ export default function createRequestOfficeSaga(type, request, forwardLocation) 
             }
 
             if(forwardLocation) {
-                
                 yield put(push(forwardLocation));
             }
         } catch (e) {
@@ -41,7 +40,7 @@ export default function createRequestOfficeSaga(type, request, forwardLocation) 
                 payload: e,
                 error: true,
             });
-            alert("오류 발생 " + e);
+            alert("오류가 발생하였습니다.");
         }
         // yield put(finishLoading(type)); // 로딩 끝
     };

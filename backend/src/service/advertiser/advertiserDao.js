@@ -177,6 +177,9 @@ exports.getAdvertiserInfoDetail = (advts_id) => {
                     , advts_nm
                     , advts_mng_nm
                     , advts_img
+                    , org_advts_img_nm
+                    , advts_img_ext
+                    , advts_img_size
                     , email_addr
                     , phone_no
                     , descp
@@ -194,10 +197,10 @@ exports.getAdvertiserInfoDetail = (advts_id) => {
     });
 }
 
-exports.addAdvertiserInfo = (advts_id, advts_nm, advts_mng_nm, advts_img, email_addr, phone_no, descp, reg_id, upd_id) => {    
+exports.addAdvertiserInfo = (advts_id, advts_nm, advts_mng_nm, advts_img, org_advts_img_nm, advts_img_ext, advts_img_size, email_addr, phone_no, descp, reg_id, upd_id) => {    
     const sql = `
-        INSERT INTO advertiser (advts_id, advts_nm, advts_mng_nm, advts_img, email_addr, phone_no, descp, use_yn, reg_id, reg_dt, upd_id, upd_dt)
-        VALUES ( '${advts_id}', '${advts_nm}', '${advts_mng_nm}', '${advts_img}', '${email_addr}', '${phone_no}', '${descp}', 'Y', 'super', NOW(), 'super', NOW()) `;
+        INSERT INTO advertiser (advts_id, advts_nm, advts_mng_nm, advts_img, org_advts_img_nm, advts_img_ext, advts_img_size, email_addr, phone_no, descp, use_yn, reg_id, reg_dt, upd_id, upd_dt)
+        VALUES ( '${advts_id}', '${advts_nm}', '${advts_mng_nm}', '${advts_img}', '${org_advts_img_nm}', '${advts_img_ext}', '${advts_img_size}', '${email_addr}', '${phone_no}', '${descp}', 'Y', 'super', NOW(), 'super', NOW()) `;
     return new Promise(resolve => {
         mysql.get_data('add_advertiser', sql, (result) => {
             resolve(result);
@@ -216,13 +219,16 @@ exports.removeAdvertiserInfo = (advts_id) => {
     });
 }
 
-exports.modifyAdvertiserInfo = (advts_id, advts_nm, advts_mng_nm, advts_img, email_addr, phone_no, descp, upd_id) => {
+exports.modifyAdvertiserInfo = (advts_id, advts_nm, advts_mng_nm, advts_img, org_advts_img_nm, advts_img_ext, advts_img_size, email_addr, phone_no, descp, upd_id) => {
     const sql = `
         UPDATE advertiser
         SET
             advts_nm = '${advts_nm}', 
             advts_mng_nm = '${advts_mng_nm}', 
             advts_img = '${advts_img}', 
+            org_advts_img_nm = '${org_advts_img_nm}', 
+            advts_img_ext = '${advts_img_ext}', 
+            advts_img_size = '${advts_img_size}',
             email_addr = '${email_addr}', 
             phone_no = '${phone_no}', 
             descp = '${descp}', 

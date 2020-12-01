@@ -34,6 +34,16 @@ export function validEmail (value) {
     return false;
 }
 
+export function validEmailLength (value) {
+    if (value === undefined || value === null)
+        return false;
+
+    if (value.trim().length < 64) 
+        return true;
+        
+    return false;
+}
+
 export function validEmailProvider (value) {
     // const regExp = /^[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/; 
     const regExp = /^((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -42,6 +52,16 @@ export function validEmailProvider (value) {
         return false;
 
     if (value.match(regExp)) 
+        return true;
+        
+    return false;
+}
+
+export function validEmailProviderLength (value) {
+    if (value === undefined || value === null)
+        return false;
+
+    if (value.trim().length < 255) 
         return true;
         
     return false;
@@ -97,7 +117,7 @@ export function validPhoneEnd (value) {
 }
 
 export function isNumber (value) {
-    const regExp = /^[0-9]$/; 
+    const regExp = /^[0-9]*$/; 
     
     if (value === undefined || value === null)
         return false;
@@ -114,4 +134,14 @@ export function checkByteOfValue (value) {
         checkByte = unescape(encodeURI(value)).length;
     }
     return checkByte;
+}
+
+export function validFileNameLength (value) {
+    if (value === undefined || value === null)
+        return false;
+
+    if (unescape(encodeURI(value)).length < 255) 
+        return true;
+        
+    return false;
 }

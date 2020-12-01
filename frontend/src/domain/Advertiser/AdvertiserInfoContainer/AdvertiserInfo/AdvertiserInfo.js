@@ -10,6 +10,7 @@ import ImageDropZone from '../../../../components/ImageDropZoneComponent/ImageDr
 import {
     isEmpty,
     isEquals, 
+    validFileNameLength,
     validEmail,
     validEmailProvider,
     validPhoneFirst,
@@ -20,6 +21,9 @@ import {
     validAdvertiserName,
     validAdvertiserMngName
 } from 'utiles/validation/validateAdvertiser';
+import {
+    extractionFileExt
+} from 'utiles/utiles';
 
 const cx = classNames.bind(styles);
 
@@ -45,6 +49,7 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
         "advts_nm" : "",
         "advts_mng_nm" : "",
         "advts_img" : "",
+        "del_advts_img" : false,
         "email_addr" : "",
         "email_addr_provider" : "",
         "phone_no_first" : "",
@@ -83,6 +88,7 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
             setAdvertiser(null);
             setAdvertiserCaution(null);
             setAdvertiserValid(null);
+            setAdvtsImgFile(null);
         }
     }, []);
 
@@ -109,13 +115,6 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
                     phoneNoEnd = splitPhoneNo[2];
                 }
             }
-            console.log("Info ============================ ")
-            console.log(advertiserInfo.phone_no)
-            console.log(phoneNoFirst)
-            console.log(phoneNoMiddle)
-            console.log(phoneNoEnd)
-            console.log(advertiserInfo.advts_img)
-            console.log("----------------------------------")
             
             setAdvertiser({
                 ...advertiser
@@ -138,7 +137,17 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
         setAdvertiser({
             ...advertiser
             , advts_img: fileData
+            , del_advts_img: false
         });
+    }
+
+    const deleteImageFile = (e) => {
+        setAdvertiser({
+            ...advertiser
+            , advts_img: ""
+            , del_advts_img: true
+        });
+        setAdvtsImgFile(null);
     }
     
     const setImageFile = (file) => {
@@ -294,7 +303,8 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        let advtsNmValid, advtsMngNmValid, advtsImgValid, emailAddrValid, emailAddrProviderValid, phoneNoFirstValid, phoneNoMiddleValid, phoneNoEndValid = false;
+        let advtsNmValid, advtsMngNmValid, emailAddrValid, emailAddrProviderValid, phoneNoFirstValid, phoneNoMiddleValid, phoneNoEndValid = false;
+        let advtsImgValid = true;
         let advtsNmMsg, advtsMngNmMsg, advtsImgMsg, emailAddrMsg, emailAddrProviderMsg, phoneNoFirstMsg, phoneNoMiddleMsg, phoneNoEndMsg = "";
         
         if(!isEmpty(advertiser.advts_nm) && validAdvertiserName(advertiser.advts_nm)){
@@ -307,10 +317,13 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
         } else {
             advtsMngNmMsg = "한글/영문,2자 이상 입력 해야 합니다.";
         }
-        if(!isEmpty(advertiser.advts_img)){
-            advtsImgValid = true;
-        } else {
-            advtsImgMsg = "이미지는 필수로 등록해야 합니다.";
+        if(!isEmpty(advtsImgFile)){
+            let fileName = advtsImgFile.name;
+
+            if(!validFileNameLength(fileName)) {
+                advtsImgMsg = "파일명이 너무 깁니다.";
+                advtsImgValid = false;
+            }
         }
         if(!isEmpty(advertiser.email_addr) && validEmail(advertiser.email_addr)){
             emailAddrValid = true;
@@ -396,9 +409,16 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
         formData.append("advts_nm", advertiser.advts_nm);
         formData.append("advts_mng_nm", advertiser.advts_mng_nm);
         formData.append("advts_img_file", advtsImgFile);
+        formData.append("del_advts_img", advertiser.del_advts_img);
         formData.append("email_addr", emailAddr);
         formData.append("phone_no", phoneNo);
         formData.append("descp", advertiser.descp);
+
+        if(advtsImgFile) {
+            formData.append("org_advts_img_nm", advtsImgFile.name);
+            formData.append("advts_img_ext", extractionFileExt(advtsImgFile.name));
+            formData.append("advts_img_size", advtsImgFile.size);
+        }
 
         onSubmit(e, formData);
     };
@@ -413,22 +433,38 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
                     <tr>
                         <th scope="row"><label htmlFor="PTjoin_name" className={cx("label")}><em className={cx("required")}>V</em>광고주이미지</label></th>
                         <td>
-                            <span className={cx("photo")} style={{width: "180px",height: "100px"}}>
-                                <ImageDropZone
-                                    imageData={advertiser.advts_img}
-                                    handleImageData={setImageData}
-                                    handleImageFile={setImageFile}
-                                    ref={advtsImgRef}
-                                />
-                            </span>
-                            <Button
-                                type="btn_small"
-                                onClick={(e) => {
-                                    openFileSelectPopup(e);
-                                }}
-                                >
-                                이미지업로드
-                            </Button>
+                            <div style={{float: 'left', width: '100%'}} >
+                                <span className={cx("photo")} style={{width: "180px",height: "100px"}}>
+                                    <ImageDropZone
+                                        imageData={advertiser.advts_img}
+                                        ref={advtsImgRef}
+                                        handleImageData={setImageData}
+                                        handleImageFile={setImageFile}
+                                    />
+                                </span>
+                                <div style={{display: 'inline-block', verticalAlign: 'top'}}>
+                                    <div style={{marginBottom: '5px'}}>
+                                        <Button
+                                            type="btn_small"
+                                            onClick={(e) => {
+                                                openFileSelectPopup(e);
+                                            }}
+                                            >
+                                            이미지업로드
+                                        </Button>
+                                    </div>
+                                    <div>
+                                        <Button
+                                            type="btn_small"
+                                            onClick={(e) => {
+                                                deleteImageFile(e);
+                                            }}
+                                            >
+                                            이미지 제거
+                                        </Button>
+                                    </div>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                     <tr>
@@ -481,6 +517,7 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
                                 id="email_addr"
                                 style={{width: "100px"}}
                                 placeholder=""
+                                maxLength="64"
                                 value={advertiser.email_addr}
                                 caution={advertiserCaution.email_addr}
                                 onChange={(e) => {
@@ -491,6 +528,7 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
                             <InputText 
                                 id="email_addr_provider"
                                 style={{width: "100px"}}
+                                maxLength="255"
                                 placeholder="직접입력"
                                 value={advertiser.email_addr_provider}
                                 caution={advertiserCaution.email_addr_provider}
@@ -534,7 +572,7 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
                                 style={{width: "50px"}}
                                 placeholder=""
                                 size="4"
-                                maxlength="4"
+                                maxLength="4"
                                 value={advertiser.phone_no_middle}
                                 caution={advertiserCaution.phone_no_middle}
                                 onChange={(e) => {
@@ -547,7 +585,7 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
                                 style={{width: "50px"}}
                                 placeholder=""
                                 size="4"
-                                maxlength="4"
+                                maxLength="4"
                                 value={advertiser.phone_no_end}
                                 caution={advertiserCaution.phone_no_end}
                                 onChange={(e) => {
@@ -564,7 +602,7 @@ const AdvertiserInfo = ({ advertiserInfo, onSubmit, onDelete, onCancel }) => {
                                 style={{width:"280px",height: "100px"}}
                                 rows={10}
                                 cols={70}
-                                maxLength={300}
+                                maxLength="300"
                                 value={advertiser.descp}
                                 caution={advertiserCaution.descp}
                                 onChange={(e) => {

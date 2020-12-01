@@ -263,7 +263,7 @@ router.post('/modifyInfo', asyncHandler(async (req, res, next) => {
     form.parse(req, async (err, field, file) => {
         if(!err) {
             // console.log('modify upload success!!');
-            const { cmpgn_id, cmpgn_title, cmpgn_pps, advts_id, send_req_cnt, send_dt_ymd, send_dt_ap, send_dt_hh, send_dt_mm, use_cm, send_mode, mgs_title, msg_summary, msg_app_img, sender_no, rct_target, link_ps_url_1, link_ps_yn_1, link_ps_url_2, link_ps_yn_2, link_ps_url_3, link_ps_yn_3, url_upload, url_upload_cv, cp_no_upload, upd_id } = field;
+            const { cmpgn_id, cmpgn_title, cmpgn_pps, advts_id, send_req_cnt, send_dt_ymd, send_dt_ap, send_dt_hh, send_dt_mm, use_cm, send_mode, mgs_title, msg_summary, msg_app_img, del_msg_app_img, sender_no, rct_target, link_ps_url_1, link_ps_yn_1, link_ps_url_2, link_ps_yn_2, link_ps_url_3, link_ps_yn_3, url_upload, url_upload_cv, cp_no_upload, upd_id } = field;
 
             let msgAppImgFilePath = '';     // msg_app_img_file - mms, rcs 첨부 이미지
             let rctTargetFilePath = '';     // rct_target_file - 수신대상 csv 파일
@@ -289,6 +289,19 @@ router.post('/modifyInfo', asyncHandler(async (req, res, next) => {
                 }
                 if(campaignDetailRet[0].cp_no_upload) {
                     cpNoUploadFilePath = campaignDetailRet[0].cp_no_upload.replace(/\\/g, '\\\\');
+                }
+
+                // 기존 이미지 삭제
+                if(del_msg_app_img == 'true'){
+                    if(msgAppImgFilePath != null && msgAppImgFilePath != undefined && msgAppImgFilePath != "") {
+                        if(fs.existsSync(msgAppImgFilePath)) {
+                            fs.unlink(msgAppImgFilePath, function(err) {
+                                if (err) throw err;
+                                console.log('file deleted');
+                            });
+                        }
+                    }
+                    msgAppImgFilePath = "";
                 }
                 
                 if(file.msg_app_img_file) {
