@@ -172,32 +172,71 @@ router.post('/addInfo', asyncHandler(async (req, res, next) => {
 
     form.parse(req, async (err, field, file) => {
         if(!err) {
-            const { cmpgn_code, cmpgn_title, cmpgn_pps, advts_id, send_req_cnt, send_dt_ymd, send_dt_ap, send_dt_hh, send_dt_mm, use_cm, send_mode, mgs_title, msg_summary, msg_app_img, sender_no, rct_target, link_ps_url_1, link_ps_yn_1, link_ps_url_2, link_ps_yn_2, link_ps_url_3, link_ps_yn_3, url_upload, url_upload_cv, cp_no_upload } = field;
+            const { cmpgn_code, cmpgn_title, cmpgn_pps, advts_id, send_req_cnt, send_dt_ymd, send_dt_ap, send_dt_hh, send_dt_mm
+                , use_cm, send_mode, mgs_title, msg_summary, msg_app_img, org_msg_app_img_nm, msg_app_img_ext, msg_app_img_size
+                , sender_no, rct_target, org_rct_target_nm, rct_target_ext, rct_target_size
+                , link_ps_url_1, link_ps_yn_1, link_ps_url_2, link_ps_yn_2, link_ps_url_3, link_ps_yn_3
+                , url_upload, org_url_upload_nm, url_upload_ext, url_upload_size, url_upload_cv
+                , cp_no_upload, org_cp_no_upload_nm, cp_no_upload_ext, cp_no_upload_size } = field;
             let msgAppImgFilePath = '';     // msg_app_img_file - mms, rcs 첨부 이미지
+            let orgMsgAppImgFileName = '';  // org_msg_app_img_nm - 원파일명 
+            let msgAppImgFileExt = '';      // msg_app_img_ext    - 확장자
+            let msgAppImgFileSize = 0;      // msg_app_img_size   - 파일크기(byte)
+
             let rctTargetFilePath = '';     // rct_target_file - 수신대상 csv 파일
+            let orgRctTargetFileName = '';  // org_rct_target_nm - 원파일명 
+            let rctTargetFileExt = '';      // rct_target_ext    - 확장자
+            let rctTargetFileSize = 0;      // rct_target_size   - 파일크기(byte)
+
             let urlUploadFilePath = '';     // url_upload_file - url 업로드
-            let cpNoUploadFilePath = '';    // cp_no_upload_file - 쿠폰번호 업로드
+            let orgUrlUploadFileName = '';  // org_url_upload_nm - 원파일명 
+            let urlUploadFileExt = '';      // url_upload_ext    - 확장자
+            let urlUploadFileSize = 0;      // url_upload_size   - 파일크기(byte)
+
+            let cpNoUploadFilePath = '';     // cp_no_upload_file - 쿠폰번호 업로드
+            let orgCpNoUploadFileName = '';  // org_cp_no_upload_nm - 원파일명 
+            let cpNoUploadFileExt = '';      // cp_no_upload_ext    - 확장자
+            let cpNoUploadFileSize = 0;      // cp_no_upload_size   - 파일크기(byte)
+
             // TO-DO :: campaign code 
             // campaign code 를 별도로 관리할지... 아님 삭제
             let cmpgnCode = "ABCDE";
             if(file.msg_app_img_file) {
                 msgAppImgFilePath = file.msg_app_img_file.path.replace(/\\/g, '\\\\');
                 console.log("msgAppImgFilePath : " + msgAppImgFilePath);
+                orgMsgAppImgFileName = org_msg_app_img_nm; 
+                msgAppImgFileExt = msg_app_img_ext;      
+                msgAppImgFileSize = msg_app_img_size;
             }
             if(file.rct_target_file) {
                 rctTargetFilePath = file.rct_target_file.path.replace(/\\/g, '\\\\');
                 console.log("rctTargetFilePath : " + rctTargetFilePath);
+                orgRctTargetFileName = org_rct_target_nm; 
+                rctTargetFileExt = rct_target_ext;      
+                rctTargetFileSize = rct_target_size;    
             }
             if(file.url_upload_file) {
                 urlUploadFilePath = file.url_upload_file.path.replace(/\\/g, '\\\\');
                 console.log("urlUploadFilePath : " + urlUploadFilePath);
+                orgUrlUploadFileName = org_url_upload_nm; 
+                urlUploadFileExt = url_upload_ext;      
+                urlUploadFileSize = url_upload_size;
             }
             if(file.cp_no_upload_file) {
                 cpNoUploadFilePath = file.cp_no_upload_file.path.replace(/\\/g, '\\\\');
                 console.log("cpNoUploadFilePath : " + cpNoUploadFilePath);
+                orgCpNoUploadFileName = org_cp_no_upload_nm; 
+                cpNoUploadFileExt = cp_no_upload_ext;
+                cpNoUploadFileSize = cp_no_upload_size;
             }
 
-            await campaignService.addCampaignInfo(cmpgnCode, cmpgn_title, cmpgn_pps, advts_id, send_req_cnt, send_dt_ymd, send_dt_ap, send_dt_hh, send_dt_mm, use_cm, send_mode, mgs_title, msg_summary, msgAppImgFilePath, sender_no, rctTargetFilePath, link_ps_url_1, link_ps_yn_1, link_ps_url_2, link_ps_yn_2, link_ps_url_3, link_ps_yn_3, urlUploadFilePath, url_upload_cv, cpNoUploadFilePath);
+            await campaignService.addCampaignInfo(cmpgnCode, cmpgn_title, cmpgn_pps, advts_id, send_req_cnt
+                , send_dt_ymd, send_dt_ap, send_dt_hh, send_dt_mm, use_cm, send_mode
+                , mgs_title, msg_summary, msgAppImgFilePath, orgMsgAppImgFileName, msgAppImgFileExt, msgAppImgFileSize
+                , sender_no, rctTargetFilePath, orgRctTargetFileName, rctTargetFileExt, rctTargetFileSize
+                , link_ps_url_1, link_ps_yn_1, link_ps_url_2, link_ps_yn_2, link_ps_url_3, link_ps_yn_3
+                , urlUploadFilePath, orgUrlUploadFileName, urlUploadFileExt, urlUploadFileSize
+                , url_upload_cv, cpNoUploadFilePath, orgCpNoUploadFileName, cpNoUploadFileExt, cpNoUploadFileSize);
             res.status(200).send({result: {code: 200, message: "success", data : ""}});
             // res.end(util.inspect({fields: fields, files: files}));
         } else {
@@ -238,9 +277,58 @@ router.post('/addInfo', asyncHandler(async (req, res, next) => {
 router.post('/removeInfo', asyncHandler(async (req, res, next) => {
     const { cmpgn_id } = req.body;
     if(cmpgn_id) {
+        let data = await campaignService.getCampaignInfoDetail(cmpgn_id);
+
+        // 첨부 이미지 파일 삭제
+        if(data != null && data.length > 0) {
+            // msg_app_img_file   - mms, rcs 첨부 이미지
+            let filePath = data[0].msg_app_img_file;
+            if(filePath != null && filePath != undefined && filePath != "") {
+                if(fs.existsSync(filePath)) {
+                    fs.unlink(filePath, function(err) {
+                        if (err) throw err;
+                        console.log('file deleted');
+                    });
+                }
+            }
+
+            // rct_target_file   - 수신대상 csv 파일
+            filePath = data[0].rct_target_file;
+            if(filePath != null && filePath != undefined && filePath != "") {
+                if(fs.existsSync(filePath)) {
+                    fs.unlink(filePath, function(err) {
+                        if (err) throw err;
+                        console.log('file deleted');
+                    });
+                }
+            }
+
+            // url_upload_file   - url 업로드
+            filePath = data[0].url_upload_file;
+            if(filePath != null && filePath != undefined && filePath != "") {
+                if(fs.existsSync(filePath)) {
+                    fs.unlink(filePath, function(err) {
+                        if (err) throw err;
+                        console.log('file deleted');
+                    });
+                }
+            }
+
+            // cp_no_upload_file   - 쿠폰번호 업로드
+            filePath = data[0].cp_no_upload_file;
+            if(filePath != null && filePath != undefined && filePath != "") {
+                if(fs.existsSync(filePath)) {
+                    fs.unlink(filePath, function(err) {
+                        if (err) throw err;
+                        console.log('file deleted');
+                    });
+                }
+            }
+        }
+
+        // db 삭제
         await campaignService.removeCampaignInfo(cmpgn_id);
         res.status(200).send({result: {code: 200, message: "success", data : ""}});
-
     } else {
         res.status(500).send({result: {code: 999, message: "success", data : ""}});
 
@@ -263,32 +351,61 @@ router.post('/modifyInfo', asyncHandler(async (req, res, next) => {
     form.parse(req, async (err, field, file) => {
         if(!err) {
             // console.log('modify upload success!!');
-            const { cmpgn_id, cmpgn_title, cmpgn_pps, advts_id, send_req_cnt, send_dt_ymd, send_dt_ap, send_dt_hh, send_dt_mm, use_cm, send_mode, mgs_title, msg_summary, msg_app_img, del_msg_app_img, sender_no, rct_target, link_ps_url_1, link_ps_yn_1, link_ps_url_2, link_ps_yn_2, link_ps_url_3, link_ps_yn_3, url_upload, url_upload_cv, cp_no_upload, upd_id } = field;
+            const { cmpgn_id, cmpgn_title, cmpgn_pps, advts_id, send_req_cnt, send_dt_ymd, send_dt_ap, send_dt_hh, send_dt_mm
+                , use_cm, send_mode, mgs_title, msg_summary, del_msg_app_img, msg_app_img, org_msg_app_img_nm, msg_app_img_ext, msg_app_img_size
+                , sender_no, rct_target, org_rct_target_nm, rct_target_ext, rct_target_size
+                , link_ps_url_1, link_ps_yn_1, link_ps_url_2, link_ps_yn_2, link_ps_url_3, link_ps_yn_3
+                , url_upload, org_url_upload_nm, url_upload_ext, url_upload_size, url_upload_cv
+                , cp_no_upload, org_cp_no_upload_nm, cp_no_upload_ext, cp_no_upload_size } = field;
 
             let msgAppImgFilePath = '';     // msg_app_img_file - mms, rcs 첨부 이미지
+            let orgMsgAppImgFileName = '';  // org_msg_app_img_nm - 원파일명 
+            let msgAppImgFileExt = '';      // msg_app_img_ext    - 확장자
+            let msgAppImgFileSize = 0;      // msg_app_img_size   - 파일크기(byte)
+
             let rctTargetFilePath = '';     // rct_target_file - 수신대상 csv 파일
+            let orgRctTargetFileName = '';  // org_rct_target_nm - 원파일명 
+            let rctTargetFileExt = '';      // rct_target_ext    - 확장자
+            let rctTargetFileSize = 0;      // rct_target_size   - 파일크기(byte)
+
             let urlUploadFilePath = '';     // url_upload_file - url 업로드
-            let cpNoUploadFilePath = '';    // cp_no_upload_file - 쿠폰번호 업로드
+            let orgUrlUploadFileName = '';  // org_url_upload_nm - 원파일명 
+            let urlUploadFileExt = '';      // url_upload_ext    - 확장자
+            let urlUploadFileSize = 0;      // url_upload_size   - 파일크기(byte)
+
+            let cpNoUploadFilePath = '';     // cp_no_upload_file - 쿠폰번호 업로드
+            let orgCpNoUploadFileName = '';  // org_cp_no_upload_nm - 원파일명 
+            let cpNoUploadFileExt = '';      // cp_no_upload_ext    - 확장자
+            let cpNoUploadFileSize = 0;      // cp_no_upload_size   - 파일크기(byte)
             
             if(cmpgn_id) {
                 let campaignDetailRet = await campaignService.getCampaignInfoDetail(cmpgn_id);
                 console.log("campaignDetailRet @@@@@@@@@@@@@@@@@@@@@@@@ ======================================")
                 console.log(campaignDetailRet)
                 console.log("----------------------------------------------------")
-                if(campaignDetailRet[0].advts_img) {
-                    advtsImgFilePath = campaignDetailRet[0].advts_img.replace(/\\/g, '\\\\');
-                }
                 if(campaignDetailRet[0].msg_app_img) {
                     msgAppImgFilePath = campaignDetailRet[0].msg_app_img.replace(/\\/g, '\\\\');
+                    orgMsgAppImgFileName = campaignDetailRet[0].org_msg_app_img_nm;  
+                    msgAppImgFileExt = campaignDetailRet[0].msg_app_img_ext;        
+                    msgAppImgFileSize = campaignDetailRet[0].msg_app_img_size;      
                 }
                 if(campaignDetailRet[0].rct_target) {
                     rctTargetFilePath = campaignDetailRet[0].rct_target.replace(/\\/g, '\\\\');
+                    orgRctTargetFileName = campaignDetailRet[0].org_rct_target_nm;  
+                    rctTargetFileExt = campaignDetailRet[0].rct_target_ext;      
+                    rctTargetFileSize = campaignDetailRet[0].rct_target_size;
                 }
                 if(campaignDetailRet[0].url_upload) {
                     urlUploadFilePath = campaignDetailRet[0].url_upload.replace(/\\/g, '\\\\');
+                    orgUrlUploadFileName = campaignDetailRet[0].org_url_upload_nm;  
+                    urlUploadFileExt = campaignDetailRet[0].url_upload_ext;      
+                    urlUploadFileSize = campaignDetailRet[0].url_upload_size;      
                 }
                 if(campaignDetailRet[0].cp_no_upload) {
                     cpNoUploadFilePath = campaignDetailRet[0].cp_no_upload.replace(/\\/g, '\\\\');
+                    orgCpNoUploadFileName = campaignDetailRet[0].org_cp_no_upload_nm;  
+                    cpNoUploadFileExt = campaignDetailRet[0].cp_no_upload_ext;      
+                    cpNoUploadFileSize = campaignDetailRet[0].cp_no_upload_size;      
                 }
 
                 // 기존 이미지 삭제
@@ -316,8 +433,10 @@ router.post('/modifyInfo', asyncHandler(async (req, res, next) => {
                     }
                     
                     // 수정 파일 upload 경로
-                    msgAppImgFilePath = form.uploadDir + path.sep + file.msg_app_img_file.name;  
                     msgAppImgFilePath = file.msg_app_img_file.path.replace(/\\/g, '\\\\');
+                    orgMsgAppImgFileName = org_msg_app_img_nm;  
+                    msgAppImgFileExt = msg_app_img_ext;        
+                    msgAppImgFileSize = msg_app_img_size; 
                     console.log("msgAppImgFilePath : " + msgAppImgFilePath);
                 }
                 if(file.rct_target_file ) {
@@ -331,9 +450,11 @@ router.post('/modifyInfo', asyncHandler(async (req, res, next) => {
                         }
                     }
                     
-                    // 수정 파일 upload 경로
-                    rctTargetFilePath = form.uploadDir + path.sep + file.rct_target_file.name;  
+                    // 수정 파일 upload 경로 
                     rctTargetFilePath = file.rct_target_file.path.replace(/\\/g, '\\\\');
+                    orgRctTargetFileName = org_rct_target_nm;  
+                    rctTargetFileExt = rct_target_ext;      
+                    rctTargetFileSize = rct_target_size;
                     console.log("rctTargetFilePath : " + rctTargetFilePath);
                 }
                 if(file.url_upload_file) {
@@ -348,8 +469,10 @@ router.post('/modifyInfo', asyncHandler(async (req, res, next) => {
                     }
                     
                     // 수정 파일 upload 경로
-                    urlUploadFilePath = form.uploadDir + path.sep + file.url_upload_file.name;  
                     urlUploadFilePath = file.url_upload_file.path.replace(/\\/g, '\\\\');
+                    orgUrlUploadFileName = org_url_upload_nm;  
+                    urlUploadFileExt = url_upload_ext;      
+                    urlUploadFileSize = url_upload_size;    
                     console.log("urlUploadFilePath : " + urlUploadFilePath);
                 }
                 if(file.cp_no_upload_file) {
@@ -364,8 +487,10 @@ router.post('/modifyInfo', asyncHandler(async (req, res, next) => {
                     }
                     
                     // 수정 파일 upload 경로
-                    cpNoUploadFilePath = form.uploadDir + path.sep + file.cp_no_upload_file.name;  
                     cpNoUploadFilePath = file.cp_no_upload_file.path.replace(/\\/g, '\\\\');
+                    orgCpNoUploadFileName = org_cp_no_upload_nm;  
+                    cpNoUploadFileExt = cp_no_upload_ext;      
+                    cpNoUploadFileSize = cp_no_upload_size; 
                     console.log("cpNoUploadFilePath : " + cpNoUploadFilePath);
                 }
 
@@ -377,7 +502,14 @@ router.post('/modifyInfo', asyncHandler(async (req, res, next) => {
                 console.log(cpNoUploadFilePath)
                 console.log("----------------------------------------------------")
 
-                await campaignService.modifyCampaignInfo(cmpgn_id, cmpgn_title, cmpgn_pps, advts_id, send_req_cnt, send_dt_ymd, send_dt_ap, send_dt_hh, send_dt_mm, use_cm, send_mode, mgs_title, msg_summary, msgAppImgFilePath, sender_no, rctTargetFilePath, link_ps_url_1, link_ps_yn_1, link_ps_url_2, link_ps_yn_2, link_ps_url_3, link_ps_yn_3, urlUploadFilePath, url_upload_cv, cpNoUploadFilePath);
+                await campaignService.modifyCampaignInfo(cmpgn_id, cmpgn_title, cmpgn_pps, advts_id, send_req_cnt
+                    , send_dt_ymd, send_dt_ap, send_dt_hh, send_dt_mm
+                    , use_cm, send_mode, mgs_title, msg_summary
+                    , msgAppImgFilePath, orgMsgAppImgFileName, msgAppImgFileExt, msgAppImgFileSize
+                    , sender_no, rctTargetFilePath, orgRctTargetFileName, rctTargetFileExt, rctTargetFileSize
+                    , link_ps_url_1, link_ps_yn_1, link_ps_url_2, link_ps_yn_2, link_ps_url_3, link_ps_yn_3
+                    , urlUploadFilePath, orgUrlUploadFileName, urlUploadFileExt, urlUploadFileSize, url_upload_cv
+                    , cpNoUploadFilePath, orgCpNoUploadFileName, cpNoUploadFileExt, cpNoUploadFileSize);
                     res.status(200).send({result: {code: 200, message: "success", data : ""}});
 
             } else {

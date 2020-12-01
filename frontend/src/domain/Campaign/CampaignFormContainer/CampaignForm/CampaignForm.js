@@ -23,6 +23,9 @@ import {
     validCampaignName,
     validCampaignMngName
 } from 'utiles/validation/validateCampaign';
+import {
+    extractionFileExt
+} from 'utiles/utiles';
 
 const cx = classNames.bind(styles);
 
@@ -522,6 +525,28 @@ const CampaignForm = ({ advertiserInfo, onSubmit, onCancel, handleAdvtsSearchPop
         formData.append("rct_target_file", rctTargetFile);
         formData.append("url_upload_file", urlUploadFile);
         formData.append("cp_no_upload_file", cpNoUploadFile);
+
+        if(msgAppImgFile) {
+            formData.append("org_msg_app_img_nm", msgAppImgFile.name);
+            formData.append("msg_app_img_ext", extractionFileExt(msgAppImgFile.name));
+            formData.append("msg_app_img_size", msgAppImgFile.size);
+        }
+        if(rctTargetFile) {
+            formData.append("org_rct_target_nm", rctTargetFile.name);
+            formData.append("rct_target_ext", extractionFileExt(rctTargetFile.name));
+            formData.append("rct_target_size", rctTargetFile.size);
+        }
+        if(urlUploadFile) {
+            formData.append("org_url_upload_nm", urlUploadFile.name);
+            formData.append("url_upload_ext", extractionFileExt(urlUploadFile.name));
+            formData.append("url_upload_size", urlUploadFile.size);
+        }
+        if(cpNoUploadFile) {
+            formData.append("org_cp_no_upload_nm", cpNoUploadFile.name);
+            formData.append("cp_no_upload_ext", extractionFileExt(cpNoUploadFile.name));
+            formData.append("cp_no_upload_size", cpNoUploadFile.size);
+        }
+        
 
         onSubmit(e, formData);
     };

@@ -23,6 +23,9 @@ import {
     validCampaignName,
     validCampaignMngName
 } from 'utiles/validation/validateCampaign';
+import {
+    extractionFileExt
+} from 'utiles/utiles';
 
 const cx = classNames.bind(styles);
 
@@ -79,9 +82,11 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
         "mgs_title" : "",
         "msg_summary" : "",
         "msg_app_img" : "",
+        "org_msg_app_img_nm" : "",
         "del_msg_app_img" : false,
         "sender_no" : "",
         "rct_target" : "",
+        "org_rct_target_nm" : "",
         "link_ps_url_1" : "",
         "link_ps_yn_1" : false,
         "link_ps_url_2" : "",
@@ -89,8 +94,10 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
         "link_ps_url_3" : "",
         "link_ps_yn_3" : false,
         "url_upload" : "",
+        "org_url_upload_nm" : "",
         "url_upload_cv" : false,
         "cp_no_upload" : "", 
+        "org_cp_no_upload_nm" : "", 
         "reg_dt" : "", 
         "udt_dt" : "",
     });
@@ -234,16 +241,16 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
                 , msg_summary: campaignInfo.msg_summary
                 , msg_app_img: campaignInfo.msg_app_img
                 , sender_no: campaignInfo.sender_no
-                , rct_target: campaignInfo.rct_target
+                , rct_target: campaignInfo.org_rct_target_nm
                 , link_ps_url_1: campaignInfo.link_ps_url_1
                 , link_ps_yn_1: (campaignInfo.link_ps_yn_1 === 'Y' ? true : false)
                 , link_ps_url_2: campaignInfo.link_ps_url_2
                 , link_ps_yn_2: (campaignInfo.link_ps_yn_2 === 'Y' ? true : false)
                 , link_ps_url_3: campaignInfo.link_ps_url_3
                 , link_ps_yn_3: (campaignInfo.link_ps_yn_3 === 'Y' ? true : false)
-                , url_upload: campaignInfo.url_upload
+                , url_upload: campaignInfo.org_url_upload_nm
                 , url_upload_cv: (campaignInfo.url_upload_cv === 'Y' ? true : false)
-                , cp_no_upload: campaignInfo.cp_no_upload
+                , cp_no_upload: campaignInfo.org_cp_no_upload_nm
                 , reg_dt: changeFormat(campaignInfo.reg_dt, 'YYYY-MM-DD hh:mm:DD')
                 , udt_dt: changeFormat(campaignInfo.udt_dt, 'YYYY-MM-DD hh:mm:DD')
             });
@@ -663,6 +670,27 @@ const CampaignInfo = ({ advertiserInfo, campaignInfo, campaignAcknlg, onSubmit, 
         formData.append("rct_target_file", rctTargetFile);
         formData.append("url_upload_file", urlUploadFile);
         formData.append("cp_no_upload_file", cpNoUploadFile);
+
+        if(msgAppImgFile) {
+            formData.append("org_msg_app_img_nm", msgAppImgFile.name);
+            formData.append("msg_app_img_ext", extractionFileExt(msgAppImgFile.name));
+            formData.append("msg_app_img_size", msgAppImgFile.size);
+        }
+        if(rctTargetFile) {
+            formData.append("org_rct_target_nm", rctTargetFile.name);
+            formData.append("rct_target_ext", extractionFileExt(rctTargetFile.name));
+            formData.append("rct_target_size", rctTargetFile.size);
+        }
+        if(urlUploadFile) {
+            formData.append("org_url_upload_nm", urlUploadFile.name);
+            formData.append("url_upload_ext", extractionFileExt(urlUploadFile.name));
+            formData.append("url_upload_size", urlUploadFile.size);
+        }
+        if(cpNoUploadFile) {
+            formData.append("org_cp_no_upload_nm", cpNoUploadFile.name);
+            formData.append("cp_no_upload_ext", extractionFileExt(cpNoUploadFile.name));
+            formData.append("cp_no_upload_size", cpNoUploadFile.size);
+        }
 
         onSubmit(e, formData);
     };

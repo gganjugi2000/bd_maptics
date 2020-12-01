@@ -159,8 +159,14 @@ exports.getCampaignInfoDetail = (cmpgn_id) => {
                     ,A.mgs_title
                     ,A.msg_summary
                     ,A.msg_app_img
+                    ,A.org_msg_app_img_nm
+                    ,A.msg_app_img_ext
+                    ,A.msg_app_img_size
                     ,A.sender_no
                     ,A.rct_target
+                    ,A.org_rct_target_nm
+                    ,A.rct_target_ext
+                    ,A.rct_target_size
                     ,A.link_ps_url_1
                     ,A.link_ps_yn_1
                     ,A.link_ps_url_2
@@ -168,8 +174,14 @@ exports.getCampaignInfoDetail = (cmpgn_id) => {
                     ,A.link_ps_url_3
                     ,A.link_ps_yn_3
                     ,A.url_upload
+                    ,A.org_url_upload_nm
+                    ,A.url_upload_ext
+                    ,A.url_upload_size
                     ,A.url_upload_cv
                     ,A.cp_no_upload
+                    ,A.org_cp_no_upload_nm
+                    ,A.cp_no_upload_ext
+                    ,A.cp_no_upload_size
                     ,A.use_yn
                     ,A.reg_id
                     ,A.reg_dt
@@ -228,10 +240,95 @@ exports.getCampaignAcknlgInfoDetail = (cmpgn_id) => {
     });
 }
 
-exports.addCampaignInfo = (cmpgn_code, cmpgn_title, cmpgn_pps, advts_id, send_req_cnt, send_dt_ymd, send_dt_ap, send_dt_hh, send_dt_mm, use_cm, send_mode, mgs_title, msg_summary, msg_app_img, sender_no, rct_target, link_ps_url_1, link_ps_yn_1, link_ps_url_2, link_ps_yn_2, link_ps_url_3, link_ps_yn_3, url_upload, url_upload_cv, cp_no_upload, reg_id, upd_id) => {    
+exports.addCampaignInfo = (
+                cmpgn_code, cmpgn_title, cmpgn_pps, advts_id, send_req_cnt
+                , send_dt_ymd, send_dt_ap, send_dt_hh, send_dt_mm, use_cm, send_mode
+                , mgs_title, msg_summary, msg_app_img, org_msg_app_img_nm, msg_app_img_ext, msg_app_img_size
+                , sender_no, rct_target, org_rct_target_nm, rct_target_ext, rct_target_size
+                , link_ps_url_1, link_ps_yn_1, link_ps_url_2, link_ps_yn_2, link_ps_url_3, link_ps_yn_3
+                , url_upload, org_url_upload_nm, url_upload_ext, url_upload_size, url_upload_cv
+                , cp_no_upload, org_cp_no_upload_nm, cp_no_upload_ext, cp_no_upload_size, reg_id, upd_id) => {    
     const sql = `
-        INSERT INTO campaign (cmpgn_code, cmpgn_title, cmpgn_pps, advts_id, send_req_cnt, send_dt_ymd, send_dt_ap, send_dt_hh, send_dt_mm, use_cm, send_mode, mgs_title, msg_summary, msg_app_img, sender_no, rct_target, link_ps_url_1, link_ps_yn_1, link_ps_url_2, link_ps_yn_2, link_ps_url_3, link_ps_yn_3, url_upload, url_upload_cv, cp_no_upload, use_yn, reg_id, reg_dt, upd_id, upd_dt)
-        VALUES ( '${cmpgn_code}', '${cmpgn_title}', '${cmpgn_pps}', '${advts_id}', '${send_req_cnt}', '${send_dt_ymd}', '${send_dt_ap}', '${send_dt_hh}', '${send_dt_mm}', '${use_cm}', '${send_mode}', '${mgs_title}', '${msg_summary}', '${msg_app_img}', '${sender_no}', '${rct_target}', '${link_ps_url_1}', '${link_ps_yn_1}', '${link_ps_url_2}', '${link_ps_yn_2}', '${link_ps_url_3}', '${link_ps_yn_3}', '${url_upload}', '${url_upload_cv}', '${cp_no_upload}', 'Y', 'super', NOW(), 'super', NOW()) `;
+        INSERT INTO campaign (
+                cmpgn_code
+                , cmpgn_title
+                , cmpgn_pps
+                , advts_id
+                , send_req_cnt
+                , send_dt_ymd
+                , send_dt_ap
+                , send_dt_hh
+                , send_dt_mm
+                , use_cm
+                , send_mode
+                , mgs_title
+                , msg_summary
+                , msg_app_img
+                , org_msg_app_img_nm, msg_app_img_ext, msg_app_img_size
+                , sender_no
+                , rct_target
+                , org_rct_target_nm, rct_target_ext, rct_target_size
+                , link_ps_url_1
+                , link_ps_yn_1
+                , link_ps_url_2
+                , link_ps_yn_2
+                , link_ps_url_3
+                , link_ps_yn_3
+                , url_upload
+                , org_url_upload_nm, url_upload_ext, url_upload_size
+                , url_upload_cv
+                , cp_no_upload
+                , org_cp_no_upload_nm, cp_no_upload_ext, cp_no_upload_size
+                , use_yn
+                , reg_id
+                , reg_dt
+                , upd_id
+                , upd_dt
+        )
+        VALUES ( 
+                '${cmpgn_code}'
+                , '${cmpgn_title}'
+                , '${cmpgn_pps}'
+                , '${advts_id}'
+                , '${send_req_cnt}'
+                , '${send_dt_ymd}'
+                , '${send_dt_ap}'
+                , '${send_dt_hh}'
+                , '${send_dt_mm}'
+                , '${use_cm}'
+                , '${send_mode}'
+                , '${mgs_title}'
+                , '${msg_summary}'
+                , '${msg_app_img}'
+                , '${org_msg_app_img_nm}'
+                , '${msg_app_img_ext}'
+                , '${msg_app_img_size}'
+                , '${sender_no}'
+                , '${rct_target}'
+                , '${org_rct_target_nm}'
+                , '${rct_target_ext}'
+                , '${rct_target_size}'
+                , '${link_ps_url_1}'
+                , '${link_ps_yn_1}'
+                , '${link_ps_url_2}'
+                , '${link_ps_yn_2}'
+                , '${link_ps_url_3}'
+                , '${link_ps_yn_3}'
+                , '${url_upload}'
+                , '${org_url_upload_nm}'
+                , '${url_upload_ext}'
+                , '${url_upload_size}'
+                , '${url_upload_cv}'
+                , '${cp_no_upload}'
+                , '${org_cp_no_upload_nm}'
+                , '${cp_no_upload_ext}'
+                , '${cp_no_upload_size}'
+                , 'Y'
+                , 'super'
+                , NOW()
+                , 'super'
+                , NOW()
+        ) `;
     return new Promise(resolve => {
         mysql.get_data('add_campaign', sql, (result) => {
             resolve(result);
@@ -261,7 +358,14 @@ exports.removeCampaignInfo = (cmpgn_id) => {
     });
 }
 
-exports.modifyCampaignInfo = (cmpgn_id, cmpgn_title, cmpgn_pps, advts_id, send_req_cnt, send_dt_ymd, send_dt_ap, send_dt_hh, send_dt_mm, use_cm, send_mode, mgs_title, msg_summary, msg_app_img, sender_no, rct_target, link_ps_url_1, link_ps_yn_1, link_ps_url_2, link_ps_yn_2, link_ps_url_3, link_ps_yn_3, url_upload, url_upload_cv, cp_no_upload, upd_id) => {
+exports.modifyCampaignInfo = (
+        cmpgn_id, cmpgn_title, cmpgn_pps, advts_id, send_req_cnt
+        , send_dt_ymd, send_dt_ap, send_dt_hh, send_dt_mm, use_cm, send_mode
+        , mgs_title, msg_summary, msg_app_img, org_msg_app_img_nm, msg_app_img_ext, msg_app_img_size
+        , sender_no, rct_target, org_rct_target_nm, rct_target_ext, rct_target_size
+        , link_ps_url_1, link_ps_yn_1, link_ps_url_2, link_ps_yn_2, link_ps_url_3, link_ps_yn_3
+        , url_upload, org_url_upload_nm, url_upload_ext, url_upload_size, url_upload_cv
+        , cp_no_upload, org_cp_no_upload_nm, cp_no_upload_ext, cp_no_upload_size, upd_id) => {
     const sql = `
         UPDATE campaign
         SET
@@ -278,8 +382,14 @@ exports.modifyCampaignInfo = (cmpgn_id, cmpgn_title, cmpgn_pps, advts_id, send_r
             mgs_title = '${mgs_title}', 
             msg_summary = '${msg_summary}', 
             msg_app_img = '${msg_app_img}', 
+            org_msg_app_img_nm = '${org_msg_app_img_nm}', 
+            msg_app_img_ext = '${msg_app_img_ext}', 
+            msg_app_img_size = '${msg_app_img_size}', 
             sender_no = '${sender_no}', 
             rct_target = '${rct_target}', 
+            org_rct_target_nm = '${org_rct_target_nm}', 
+            rct_target_ext = '${rct_target_ext}', 
+            rct_target_size = '${rct_target_size}', 
             link_ps_url_1 = '${link_ps_url_1}', 
             link_ps_yn_1 = '${link_ps_yn_1}', 
             link_ps_url_2 = '${link_ps_url_2}', 
@@ -287,8 +397,14 @@ exports.modifyCampaignInfo = (cmpgn_id, cmpgn_title, cmpgn_pps, advts_id, send_r
             link_ps_url_3 = '${link_ps_url_3}', 
             link_ps_yn_3 = '${link_ps_yn_3}', 
             url_upload = '${url_upload}', 
+            org_url_upload_nm = '${org_url_upload_nm}', 
+            url_upload_ext = '${url_upload_ext}', 
+            url_upload_size = '${url_upload_size}', 
             url_upload_cv = '${url_upload_cv}', 
             cp_no_upload = '${cp_no_upload}',
+            org_cp_no_upload_nm = '${org_cp_no_upload_nm}',
+            cp_no_upload_ext = '${cp_no_upload_ext}',
+            cp_no_upload_size = '${cp_no_upload_size}',
             upd_id = 'super', 
             upd_dt = NOW()
         where id = '${cmpgn_id}'
